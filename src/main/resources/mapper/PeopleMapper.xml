@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.gy.personalmanagersystem.dao.PeopleMapper" >
+  <resultMap id="BaseResultMap" type="edu.gy.personalmanagersystem.pojo.People" >
+    <id column="number" property="number" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="birthplace" property="birthplace" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="identityNo" property="identityno" jdbcType="VARCHAR" />
+    <result column="politicalstatus" property="politicalstatus" jdbcType="VARCHAR" />
+    <result column="photoNumber" property="photonumber" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    number, name, sex, age, department, position, birthplace, nation, identityNo, politicalstatus, 
+    photoNumber
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_people
+    where number = #{number,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_people
+    where number = #{number,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.gy.personalmanagersystem.pojo.People" >
+    insert into t_people (number, name, sex, 
+      age, department, position, 
+      birthplace, nation, identityNo, 
+      politicalstatus, photoNumber)
+    values (#{number,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{age,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{birthplace,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{identityno,jdbcType=VARCHAR}, 
+      #{politicalstatus,jdbcType=VARCHAR}, #{photonumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.gy.personalmanagersystem.pojo.People" >
+    insert into t_people
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="birthplace != null" >
+        birthplace,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="identityno != null" >
+        identityNo,
+      </if>
+      <if test="politicalstatus != null" >
+        politicalstatus,
+      </if>
+      <if test="photonumber != null" >
+        photoNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null" >
+        #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="identityno != null" >
+        #{identityno,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalstatus != null" >
+        #{politicalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="photonumber != null" >
+        #{photonumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.gy.personalmanagersystem.pojo.People" >
+    update t_people
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null" >
+        birthplace = #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="identityno != null" >
+        identityNo = #{identityno,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalstatus != null" >
+        politicalstatus = #{politicalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="photonumber != null" >
+        photoNumber = #{photonumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where number = #{number,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.gy.personalmanagersystem.pojo.People" >
+    update t_people
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      department = #{department,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      identityNo = #{identityno,jdbcType=VARCHAR},
+      politicalstatus = #{politicalstatus,jdbcType=VARCHAR},
+      photoNumber = #{photonumber,jdbcType=INTEGER}
+    where number = #{number,jdbcType=INTEGER}
+  </update>
+</mapper>
