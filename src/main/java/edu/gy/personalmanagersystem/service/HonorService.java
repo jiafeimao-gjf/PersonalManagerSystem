@@ -1,12 +1,12 @@
 package edu.gy.personalmanagersystem.service;
 
 /**
- * @InterfaceName: IHonor
+ * @InterfaceName: HonorService
  * @Author: Gu Jiafei
  * @Date: 2019-04-22 16:11
  * @Version: 1.0
  **/
-public interface IHonor {
+public interface HonorService {
 
 //    int addHonor(THonor honor);
 //

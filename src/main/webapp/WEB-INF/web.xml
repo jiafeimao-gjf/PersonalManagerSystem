@@ -48,4 +48,12 @@
 		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<!-- 使用默认servlet处理静态资源请求 -->
+	<!--后缀名为css/gif/jps/png/js的静态资源不拦截-->
+<!--	<servlet-mapping>-->
+<!--		<servlet-name>default</servlet-name>-->
+<!--		<url-pattern>/css/**</url-pattern>-->
+<!--		<url-pattern>/js/**</url-pattern>-->
+<!--		<url-pattern>/img/**</url-pattern>-->
+<!--	</servlet-mapping>-->
 </web-app> 

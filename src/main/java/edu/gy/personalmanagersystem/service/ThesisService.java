@@ -1,12 +1,12 @@
 package edu.gy.personalmanagersystem.service;
 
 /**
- * @InterfaceName: IThesis
+ * @InterfaceName: ThesisService
  * @Author: Gu Jiafei
  * @Date: 2019-04-22 16:10
  * @Version: 1.0
  **/
-public interface IThesis {
+public interface ThesisService {
 
 //    int addThesis(TThesis thesis);
 //

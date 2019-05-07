@@ -1,6 +1,6 @@
 package edu.gy.personalmanagersystem.service;
 
-import org.springframework.stereotype.Service;
+import edu.gy.personalmanagersystem.pojo.User;
 
 /**
  * @InterfaceName: UserService
@@ -9,5 +9,9 @@ import org.springframework.stereotype.Service;
  * @Version: 1.0
  **/
 public interface UserService {
+    User getUserByID(Integer userID);
+
+    Integer insertNewUser(User user);
+
 
 }

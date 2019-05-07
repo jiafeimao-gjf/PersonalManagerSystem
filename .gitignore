@@ -29,3 +29,5 @@ gen/
 *.ipr
 .mvn
 mvnw*
+src/main/java/edu/gy/personalmanagersystem/utils/
+src/test/
