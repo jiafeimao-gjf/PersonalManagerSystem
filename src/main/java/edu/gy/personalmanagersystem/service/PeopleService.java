@@ -22,14 +22,14 @@ public interface PeopleService {
      * @Param [number]
      * @return java.util.List<edu.gy.personalmanagersystem.pojo.TPeople>
      **/
-    People getPeople(Integer number);
+    People getPeople(String number);
     /** 删除员工
      * @Author Gu Jiafei
      * @Date 16:18 2019-04-22
      * @Param [number]
      * @return int
      **/
-    int deletePeople(Integer number);
+    int deletePeople(String number);
     /** 跟新员工信息
      * @Author Gu Jiafei
      * @Date 16:18 2019-04-22

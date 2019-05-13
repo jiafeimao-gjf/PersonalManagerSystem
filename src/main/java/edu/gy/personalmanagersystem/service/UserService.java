@@ -9,7 +9,7 @@ import edu.gy.personalmanagersystem.pojo.User;
  * @Version: 1.0
  **/
 public interface UserService {
-    User getUserByID(Integer userID);
+    User getUserByID(String number);
 
     Integer insertNewUser(User user);
 

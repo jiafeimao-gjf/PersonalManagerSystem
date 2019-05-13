@@ -50,10 +50,14 @@
 	</servlet-mapping>
 	<!-- 使用默认servlet处理静态资源请求 -->
 	<!--后缀名为css/gif/jps/png/js的静态资源不拦截-->
-<!--	<servlet-mapping>-->
-<!--		<servlet-name>default</servlet-name>-->
-<!--		<url-pattern>/css/**</url-pattern>-->
-<!--		<url-pattern>/js/**</url-pattern>-->
-<!--		<url-pattern>/img/**</url-pattern>-->
-<!--	</servlet-mapping>-->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/css/**</url-pattern>
+		<url-pattern>/js/**</url-pattern>
+		<url-pattern>/img/**</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>20</session-timeout>
+	</session-config>
 </web-app> 

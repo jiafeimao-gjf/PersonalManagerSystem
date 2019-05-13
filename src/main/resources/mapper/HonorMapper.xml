@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.gy.personalmanagersystem.dao.HonorMapper" >
   <resultMap id="BaseResultMap" type="edu.gy.personalmanagersystem.pojo.Honor" >
-    <id column="number" property="number" jdbcType="INTEGER" />
+    <id column="number" property="number" jdbcType="VARCHAR" />
+    <id column="honorid" property="honorid" jdbcType="INTEGER" />
     <result column="company" property="company" jdbcType="VARCHAR" />
     <result column="awardname" property="awardname" jdbcType="VARCHAR" />
     <result column="awardlevel" property="awardlevel" jdbcType="VARCHAR" />
@@ -11,31 +12,36 @@
     <result column="grade" property="grade" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    number, company, awardname, awardlevel, awardcpy, remarks, grade
+    number, honorid, company, awardname, awardlevel, awardcpy, remarks, grade
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="edu.gy.personalmanagersystem.pojo.HonorKey" >
     select 
     <include refid="Base_Column_List" />
     from t_honor
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and honorid = #{honorid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="edu.gy.personalmanagersystem.pojo.HonorKey" >
     delete from t_honor
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and honorid = #{honorid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="edu.gy.personalmanagersystem.pojo.Honor" >
-    insert into t_honor (number, company, awardname, 
-      awardlevel, awardcpy, remarks, 
-      grade)
-    values (#{number,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR}, #{awardname,jdbcType=VARCHAR}, 
-      #{awardlevel,jdbcType=VARCHAR}, #{awardcpy,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{grade,jdbcType=VARCHAR})
+    insert into t_honor (number, honorid, company, 
+      awardname, awardlevel, awardcpy, 
+      remarks, grade)
+    values (#{number,jdbcType=VARCHAR}, #{honorid,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR}, 
+      #{awardname,jdbcType=VARCHAR}, #{awardlevel,jdbcType=VARCHAR}, #{awardcpy,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="edu.gy.personalmanagersystem.pojo.Honor" >
     insert into t_honor
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="number != null" >
         number,
+      </if>
+      <if test="honorid != null" >
+        honorid,
       </if>
       <if test="company != null" >
         company,
@@ -58,7 +64,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="number != null" >
-        #{number,jdbcType=INTEGER},
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="honorid != null" >
+        #{honorid,jdbcType=INTEGER},
       </if>
       <if test="company != null" >
         #{company,jdbcType=VARCHAR},
@@ -102,7 +111,8 @@
         grade = #{grade,jdbcType=VARCHAR},
       </if>
     </set>
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and honorid = #{honorid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="edu.gy.personalmanagersystem.pojo.Honor" >
     update t_honor
@@ -112,6 +122,7 @@
       awardcpy = #{awardcpy,jdbcType=VARCHAR},
       remarks = #{remarks,jdbcType=VARCHAR},
       grade = #{grade,jdbcType=VARCHAR}
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and honorid = #{honorid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -2,41 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.gy.personalmanagersystem.dao.PeopleMapper" >
   <resultMap id="BaseResultMap" type="edu.gy.personalmanagersystem.pojo.People" >
-    <id column="number" property="number" jdbcType="INTEGER" />
+    <id column="number" property="number" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="INTEGER" />
-    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
     <result column="department" property="department" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
     <result column="birthplace" property="birthplace" jdbcType="VARCHAR" />
     <result column="nation" property="nation" jdbcType="VARCHAR" />
     <result column="identityNo" property="identityno" jdbcType="VARCHAR" />
     <result column="politicalstatus" property="politicalstatus" jdbcType="VARCHAR" />
-    <result column="photoNumber" property="photonumber" jdbcType="INTEGER" />
+    <result column="photoNumber" property="photonumber" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     number, name, sex, age, department, position, birthplace, nation, identityNo, politicalstatus, 
     photoNumber
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from t_people
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_people
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="edu.gy.personalmanagersystem.pojo.People" >
     insert into t_people (number, name, sex, 
       age, department, position, 
       birthplace, nation, identityNo, 
       politicalstatus, photoNumber)
-    values (#{number,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
-      #{age,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+    values (#{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{age,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
       #{birthplace,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{identityno,jdbcType=VARCHAR}, 
-      #{politicalstatus,jdbcType=VARCHAR}, #{photonumber,jdbcType=INTEGER})
+      #{politicalstatus,jdbcType=VARCHAR}, #{photonumber,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="edu.gy.personalmanagersystem.pojo.People" >
     insert into t_people
@@ -77,16 +77,16 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="number != null" >
-        #{number,jdbcType=INTEGER},
+        #{number,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
-        #{sex,jdbcType=INTEGER},
+        #{sex,jdbcType=VARCHAR},
       </if>
       <if test="age != null" >
-        #{age,jdbcType=INTEGER},
+        #{age,jdbcType=VARCHAR},
       </if>
       <if test="department != null" >
         #{department,jdbcType=VARCHAR},
@@ -107,7 +107,7 @@
         #{politicalstatus,jdbcType=VARCHAR},
       </if>
       <if test="photonumber != null" >
-        #{photonumber,jdbcType=INTEGER},
+        #{photonumber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -118,10 +118,10 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
-        sex = #{sex,jdbcType=INTEGER},
+        sex = #{sex,jdbcType=VARCHAR},
       </if>
       <if test="age != null" >
-        age = #{age,jdbcType=INTEGER},
+        age = #{age,jdbcType=VARCHAR},
       </if>
       <if test="department != null" >
         department = #{department,jdbcType=VARCHAR},
@@ -142,23 +142,23 @@
         politicalstatus = #{politicalstatus,jdbcType=VARCHAR},
       </if>
       <if test="photonumber != null" >
-        photoNumber = #{photonumber,jdbcType=INTEGER},
+        photoNumber = #{photonumber,jdbcType=VARCHAR},
       </if>
     </set>
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="edu.gy.personalmanagersystem.pojo.People" >
     update t_people
     set name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
       department = #{department,jdbcType=VARCHAR},
       position = #{position,jdbcType=VARCHAR},
       birthplace = #{birthplace,jdbcType=VARCHAR},
       nation = #{nation,jdbcType=VARCHAR},
       identityNo = #{identityno,jdbcType=VARCHAR},
       politicalstatus = #{politicalstatus,jdbcType=VARCHAR},
-      photoNumber = #{photonumber,jdbcType=INTEGER}
-    where number = #{number,jdbcType=INTEGER}
+      photoNumber = #{photonumber,jdbcType=VARCHAR}
+    where number = #{number,jdbcType=VARCHAR}
   </update>
 </mapper>

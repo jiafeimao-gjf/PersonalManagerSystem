@@ -1,5 +1,7 @@
 package edu.gy.personalmanagersystem.service;
 
+import edu.gy.personalmanagersystem.pojo.Role;
+
 /**
  * @InterfaceName: RoleService
  * @Author: Gu Jiafei
@@ -7,4 +9,10 @@ package edu.gy.personalmanagersystem.service;
  * @Version: 1.0
  **/
 public interface RoleService {
+
+    Role getRole(String number);
+
+    Integer insertRole(Role role);
+
+
 }

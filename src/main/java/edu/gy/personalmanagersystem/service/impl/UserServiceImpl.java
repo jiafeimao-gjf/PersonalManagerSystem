@@ -18,9 +18,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userDao;
 
-
-    public User getUserByID(Integer userID) {
-        User user = userDao.selectByPrimaryKey(userID);
+    public User getUserByID(String number) {
+        User user = userDao.selectByPrimaryKey(number);
         return user;
     }
 

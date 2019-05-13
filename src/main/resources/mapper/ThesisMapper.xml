@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.gy.personalmanagersystem.dao.ThesisMapper" >
   <resultMap id="BaseResultMap" type="edu.gy.personalmanagersystem.pojo.Thesis" >
-    <id column="number" property="number" jdbcType="INTEGER" />
+    <id column="number" property="number" jdbcType="VARCHAR" />
+    <id column="thesisid" property="thesisid" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="company" property="company" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
@@ -10,31 +11,36 @@
     <result column="magazine" property="magazine" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    number, name, company, title, classify, magazine
+    number, thesisid, name, company, title, classify, magazine
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="edu.gy.personalmanagersystem.pojo.ThesisKey" >
     select 
     <include refid="Base_Column_List" />
     from t_thesis
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and thesisid = #{thesisid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="edu.gy.personalmanagersystem.pojo.ThesisKey" >
     delete from t_thesis
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and thesisid = #{thesisid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="edu.gy.personalmanagersystem.pojo.Thesis" >
-    insert into t_thesis (number, name, company, 
-      title, classify, magazine
-      )
-    values (#{number,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{classify,jdbcType=VARCHAR}, #{magazine,jdbcType=VARCHAR}
-      )
+    insert into t_thesis (number, thesisid, name, 
+      company, title, classify, 
+      magazine)
+    values (#{number,jdbcType=VARCHAR}, #{thesisid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{classify,jdbcType=VARCHAR}, 
+      #{magazine,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="edu.gy.personalmanagersystem.pojo.Thesis" >
     insert into t_thesis
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="number != null" >
         number,
+      </if>
+      <if test="thesisid != null" >
+        thesisid,
       </if>
       <if test="name != null" >
         name,
@@ -54,7 +60,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="number != null" >
-        #{number,jdbcType=INTEGER},
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="thesisid != null" >
+        #{thesisid,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -92,7 +101,8 @@
         magazine = #{magazine,jdbcType=VARCHAR},
       </if>
     </set>
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and thesisid = #{thesisid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="edu.gy.personalmanagersystem.pojo.Thesis" >
     update t_thesis
@@ -101,6 +111,7 @@
       title = #{title,jdbcType=VARCHAR},
       classify = #{classify,jdbcType=VARCHAR},
       magazine = #{magazine,jdbcType=VARCHAR}
-    where number = #{number,jdbcType=INTEGER}
+    where number = #{number,jdbcType=VARCHAR}
+      and thesisid = #{thesisid,jdbcType=INTEGER}
   </update>
 </mapper>

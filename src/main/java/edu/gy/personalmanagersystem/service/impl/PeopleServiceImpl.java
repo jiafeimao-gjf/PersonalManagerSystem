@@ -18,7 +18,7 @@ public class PeopleServiceImpl implements PeopleService {
     @Autowired
     PeopleMapper peopleDao;
 
-    public People getPeople(Integer number) {
+    public People getPeople(String number) {
         return peopleDao.selectByPrimaryKey(number);
     }
 
@@ -26,7 +26,7 @@ public class PeopleServiceImpl implements PeopleService {
         return peopleDao.insert(people);
     }
 
-    public int deletePeople(Integer number) {
+    public int deletePeople(String number) {
         return peopleDao.deleteByPrimaryKey(number);
     }
 
