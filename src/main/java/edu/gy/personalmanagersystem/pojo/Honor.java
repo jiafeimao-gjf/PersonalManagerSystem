@@ -1,6 +1,10 @@
 package edu.gy.personalmanagersystem.pojo;
 
-public class Honor extends HonorKey {
+public class Honor {
+    private Integer honorid;
+
+    private String number;
+
     private String company;
 
     private String awardname;
@@ -12,6 +16,22 @@ public class Honor extends HonorKey {
     private String remarks;
 
     private String grade;
+
+    public Integer getHonorid() {
+        return honorid;
+    }
+
+    public void setHonorid(Integer honorid) {
+        this.honorid = honorid;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number == null ? null : number.trim();
+    }
 
     public String getCompany() {
         return company;

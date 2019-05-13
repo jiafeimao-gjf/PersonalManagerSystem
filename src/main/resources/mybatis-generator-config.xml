@@ -30,10 +30,10 @@
         <javaClientGenerator targetPackage="edu.gy.personalmanagersystem.dao" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>  
-  
-        <table tableName="t_people" domainObjectName="People" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">
-            <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
-        </table>
+<!--  -->
+<!--        <table tableName="t_people" domainObjectName="People" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
+<!--            &lt;!&ndash; <generatedKey column="ID" sqlStatement="oracle" identity="true" /> &ndash;&gt;-->
+<!--        </table>-->
          <table tableName="t_honor" domainObjectName="Honor" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">
             <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
         </table>
@@ -41,11 +41,11 @@
             <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
         </table>
 
-        <table tableName="t_user" domainObjectName="User" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">
-            <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
-        </table>
-        <table tableName="t_role" domainObjectName="Role" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">
-            <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
-        </table>
+<!--        <table tableName="t_user" domainObjectName="User" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
+<!--            &lt;!&ndash; <generatedKey column="ID" sqlStatement="oracle" identity="true" /> &ndash;&gt;-->
+<!--        </table>-->
+<!--        <table tableName="t_role" domainObjectName="Role" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
+<!--            &lt;!&ndash; <generatedKey column="ID" sqlStatement="oracle" identity="true" /> &ndash;&gt;-->
+<!--        </table>-->
     </context>  
 </generatorConfiguration>  

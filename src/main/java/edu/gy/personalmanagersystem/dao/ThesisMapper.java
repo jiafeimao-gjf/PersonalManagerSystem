@@ -1,18 +1,25 @@
 package edu.gy.personalmanagersystem.dao;
 
 import edu.gy.personalmanagersystem.pojo.Thesis;
-import edu.gy.personalmanagersystem.pojo.ThesisKey;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ThesisMapper {
-    int deleteByPrimaryKey(ThesisKey key);
+    int deleteByPrimaryKey(Integer thesisid);
 
     int insert(Thesis record);
 
     int insertSelective(Thesis record);
 
-    Thesis selectByPrimaryKey(ThesisKey key);
+    Thesis selectByPrimaryKey(Integer thesisid);
 
     int updateByPrimaryKeySelective(Thesis record);
 
     int updateByPrimaryKey(Thesis record);
+
+    int addEntitys(@Param("entitys")List<Thesis> entitys);
+
+    List<Thesis> getByItem(@Param("entity")Thesis entity,@Param("rule")String rule);
+
 }

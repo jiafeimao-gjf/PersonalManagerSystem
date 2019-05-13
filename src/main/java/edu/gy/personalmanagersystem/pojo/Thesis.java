@@ -1,6 +1,10 @@
 package edu.gy.personalmanagersystem.pojo;
 
-public class Thesis extends ThesisKey {
+public class Thesis {
+    private Integer thesisid;
+
+    private String number;
+
     private String name;
 
     private String company;
@@ -10,6 +14,22 @@ public class Thesis extends ThesisKey {
     private String classify;
 
     private String magazine;
+
+    public Integer getThesisid() {
+        return thesisid;
+    }
+
+    public void setThesisid(Integer thesisid) {
+        this.thesisid = thesisid;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number == null ? null : number.trim();
+    }
 
     public String getName() {
         return name;
