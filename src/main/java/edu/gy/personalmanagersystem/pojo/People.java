@@ -110,4 +110,11 @@ public class People {
     public void setPhotonumber(String photonumber) {
         this.photonumber = photonumber == null ? null : photonumber.trim();
     }
+
+    @Override
+    public String toString() {
+        return "[number : "+number+"， name : "+name+", sex : "+sex+", age : "+age+", department : "+
+                department+", position : "+position+", birthplace : "+birthplace+", nation : "+nation+
+                ", identityno : "+identityno+", politicalstatus : "+politicalstatus+", photonumber : "+photonumber+"]";
+    }
 }

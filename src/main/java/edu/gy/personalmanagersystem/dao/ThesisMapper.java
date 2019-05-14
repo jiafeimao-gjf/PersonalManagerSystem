@@ -22,4 +22,6 @@ public interface ThesisMapper {
 
     List<Thesis> getByItem(@Param("entity")Thesis entity,@Param("rule")String rule);
 
+    List<Thesis> getThesisInfoByLikes(@Param("entity")Thesis entity);
+
 }

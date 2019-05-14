@@ -133,7 +133,7 @@
         1=1
       </if>
       <if test="entity!=null and entity.thesisid!=null">
-        and thesis=#{entity.thesisid}
+        and thesisid=#{entity.thesisid}
       </if>
       <if test="entity!=null and entity.number!=null">
         and number=#{entity.number}
@@ -158,4 +158,39 @@
       order by ${rule}
     </if>
   </select>
+
+  <select id="getThesisInfoByLikes" resultType="edu.gy.personalmanagersystem.pojo.Thesis">
+    <bind name="name_pattern" value="'%'+entity.name+'%'"/>
+    <if test="entity.company!=null">
+      <bind name="company_pattern" value="'%'+entity.company+'%'"/>
+    </if>
+    <if test="entity.title!=null">
+      <bind name="title_pattern" value="'%'+entity.title+'%'"></bind>
+    </if>
+    <if test="entity.classify!=null">
+      <bind name="classify_pattern" value="'%'+entity.classify+'%'"></bind>
+    </if>
+
+    <if test="entity.magazine!=null">
+      <bind name="magazine_pattern" value="'%'+entity.magazine+'%'"></bind>
+    </if>
+    select
+    <include refid="Base_Column_List"/>
+    from t_thesis
+    where
+    name LIKE #{name_pattern}
+    <if test="entity.company!=null">
+      OR company LIKE #{company_pattern}
+    </if>
+    <if test="entity.title!=null">
+      OR title LIKE #{title_pattern}
+    </if>
+    <if test="entity.classify!=null">
+      OR classify LIKE #{classify_pattern}
+    </if>
+    <if test="entity.magazine!=null">
+      OR magazine LIKE #{magazine_pattern}
+    </if>
+  </select>
+
 </mapper>

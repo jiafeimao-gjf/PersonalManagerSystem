@@ -1,5 +1,9 @@
 package edu.gy.personalmanagersystem.service;
 
+import edu.gy.personalmanagersystem.pojo.Honor;
+
+import java.util.List;
+
 /**
  * @InterfaceName: HonorService
  * @Author: Gu Jiafei
@@ -8,11 +12,14 @@ package edu.gy.personalmanagersystem.service;
  **/
 public interface HonorService {
 
-//    int addHonor(THonor honor);
-//
-//    int updateHonorInfo(THonor honor);
-//
-//    THonor getHonor(Integer number);
-//
-//    int deleteHonor(Integer number);
+    int addHonor(Honor honor);
+
+    int updateHonorInfo(Honor honor);
+
+
+    List<Honor> getByItem(Honor honor,String rule);
+
+    int addHonors(List<Honor> honorList);
+
+    int deleteHonor(Integer number);
 }

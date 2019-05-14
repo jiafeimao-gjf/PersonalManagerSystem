@@ -20,4 +20,9 @@ public class Role {
     public void setRoleid(Integer roleid) {
         this.roleid = roleid;
     }
+
+    @Override
+    public String toString() {
+        return "[number : "+number+", roleid : "+roleid+"]";
+    }
 }

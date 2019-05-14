@@ -70,4 +70,11 @@ public class Thesis {
     public void setMagazine(String magazine) {
         this.magazine = magazine == null ? null : magazine.trim();
     }
+
+    @Override
+    public String toString() {
+        return "[thesisid : "+thesisid+", number : "+number+", name : "+name+
+                ", company : "+company+", title : "+title+", classify : "+classify+
+                ", magazine : " + magazine + "]";
+    }
 }

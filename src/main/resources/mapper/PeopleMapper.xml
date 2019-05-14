@@ -161,4 +161,25 @@
       photoNumber = #{photonumber,jdbcType=VARCHAR}
     where number = #{number,jdbcType=VARCHAR}
   </update>
+
+  <select id="getPeopleInfoByLikes" resultType="edu.gy.personalmanagersystem.pojo.People" >
+    <bind name="name_pattern" value="'%'+entity.name+'%'"/>
+    <if test="entity.department!=null">
+      <bind name="depart_pattern" value="'%'+entity.department+'%'"/>
+    </if>
+    <if test="entity.birthplace!=null">
+      <bind name="birth_pattern" value="'%'+entity.birthplace+'%'"/>
+    </if>
+    select
+    <include refid="Base_Column_List"/>
+    from t_people
+    where
+      name LIKE #{name_pattern}
+      <if test="entity.department!=null">
+        OR department LIKE #{depart_pattern}
+      </if>
+      <if test="entity.birthplace!=null">
+        OR birthplace LIKE #{birth_pattern}
+      </if>
+  </select>
 </mapper>

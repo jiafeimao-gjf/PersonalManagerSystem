@@ -1,5 +1,9 @@
 package edu.gy.personalmanagersystem.service;
 
+import edu.gy.personalmanagersystem.pojo.Thesis;
+
+import java.util.List;
+
 /**
  * @InterfaceName: ThesisService
  * @Author: Gu Jiafei
@@ -8,13 +12,14 @@ package edu.gy.personalmanagersystem.service;
  **/
 public interface ThesisService {
 
-//    int addThesis(TThesis thesis);
-//
-//    int updateThesisInfo(TThesis thesis);
-//
-//    TThesis getThesis(Integer number);
-//
-//    int deleteTheis(Integer number);
+    int addThesis(Thesis thesis);
 
+    int updateThesisInfo(Thesis thesis);
+
+    int deleteThesis(Integer thesisid);
+
+    int addThesisList(List<Thesis> thesisList);
+
+    List<Thesis> getByItem(Thesis thesis,String rule);
 
 }

@@ -80,4 +80,10 @@ public class Honor {
     public void setGrade(String grade) {
         this.grade = grade == null ? null : grade.trim();
     }
+
+    @Override
+    public String toString() {
+        return "[honorid : "+honorid+", number : "+number+", company : "+company+", awardname : "+awardname+
+                ", awardlevel : "+awardlevel+", awardcpy : "+awardcpy+", reamrks : "+remarks+", grade :" +grade+"]";
+    }
 }
