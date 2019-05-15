@@ -21,7 +21,7 @@ public class People {
 
     private String politicalstatus;
 
-    private String photonumber;
+    private String phonenumber;
 
     public String getNumber() {
         return number;
@@ -103,18 +103,18 @@ public class People {
         this.politicalstatus = politicalstatus == null ? null : politicalstatus.trim();
     }
 
-    public String getPhotonumber() {
-        return photonumber;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhotonumber(String photonumber) {
-        this.photonumber = photonumber == null ? null : photonumber.trim();
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber == null ? null : phonenumber.trim();
     }
 
     @Override
     public String toString() {
         return "[number : "+number+"， name : "+name+", sex : "+sex+", age : "+age+", department : "+
                 department+", position : "+position+", birthplace : "+birthplace+", nation : "+nation+
-                ", identityno : "+identityno+", politicalstatus : "+politicalstatus+", photonumber : "+photonumber+"]";
+                ", identityno : "+identityno+", politicalstatus : "+politicalstatus+", phonenumber : "+ phonenumber +"]";
     }
 }

@@ -13,7 +13,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"/PersonalManagerSystem_war/login",
+                url:"//localhost:8080/PersonalManagerSystem_war/login",
                 data:{
                     number:no,
                     pwd:p
@@ -32,26 +32,32 @@ $(document).ready(function () {
         }
     });
 
+    $("#changeInfo").click(function () {
+        console.log("修改信息");
+    });
+
+    $("#cancelChange").click(function () {
+        console.log("取消修改");
+    });
+
     $(".body1").click(function(){
-        alert("body1");
-        $(".body1").className = "active";
-        $(".body2").className = "";
-        $(".body3").className = "";
+        console.log("个人信息页");
+        $(".peopleinfo").show();
+        $(".peoplethesis").hide();
+        $(".peopleawards").hide();
     });
 
     $(".body2").click(function(){
-        alert("body2");
-        $(".body2").className = "active";
-        $(".body1").className = "";
-        $(".body3").className = "";
+        console.log("论文信息");
+        $(".peopleinfo").hide();
+        $(".peoplethesis").show();
+        $(".peopleawards").hide();
     });
 
     $(".body3").click(function(){
-        alert("body3");
-        $(".body3").className = "active";
-        $(".body2").className = "";
-        $(".body1").className = "";
+        console.log("荣誉信息");;
+        $(".peopleinfo").hide();
+        $(".peoplethesis").hide();
+        $(".peopleawards").show();
     });
-
-
 });

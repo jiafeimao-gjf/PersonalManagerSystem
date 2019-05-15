@@ -12,11 +12,11 @@
     <result column="nation" property="nation" jdbcType="VARCHAR" />
     <result column="identityNo" property="identityno" jdbcType="VARCHAR" />
     <result column="politicalstatus" property="politicalstatus" jdbcType="VARCHAR" />
-    <result column="photoNumber" property="photonumber" jdbcType="VARCHAR" />
+    <result column="phoneNumber" property="phonenumber" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     number, name, sex, age, department, position, birthplace, nation, identityNo, politicalstatus, 
-    photoNumber
+    phoneNumber
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -32,11 +32,11 @@
     insert into t_people (number, name, sex, 
       age, department, position, 
       birthplace, nation, identityNo, 
-      politicalstatus, photoNumber)
+      politicalstatus, phoneNumber)
     values (#{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{age,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
       #{birthplace,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{identityno,jdbcType=VARCHAR}, 
-      #{politicalstatus,jdbcType=VARCHAR}, #{photonumber,jdbcType=VARCHAR})
+      #{politicalstatus,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="edu.gy.personalmanagersystem.pojo.People" >
     insert into t_people
@@ -71,8 +71,8 @@
       <if test="politicalstatus != null" >
         politicalstatus,
       </if>
-      <if test="photonumber != null" >
-        photoNumber,
+      <if test="phonenumber != null" >
+        phoneNumber,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -106,8 +106,8 @@
       <if test="politicalstatus != null" >
         #{politicalstatus,jdbcType=VARCHAR},
       </if>
-      <if test="photonumber != null" >
-        #{photonumber,jdbcType=VARCHAR},
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -141,8 +141,8 @@
       <if test="politicalstatus != null" >
         politicalstatus = #{politicalstatus,jdbcType=VARCHAR},
       </if>
-      <if test="photonumber != null" >
-        photoNumber = #{photonumber,jdbcType=VARCHAR},
+      <if test="phonenumber != null" >
+        phoneNumber = #{phonenumber,jdbcType=VARCHAR},
       </if>
     </set>
     where number = #{number,jdbcType=VARCHAR}
@@ -158,7 +158,7 @@
       nation = #{nation,jdbcType=VARCHAR},
       identityNo = #{identityno,jdbcType=VARCHAR},
       politicalstatus = #{politicalstatus,jdbcType=VARCHAR},
-      photoNumber = #{photonumber,jdbcType=VARCHAR}
+      phoneNumber = #{phonenumber,jdbcType=VARCHAR}
     where number = #{number,jdbcType=VARCHAR}
   </update>
 

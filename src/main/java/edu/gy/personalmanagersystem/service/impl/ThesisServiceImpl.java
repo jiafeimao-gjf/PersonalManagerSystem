@@ -38,4 +38,8 @@ public class ThesisServiceImpl implements ThesisService {
     public List<Thesis> getByItem(Thesis thesis, String rule) {
         return thesisDao.getByItem(thesis,rule);
     }
+
+    public List<Thesis> getByLikes(Thesis thesis) {
+        return thesisDao.getThesisInfoByLikes(thesis);
+    }
 }

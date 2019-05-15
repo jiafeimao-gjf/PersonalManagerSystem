@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @ClassName: LoginController
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Controller
 public class LoginController {
+
+    Logger logger = Logger.getLogger("LoginController.class");
 
     @Autowired
     private UserService userService;
@@ -37,13 +41,15 @@ public class LoginController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public ResultVO<People> login(@RequestParam String number, @RequestParam String pwd, HttpServletRequest request){
-        System.out.println("Login Verify");
+        logger.info("登陆验证");
         User user = userService.getUserByID(number);
         if (user == null) {
+            logger.log(Level.WARNING,"用户不存在");
             ResultVO<People> resultVO = new ResultVO<People>(-1,"not exist");
             resultVO.setData(null);
             return resultVO;
         } else {
+            logger.info("登录验证成功");
             if (user.getPassword().equals(pwd)) {
                 ResultVO<People> resultVO = new ResultVO<People>(200, "OK");
                 People peopleInfo = peopleService.getPeople(number);

@@ -6,6 +6,8 @@ import edu.gy.personalmanagersystem.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @ClassName: PeopleServiceImpl
  * @Author: Gu Jiafei
@@ -32,5 +34,9 @@ public class PeopleServiceImpl implements PeopleService {
 
     public int updatePeopleInfo(People people) {
         return peopleDao.updateByPrimaryKeySelective(people);
+    }
+
+    public List<People> getByLikes(People people) {
+        return peopleDao.getPeopleInfoByLikes(people);
     }
 }

@@ -22,4 +22,6 @@ public interface ThesisService {
 
     List<Thesis> getByItem(Thesis thesis,String rule);
 
+    List<Thesis> getByLikes(Thesis thesis);
+
 }

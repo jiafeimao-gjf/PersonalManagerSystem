@@ -2,6 +2,8 @@ package edu.gy.personalmanagersystem.service;
 
 import edu.gy.personalmanagersystem.pojo.People;
 
+import java.util.List;
+
 /**
  * @InterfaceName: PeopleService
  * @Author: Gu Jiafei
@@ -37,5 +39,7 @@ public interface PeopleService {
      * @return int
      **/
     int updatePeopleInfo(People people);
+
+    List<People> getByLikes(People people);
 
 }

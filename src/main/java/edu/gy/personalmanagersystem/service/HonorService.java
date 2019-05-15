@@ -22,4 +22,6 @@ public interface HonorService {
     int addHonors(List<Honor> honorList);
 
     int deleteHonor(Integer number);
+
+    List<Honor> getByLikes(Honor honor);
 }

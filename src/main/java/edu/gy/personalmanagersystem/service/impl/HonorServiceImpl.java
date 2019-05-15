@@ -39,4 +39,8 @@ public class HonorServiceImpl implements HonorService {
     public int deleteHonor(Integer honorid) {
         return honorDao.deleteByPrimaryKey(honorid);
     }
+
+    public List<Honor> getByLikes(Honor honor) {
+        return honorDao.getHonorInfoByLikes(honor);
+    }
 }
