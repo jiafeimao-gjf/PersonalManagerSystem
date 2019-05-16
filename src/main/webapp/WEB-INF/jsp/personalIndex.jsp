@@ -48,61 +48,61 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">教职工编号</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getNumber()%>"/>
+                        <input type="text" readonly="readonly" class="number form-control" value="<%=people.getNumber()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >姓名</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getName()%>"/>
+                        <input type="text" class="name form-control" value="<%=people.getName()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >性别</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getSex()%>"/>
+                        <input type="text" class="sex form-control" value="<%=people.getSex()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >年龄</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getAge()%>"/>
+                        <input type="text" class="age form-control" value="<%=people.getAge()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >部门</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getDepartment()%>"/>
+                        <input type="text" class="department form-control" value="<%=people.getDepartment()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >职位</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getPosition()%>"/>
+                        <input type="text" class="position form-control" value="<%=people.getPosition()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >籍贯</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getBirthplace()%>"/>
+                        <input type="text" class="birthplace form-control" value="<%=people.getBirthplace()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >民族</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getNation()%>"/>
+                        <input type="text" class="nation form-control" value="<%=people.getNation()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >身份证号</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getIdentityno()%>"/>
+                        <input type="text" class="identityno form-control" value="<%=people.getIdentityno()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >政治面貌</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getPoliticalstatus()%>"/>
+                        <input type="text" class="politicalstatus form-control" value="<%=people.getPoliticalstatus()%>"/>
                         <div></div>
 
                     </div>
@@ -110,7 +110,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >电话号码</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="<%=people.getPhonenumber()%>"/>
+                        <input type="text" class="phonenumber form-control" value="<%=people.getPhonenumber()%>"/>
                     </div>
                 </div>
                 <hr>
@@ -127,13 +127,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">密码</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" placeholder="输入新密码"/>
+                        <input type="password" class="newpwd form-control" placeholder="输入新密码"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >确认密码</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" placeholder="输入确认密码"/>
+                        <input type="password" class="newpwdconformed form-control" placeholder="输入确认密码"/>
                     </div>
                 </div>
                 <hr>
@@ -188,7 +188,9 @@
                 <div class="form-group">
                     <label class="col-sm-3"></label>
                     <div class="col-sm-6">
-                        <input type="button" class="btn col-sm-2 btn-primary" value="搜索"/>
+                        <input type="button" class="thesis-search btn col-sm-2 btn-primary" value="搜索"/>
+                        <label class="col-sm-2">    </label>
+                        <input type="button" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
                     </div>
                 </div>
 
@@ -343,7 +345,9 @@
                 <div class="form-group">
                     <label class="col-sm-3"></label>
                     <div class="col-sm-6">
-                        <input type="button" class="btn col-sm-2 btn-primary" value="搜索"/>
+                        <input type="button" class="award-search btn col-sm-2 btn-primary" value="搜索"/>
+                        <label class="col-sm-2">    </label>
+                        <input type="button" class="display-all-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
                     </div>
                 </div>
             </form>

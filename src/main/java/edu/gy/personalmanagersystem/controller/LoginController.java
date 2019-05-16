@@ -49,8 +49,9 @@ public class LoginController {
             resultVO.setData(null);
             return resultVO;
         } else {
-            logger.info("登录验证成功");
+            logger.info("用户存在");
             if (user.getPassword().equals(pwd)) {
+                logger.info("输入密码正确");
                 ResultVO<People> resultVO = new ResultVO<People>(200, "OK");
                 People peopleInfo = peopleService.getPeople(number);
                 Role role = roleService.getRole(number);
@@ -59,6 +60,7 @@ public class LoginController {
                 request.getSession().setAttribute("roleinfo",role);
                 return resultVO;
             } else {
+                logger.info("输入密码错误");
                 ResultVO<People> resultVO = new ResultVO<People>(-1,"wrong pwd");
                 resultVO.setData(null);
                 return resultVO;

@@ -28,4 +28,8 @@ public class UserServiceImpl implements UserService {
         Integer res = userDao.insertSelective(user);
         return res;
     }
+
+    public int updateUser(User user) {
+        return userDao.updateByPrimaryKeySelective(user);
+    }
 }
