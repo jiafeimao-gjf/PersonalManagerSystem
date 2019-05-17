@@ -1,12 +1,8 @@
 package edu.gy.personalmanagersystem.controller;
 
 import edu.gy.personalmanagersystem.VO.ResultVO;
-import edu.gy.personalmanagersystem.pojo.People;
-import edu.gy.personalmanagersystem.pojo.Role;
-import edu.gy.personalmanagersystem.pojo.User;
-import edu.gy.personalmanagersystem.service.PeopleService;
-import edu.gy.personalmanagersystem.service.RoleService;
-import edu.gy.personalmanagersystem.service.UserService;
+import edu.gy.personalmanagersystem.pojo.*;
+import edu.gy.personalmanagersystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,33 +35,48 @@ public class LoginController {
     private PeopleService peopleService;
 
     @Autowired
+    private HonorService honorService;
+
+    @Autowired
+    private ThesisService thesisService;
+
+    @Autowired
     RoleService roleService;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<People> login(@RequestParam String number, @RequestParam String pwd, HttpServletRequest request){
+    public ResultVO<String> login(@RequestParam String number, @RequestParam String pwd, HttpSession session){
         logger.info("登陆验证");
         User user = userService.getUserByID(number);
         if (user == null) {
             logger.log(Level.WARNING,"用户不存在");
-            ResultVO<People> resultVO = new ResultVO<People>(-1,"not exist");
-            resultVO.setData(null);
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"not exist");
+            resultVO.setData("用户不存在");
             return resultVO;
         } else {
             logger.info("用户存在");
             if (user.getPassword().equals(pwd)) {
                 logger.info("输入密码正确");
-                ResultVO<People> resultVO = new ResultVO<People>(200, "OK");
+                ResultVO<String> resultVO = new ResultVO<String>(200, "OK");
                 People peopleInfo = peopleService.getPeople(number);
                 Role role = roleService.getRole(number);
-                resultVO.setData(peopleInfo);
-                request.getSession().setAttribute("peopleinfo",peopleInfo);
-                request.getSession().setAttribute("roleinfo",role);
+                if (role.getRoleid() == 2) {
+                    Honor honor = new Honor();
+                    honor.setNumber(number);
+                    List<Honor> honorList = honorService.getByItem(honor,null);
+                    Thesis thesis = new Thesis();thesis.setNumber(number);
+                    List<Thesis> thesisList = thesisService.getByItem(thesis,null);
+                    session.setAttribute("honorList",honorList);
+                    session.setAttribute("ThesisList",thesisList);
+                }
+                resultVO.setData("验证成功");
+                session.setAttribute("peopleinfo",peopleInfo);
+                session.setAttribute("roleinfo",role);
                 return resultVO;
             } else {
                 logger.info("输入密码错误");
-                ResultVO<People> resultVO = new ResultVO<People>(-1,"wrong pwd");
-                resultVO.setData(null);
+                ResultVO<String> resultVO = new ResultVO<String>(-1,"wrong password");
+                resultVO.setData("密码错误");
                 return resultVO;
             }
         }

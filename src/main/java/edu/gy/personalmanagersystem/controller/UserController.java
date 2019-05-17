@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -31,11 +32,11 @@ public class UserController {
         int res = userService.updateUser(user);
         if (res == 1) {
             logger.info("修改密码成功");
-            ResultVO<String> resultVO = new ResultVO<String>(200,"successs");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("修改密码成功！");
             return resultVO;
         } else {
-            logger.info("修改密码失败");
+            logger.log(Level.WARNING,"修改密码失败");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
             resultVO.setData("修改密码失败！");
             return resultVO;

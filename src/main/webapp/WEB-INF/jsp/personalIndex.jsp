@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: gujiafei1104
@@ -7,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
+<%@ page import="java.util.List" %>
 <%
     People people = (People) session.getAttribute("peopleinfo");
     System.out.println("user name: "+people.getName());
@@ -30,7 +32,7 @@
                 <li class="body1"><a>个人信息</a></li>
                 <li class="body2"><a>论文信息</a></li>
                 <li class="body3"><a>荣誉信息</a></li>
-                <li id=""><a href="${pageContext.request.contextPath}/index">退出登陆</a></li>
+                <li class="body4"><a href="${pageContext.request.contextPath}/index">退出登陆</a></li>
             </ul>
         </div>
     </nav>
@@ -54,8 +56,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >姓名</label>
                     <div class="col-sm-6">
-                        <input type="text" class="name form-control" value="<%=people.getName()%>"/>
-                    </div>
+                        <input type="text" class="name form-control" value="<%=people.getName()%>"/></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >性别</label>
@@ -103,8 +104,6 @@
                     <label class="col-sm-2 control-label" >政治面貌</label>
                     <div class="col-sm-6">
                         <input type="text" class="politicalstatus form-control" value="<%=people.getPoliticalstatus()%>"/>
-                        <div></div>
-
                     </div>
                 </div>
                 <div class="form-group">
@@ -150,7 +149,7 @@
 
     </div>
 
-    <div class="peoplethesis" hidden>
+    <div class="peoplethesis">
         <div class="col-xs-10">
             <a class="list-group-item active"> 论文信息</a>
         </div>
@@ -161,27 +160,27 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">姓名</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="<%=people.getName()%>"/>
+                        <input aria-label="<%=people.getName()%>" type="text" class="form-control" name="name" placeholder="<%=people.getName()%>"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >部门</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="<%=people.getDepartment()%>"/>
+                        <input aria-label="<%=people.getDepartment()%>>" type="text" class="form-control" name="name" placeholder="<%=people.getDepartment()%>"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">论文标题</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="论文标题关键字"/>
+                        <input aria-label="论文标题关键字" type="text" class="form-control" name="name" placeholder="论文标题关键字"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">期刊名称</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="期刊关键字"/>
+                        <input aria-label="期刊关键字" type="text" class="form-control" name="name" placeholder="期刊关键字"/>
                     </div>
                 </div>
                 <hr>
@@ -193,7 +192,6 @@
                         <input type="button" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
                     </div>
                 </div>
-
             </form>
         </div>
 
@@ -231,62 +229,6 @@
                             Default
                         </td>
                     </tr>
-                    <tr class="success">
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Approved
-                        </td>
-                    </tr>
-                    <tr class="error">
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            02/04/2012
-                        </td>
-                        <td>
-                            Declined
-                        </td>
-                    </tr>
-                    <tr class="warning">
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            03/04/2012
-                        </td>
-                        <td>
-                            Pending
-                        </td>
-                    </tr>
-                    <tr class="info">
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            04/04/2012
-                        </td>
-                        <td>
-                            Call in to confirm
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
                 <ul class="pagination pagination-sm">
@@ -315,7 +257,8 @@
             </div>
         </div>
     </div>
-    <div class="peopleawards" hidden>
+
+    <div class="peopleawards">
         <div class="col-xs-10">
             <a  class="list-group-item active">荣誉信息</a>
         </div>
@@ -351,6 +294,7 @@
                     </div>
                 </div>
             </form>
+
         </div>
 
         <div class="col-xs-10">
@@ -359,92 +303,38 @@
                     <thead>
                     <tr>
                         <th>
-                            编号
+                            序号
                         </th>
                         <th>
-                            产品
+                            教职工编号
                         </th>
                         <th>
-                            交付时间
+                            荣誉名称
                         </th>
                         <th>
-                            状态
+                            获奖等级
+                        </th>
+                        <th>
+                            操作
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Default
-                        </td>
-                    </tr>
-                    <tr class="success">
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Approved
-                        </td>
-                    </tr>
-                    <tr class="error">
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            02/04/2012
-                        </td>
-                        <td>
-                            Declined
-                        </td>
-                    </tr>
-                    <tr class="warning">
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            03/04/2012
-                        </td>
-                        <td>
-                            Pending
-                        </td>
-                    </tr>
-                    <tr class="info">
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            04/04/2012
-                        </td>
-                        <td>
-                            Call in to confirm
-                        </td>
-                    </tr>
+                    <tbody id="honors-body">
+                        <c:if test="<%=(List<Honor>)session.getAttribute("honorList")!=null%>">
+                            <c:forEach items="<%=session.getAttribute("honorList")%>" var="honor"
+                                       begin="0" end="<%=((List<Honor>)session.getAttribute("honorList")).size() -1%>">
+                                <tr>
+                                    <td>${honor.honorid}</td>
+                                    <td>${honor.number}</td>
+                                    <td>${honor.awardname}</td>
+                                    <td>${honor.awardlevel}</td>
+                                    <td><button class="btn">查看详情</button> <button class="btn">跟新信息</button></td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
                     </tbody>
                 </table>
+
                 <ul class="pagination pagination-sm">
                     <li>
                         <a href="#">Prev</a>
