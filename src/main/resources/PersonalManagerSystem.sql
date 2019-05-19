@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 13/05/2019 22:09:51
+ Date: 19/05/2019 21:10:32
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,17 @@ CREATE TABLE `t_honor` (
   PRIMARY KEY (`honorid`) USING BTREE,
   KEY `number1` (`number`),
   CONSTRAINT `number1` FOREIGN KEY (`number`) REFERENCES `t_people` (`number`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_honor
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_honor` VALUES ('100002', 'xx学院', 'C语言课程优秀讲师', '院级', 'xx大学', '2017-2018年', '提名', 1);
+INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '4*100米接力第一名', '校级', 'xx大学', '2017-2018年', '第一名', 4);
+INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '数据结构优秀讲师', '院级', 'xx大学', '2017-2018年度', '一等', 6);
+INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '数据结构优秀讲师', '院级', 'xx大学', '2017-2018年度', '一等', 7);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_people
@@ -50,7 +60,7 @@ CREATE TABLE `t_people` (
   `nation` varchar(255) DEFAULT NULL COMMENT '民族',
   `identityNo` varchar(18) DEFAULT NULL COMMENT '身份证号',
   `politicalstatus` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '政治面貌',
-  `photoNumber` varchar(12) DEFAULT NULL COMMENT '电话',
+  `phoneNumber` varchar(12) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`number`),
   KEY `number` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -59,9 +69,11 @@ CREATE TABLE `t_people` (
 -- Records of t_people
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_people` VALUES ('100001', 'admin', '1', '30', '人事部', '主管', '北京', '汉族', '340122188511115544', '党员', '17777777777');
-INSERT INTO `t_people` VALUES ('100002', 'Jams', '1', '25', '经管学院', '讲师', '上海', '汉族', '341133199401011144', '团员', '16666666666');
-INSERT INTO `t_people` VALUES ('100003', 'Thomas', '1', '24', '信息学院', '讲师', '浙江杭州', '汉族', '344122199006216633', '群众', '18888888888');
+INSERT INTO `t_people` VALUES ('100001', 'admin', '男', '30', '人事部', '主管', '北京', '汉族', '340122188511115544', '党员', '17777777777');
+INSERT INTO `t_people` VALUES ('100002', 'Jams', '男', '25', '经管学院', '博士', '上海', '汉族', '341133199401011144', '团员', '16666666666');
+INSERT INTO `t_people` VALUES ('100003', 'Thomas', '男', '24', '信息学院', '讲师', '安徽合肥', '汉族', '344122199006216633', '团员', '18888888888');
+INSERT INTO `t_people` VALUES ('100004', 'Jack', '男', '49', '计算机科学与技术系', '系主任', '陕西西安', '汉族', '622122197008081234', '党员', '16666664444');
+INSERT INTO `t_people` VALUES ('100005', 'Tony', '男', '49', '公路系', '系主任', '陕西西安', '汉族', '622122197008081234', '党员', '16666663333');
 COMMIT;
 
 -- ----------------------------
@@ -82,6 +94,8 @@ BEGIN;
 INSERT INTO `t_role` VALUES ('100001', 1);
 INSERT INTO `t_role` VALUES ('100002', 2);
 INSERT INTO `t_role` VALUES ('100003', 2);
+INSERT INTO `t_role` VALUES ('100004', 2);
+INSERT INTO `t_role` VALUES ('100005', 2);
 COMMIT;
 
 -- ----------------------------
@@ -126,8 +140,10 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `t_user` VALUES ('100001', '123456');
-INSERT INTO `t_user` VALUES ('100002', '123456');
+INSERT INTO `t_user` VALUES ('100002', '111111');
 INSERT INTO `t_user` VALUES ('100003', '123456');
+INSERT INTO `t_user` VALUES ('100004', '081234');
+INSERT INTO `t_user` VALUES ('100005', '123456');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

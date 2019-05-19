@@ -69,6 +69,8 @@ public class HonorController {
     private ResultVO<String> setResultVO(List<Honor> honorList,HttpSession session){
         if (honorList == null) {
             logger.info("没有荣誉信息");
+            session.removeAttribute("honorList");
+            session.setAttribute("honorList",null);
             ResultVO<String> resultVO = new ResultVO<String>(-1,"none");
             resultVO.setData("没有荣誉信息");
             return resultVO;

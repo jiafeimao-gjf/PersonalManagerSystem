@@ -11,7 +11,8 @@
 <%@ page import="java.util.List" %>
 <%
     People people = (People) session.getAttribute("peopleinfo");
-    System.out.println("user name: "+people.getName());
+    List<Honor> honorList = (List<Honor>) session.getAttribute("honorList");
+    List<Thesis> thesisList = (List<Thesis>) session.getAttribute("thesisList");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>
@@ -32,7 +33,7 @@
                 <li class="body1"><a>个人信息</a></li>
                 <li class="body2"><a>论文信息</a></li>
                 <li class="body3"><a>荣誉信息</a></li>
-                <li class="body4"><a href="${pageContext.request.contextPath}/index">退出登陆</a></li>
+                <li class="body4"><a>退出登陆</a></li>
             </ul>
         </div>
     </nav>
@@ -43,7 +44,6 @@
                 个人信息
             </a>
         </div>
-        <hr>
         <div class="col-xs-10" >
             <br>
             <form class="form-horizontal" role="form">
@@ -149,38 +149,42 @@
 
     </div>
 
-    <div class="peoplethesis">
+    <div class="peoplethesis" hidden>
         <div class="col-xs-10">
             <a class="list-group-item active"> 论文信息</a>
         </div>
-        <hr>
         <div class="col-xs-10">
             <br>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">姓名</label>
                     <div class="col-sm-6">
-                        <input aria-label="<%=people.getName()%>" type="text" class="form-control" name="name" placeholder="<%=people.getName()%>"/>
+                        <input type="text" class="thesis-name form-control" name="name" placeholder="论文作者"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >部门</label>
                     <div class="col-sm-6">
-                        <input aria-label="<%=people.getDepartment()%>>" type="text" class="form-control" name="name" placeholder="<%=people.getDepartment()%>"/>
+                        <input type="text" class="thesis-department form-control" name="department" placeholder="所属部门"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">论文标题</label>
                     <div class="col-sm-6">
-                        <input aria-label="论文标题关键字" type="text" class="form-control" name="name" placeholder="论文标题关键字"/>
+                        <input aria-label="论文标题关键字" type="text" class="thesis-title form-control" name="title" placeholder="论文标题关键字"/>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">论文分类</label>
+                    <div class="col-sm-6">
+                        <input aria-label="期刊关键字" type="text" class="thesis-classify form-control" name="classify" placeholder="论文分类"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">期刊名称</label>
                     <div class="col-sm-6">
-                        <input aria-label="期刊关键字" type="text" class="form-control" name="name" placeholder="期刊关键字"/>
+                        <input aria-label="期刊关键字" type="text" class="thesis-magazine form-control" name="magazine" placeholder="期刊关键字"/>
                     </div>
                 </div>
                 <hr>
@@ -201,34 +205,32 @@
                     <thead>
                     <tr>
                         <th>
-                            编号
+                            序号
                         </th>
                         <th>
-                            产品
+                            作者
                         </th>
                         <th>
-                            交付时间
+                            标题
                         </th>
                         <th>
-                            状态
+                            分类
+                        </th>
+                        <th>
+                            操作
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Default
-                        </td>
-                    </tr>
+                        <c:forEach items="${thesisList}" var="thesis">
+                            <tr>
+                                <td>${thesis.thesisid}</td>
+                                <td>${thesis.name}</td>
+                                <td>${thesis.title}</td>
+                                <td>${thesis.classify}</td>
+                                <td><button class="btn btn-primary">查看详情</button> <button class="btn btn-primary">跟新信息</button></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
                 <ul class="pagination pagination-sm">
@@ -258,30 +260,30 @@
         </div>
     </div>
 
-    <div class="peopleawards">
+    <div class="peopleawards" hidden>
         <div class="col-xs-10">
             <a  class="list-group-item active">荣誉信息</a>
         </div>
-        <hr>
+
         <div class="col-xs-10">
             <br>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">荣誉名称</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="awardname" placeholder="荣誉名称"/>
+                        <input type="text" class="honor-awardname form-control" name="awardname" placeholder="荣誉名称"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">部门</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="部门"/>
+                        <input type="text" class="honor-department form-control" name="department" placeholder="部门"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">获奖级别</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="论文标题关键字"/>
+                        <input type="text" class="honor-awardlevel form-control" name="awardlevel" placeholder="获奖级别"/>
                     </div>
                 </div>
                 <hr>
@@ -320,18 +322,15 @@
                     </tr>
                     </thead>
                     <tbody id="honors-body">
-                        <c:if test="<%=(List<Honor>)session.getAttribute("honorList")!=null%>">
-                            <c:forEach items="<%=session.getAttribute("honorList")%>" var="honor"
-                                       begin="0" end="<%=((List<Honor>)session.getAttribute("honorList")).size() -1%>">
-                                <tr>
-                                    <td>${honor.honorid}</td>
-                                    <td>${honor.number}</td>
-                                    <td>${honor.awardname}</td>
-                                    <td>${honor.awardlevel}</td>
-                                    <td><button class="btn">查看详情</button> <button class="btn">跟新信息</button></td>
-                                </tr>
-                            </c:forEach>
-                        </c:if>
+                        <c:forEach items="${honorList}" var="honor">
+                            <tr>
+                                <td>${honor.honorid}</td>
+                                <td>${honor.number}</td>
+                                <td>${honor.awardname}</td>
+                                <td>${honor.awardlevel}</td>
+                                <td><button class="btn btn-primary">查看详情</button> <button class="btn btn-primary">跟新信息</button></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
 

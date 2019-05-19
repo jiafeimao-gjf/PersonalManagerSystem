@@ -176,10 +176,10 @@
     where
       name LIKE #{name_pattern}
       <if test="entity.department!=null">
-        OR department LIKE #{depart_pattern}
+        AND department LIKE #{depart_pattern}
       </if>
       <if test="entity.birthplace!=null">
-        OR birthplace LIKE #{birth_pattern}
+        AND birthplace LIKE #{birth_pattern}
       </if>
   </select>
 </mapper>

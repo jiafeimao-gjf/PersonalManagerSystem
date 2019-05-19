@@ -45,10 +45,11 @@ public class ThesisController {
     @ResponseBody
     public ResultVO<String> getThesisByLikes(@RequestParam("name")String name,
                                              @RequestParam("title")String title,
+                                             @RequestParam("department")String department,
                                              @RequestParam("classify")String classify,
                                              @RequestParam("magazine")String magazine,
                                              HttpSession session){
-        People people = (People) session.getAttribute("PeopleInfo");
+        People people = (People) session.getAttribute("peopleinfo");
         if (people == null) {
             logger.log(Level.WARNING,"用户没有登录");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"not login");
@@ -62,6 +63,7 @@ public class ThesisController {
             thesis.setTitle(title);
             thesis.setClassify(classify);
             thesis.setMagazine(magazine);
+            thesis.setCompany(department);
             List<Thesis> thesisList = thesisService.getByLikes(thesis);
             return setResultVO(session,thesisList);
         }

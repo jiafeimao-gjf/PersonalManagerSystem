@@ -5,9 +5,9 @@ $(document).ready(function () {
         var p = $("#pwd").val();
         console.log("number = "+no);
         console.log("pwd = "+p);
-        if (no.length != 6 ){
-            alert("请输入合法用户名，用户名应为6个数字组成");
-        } else if (pwd === null) {
+        if (no.length === 0){
+            alert("请输入合法密码");
+        } else if (pwd.length === 0) {
             alert("请输入合法密码");
         } else {
             $.ajax({
@@ -79,7 +79,9 @@ $(document).ready(function () {
         var number = $(".number").val();
         var newpwd = $(".newpwd").val();
         var newpwdconformed = $(".newpwdconformed").val();
-        if (newpwdconformed === null || newpwd === null){
+        console.log("newpwd: "+newpwd);
+        console.log("newpwdconformed: "+newpwdconformed);
+        if (newpwdconformed.length === 0 && newpwd.length === 0){
             alert("密码不能为空");
         } else {
             if (newpwd === newpwdconformed){
@@ -96,11 +98,7 @@ $(document).ready(function () {
                             if (result.code === 200) {
                                 console.log("修改密码成功");
                                 alert(result.data+"请重新登录！");
-                                sessionStorage.clear();
                                 window.location.href="//localhost:8080/PersonalManagerSystem_war/index";
-                                $(".peopleinfo").show();
-                                $(".peoplethesis").hide();
-                                $(".peopleawards").hide();
                             } else {
                                 alert(result.data);
                             }
@@ -128,15 +126,19 @@ $(document).ready(function () {
     });
 
     $(".body3").click(function(){
-        console.log("荣誉信息");;
+        console.log("荣誉信息");
         $(".peopleinfo").hide();
         $(".peoplethesis").hide();
         $(".peopleawards").show();
     });
 
     $(".body4").click(function(){
-        console.log("清除session，重新登录");
-        sessionStorage.clear();
+        if (confirm("确定退出登录？")){
+            console.log("清除session，重新登录");
+            window.location.href = "//localhost:8080/PersonalManagerSystem_war/index";
+        } else {
+            console.log("取消重新登录");
+        }
     });
 
     $(".display-all-award").click(function () {
@@ -153,35 +155,10 @@ $(document).ready(function () {
                if (result.code === 200) {
                    console.log(result.info);
                    alert(result.data);
-                   var honorList = sessionStorage.getItem("honorList");
-                   console.log(honorList);
-                   // var honor_body = $("#honors-body");
-                   // for (var i = 0;i < honorList.size(); i++){
-                   //     var row = document.createElement('tr');
-                   //     var idCell = document.createElement('td');
-                   //     idCell.innerHTML = honorList[i].honorid;
-                   //     row.appendChild(idCell);
-                   //     var numberCell = document.createElement('td');
-                   //     numberCell.innerHTML = honorList[i].number;
-                   //     row.appendChild(numberCell);
-                   //     var awardNameCell = document.createElement('td');
-                   //     awardNameCell.innerHTML = honorList[i].awardname;
-                   //     row.appendChild(awardNameCell);
-                   //     var awardLevelCell = document.createElement('td');
-                   //     awardLevelCell.innerHTML = honorList[i].awardlevel;
-                   //     row.appendChild(awardLevelCell);
-                   //     var opeartion = document.createElement('td');
-                   //     var btnDetail = document.createElement('input'); //创建一个input控件
-                   //     btnDetail.setAttribute('type','button'); //type="button"
-                   //     btnDetail.setAttribute('value','查看详情');
-                   //     opeartion.appendChild(btnDetail);
-                   //     var btnUpdate = document.createElement('input'); //创建一个input控件
-                   //     btnUpdate.setAttribute('type','button'); //type="button"
-                   //     btnUpdate.setAttribute('value','更新');
-                   //     opeartion.appendChild(btnUpdate);
-                   //     row.appendChild(opeartion);
-                   //     honor_body.appendChild(row);
-                   // }
+                   window.location.href="/PersonalManagerSystem_war/personalIndex";
+                   $(".peopleinfo").hide();
+                   $(".peoplethesis").hide();
+                   $(".peopleawards").show();
                } else {
                    alert(result.data);
                }
@@ -191,16 +168,92 @@ $(document).ready(function () {
 
     $(".display-all-thesis").click(function () {
         console.log("显示全部论文信息:");
+        var number = $(".number").val();
+        $.ajax({
+            type:"get",
+            datatype:"form-data",
+            url:"//localhost:8080/PersonalManagerSystem_war/getthesisbynumber",
+            data: {
+                "number":number
+            },
+            success:function (result) {
+                if (result.code === 200) {
+                    console.log(result.info);
+                    alert(result.data);
+                    window.location.href="/PersonalManagerSystem_war/personalIndex";
+                    console.log("论文信息");
+                    $(".peopleinfo").hide();
+                    $(".peoplethesis").show();
+                    $(".peopleawards").hide();
+                } else {
+                    alert(result.data);
+                }
+            }
+        });
     });
 
     $(".award-search").click(function () {
         console.log("搜索荣誉信息");
-
+        var awardname = $(".honor-awardname").val();
+        var department = $(".honor-department").val();
+        var awardlevel = $(".honor-awardlevel").val();
+        $.ajax({
+            type:"get",
+            datatype:"form-data",
+            url:"//localhost:8080/PersonalManagerSystem_war/gethonorsbylikes",
+            data: {
+                "awardname":awardname,
+                "department":department,
+                "awardlevel":awardlevel
+            },
+            success:function (result) {
+                if (result.code === 200) {
+                    console.log(result.info);
+                    alert(result.data);
+                    window.location.href="/PersonalManagerSystem_war/personalIndex";
+                    $(".peopleinfo").hide();
+                    $(".peoplethesis").hide();
+                    $(".peopleawards").show();
+                } else {
+                    alert(result.data);
+                }
+            }
+        });
     });
 
     $(".thesis-search").click(function () {
         console.log("搜索论文信息");
+        var thesisname = $(".thesis-name").val();
+        var department = $(".thesis-department").val();
+        var title = $(".thesis-title").val();
+        var classify  = $(".thesis-classify").val();
+        var magazine = $(".thesis-magazine").val();
+        $.ajax({
+            type:"get",
+            datatype:"form-data",
+            url:"//localhost:8080/PersonalManagerSystem_war/getthesisbylikes",
+            data: {
+                "name":thesisname,
+                "title":title,
+                "department":department,
+                "classify":classify,
+                "magazine":magazine
 
+            },
+            success:function (result) {
+                if (result.code === 200) {
+                    console.log(result.info);
+                    alert(result.data);
+                    window.location.href="/PersonalManagerSystem_war/personalIndex";
+                    console.log("论文信息");
+                    $(".peopleinfo").hide();
+                    $(".peoplethesis").show();
+                    $(".peopleawards").hide();
+                } else {
+                    alert(result.data);
+                }
+            }
+        });
     });
 
     // 修改个人信息控制

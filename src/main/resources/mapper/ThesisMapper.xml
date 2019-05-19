@@ -180,16 +180,16 @@
     where
     name LIKE #{name_pattern}
     <if test="entity.company!=null">
-      OR company LIKE #{company_pattern}
+      AND company LIKE #{company_pattern}
     </if>
     <if test="entity.title!=null">
-      OR title LIKE #{title_pattern}
+      AND title LIKE #{title_pattern}
     </if>
     <if test="entity.classify!=null">
-      OR classify LIKE #{classify_pattern}
+      AND classify LIKE #{classify_pattern}
     </if>
     <if test="entity.magazine!=null">
-      OR magazine LIKE #{magazine_pattern}
+      AND magazine LIKE #{magazine_pattern}
     </if>
   </select>
 

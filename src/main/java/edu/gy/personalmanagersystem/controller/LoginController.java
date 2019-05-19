@@ -46,6 +46,7 @@ public class LoginController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public ResultVO<String> login(@RequestParam String number, @RequestParam String pwd, HttpSession session){
+
         logger.info("登陆验证");
         User user = userService.getUserByID(number);
         if (user == null) {
@@ -67,7 +68,7 @@ public class LoginController {
                     Thesis thesis = new Thesis();thesis.setNumber(number);
                     List<Thesis> thesisList = thesisService.getByItem(thesis,null);
                     session.setAttribute("honorList",honorList);
-                    session.setAttribute("ThesisList",thesisList);
+                    session.setAttribute("thesisList",thesisList);
                 }
                 resultVO.setData("验证成功");
                 session.setAttribute("peopleinfo",peopleInfo);
@@ -83,7 +84,13 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String index(){
+    public String index(HttpSession session){
+        if (session.getAttribute("peopleinfo") != null){
+            session.removeAttribute("peopleinfo");
+            session.removeAttribute("honorList");
+            session.removeAttribute("thesisList");
+            logger.info("用户已退出登录");
+        }
         return "index";
     }
 

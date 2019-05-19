@@ -31,7 +31,9 @@
 	<!-- 静态资源可访问的设置方式 -->
 <!--	<mvc:default-servlet-handler/>-->
 
+	<!--配置静态资源的访问映射，此配置中的文件，将不被前端控制器拦截 -->
 	<mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
