@@ -23,6 +23,8 @@ public class People {
 
     private String phonenumber;
 
+    private Integer checked;
+
     public String getNumber() {
         return number;
     }
@@ -111,10 +113,19 @@ public class People {
         this.phonenumber = phonenumber == null ? null : phonenumber.trim();
     }
 
+    public Integer getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Integer check) {
+        this.checked = check;
+    }
+
     @Override
     public String toString() {
         return "[number : "+number+"， name : "+name+", sex : "+sex+", age : "+age+", department : "+
                 department+", position : "+position+", birthplace : "+birthplace+", nation : "+nation+
-                ", identityno : "+identityno+", politicalstatus : "+politicalstatus+", phonenumber : "+ phonenumber +"]";
+                ", identityno : "+identityno+", politicalstatus : "+politicalstatus+
+                ", phonenumber : "+ phonenumber + ", check : "+checked+"]";
     }
 }

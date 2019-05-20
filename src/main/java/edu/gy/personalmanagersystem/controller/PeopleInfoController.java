@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 @Controller
 public class PeopleInfoController {
 
-    Logger logger =  Logger.getLogger("PeopleInfoController.class");
+    private Logger logger =  Logger.getLogger("PeopleInfoController.class");
 
     @Autowired
     private PeopleService peopleService;

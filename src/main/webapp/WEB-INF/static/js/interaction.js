@@ -13,7 +13,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"//localhost:8080/PersonalManagerSystem_war/login",
+                url:"/PersonalManagerSystem_war/login",
                 data:{
                     "number":no,
                     "pwd":p
@@ -22,7 +22,7 @@ $(document).ready(function () {
                     if (result.code === 200) {
                         console.log(result.data);
                         alert("Log In Successfully");
-                        window.location.href="//localhost:8080/PersonalManagerSystem_war/personalIndex";
+                        window.location.href="/PersonalManagerSystem_war/personalIndex";
                     } else {
                         alert("Log in failed for "+result.info);
                     }
@@ -48,7 +48,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"//localhost:8080/PersonalManagerSystem_war/updatePeopleInfo",
+                url:"/PersonalManagerSystem_war/updatePeopleInfo",
                 data:{
                     "number":number,
                     "name":name,
@@ -89,7 +89,7 @@ $(document).ready(function () {
                     $.ajax({
                         type:"post",
                         datatype:"form-data",
-                        url:"//localhost:8080/PersonalManagerSystem_war/changepwd",
+                        url:"/PersonalManagerSystem_war/changepwd",
                         data: {
                             "number":number,
                             "password":newpwdconformed
@@ -98,7 +98,7 @@ $(document).ready(function () {
                             if (result.code === 200) {
                                 console.log("修改密码成功");
                                 alert(result.data+"请重新登录！");
-                                window.location.href="//localhost:8080/PersonalManagerSystem_war/index";
+                                window.location.href="/PersonalManagerSystem_war/index";
                             } else {
                                 alert(result.data);
                             }
@@ -135,7 +135,7 @@ $(document).ready(function () {
     $(".body4").click(function(){
         if (confirm("确定退出登录？")){
             console.log("清除session，重新登录");
-            window.location.href = "//localhost:8080/PersonalManagerSystem_war/index";
+            window.location.href = "/PersonalManagerSystem_war/index";
         } else {
             console.log("取消重新登录");
         }
@@ -172,7 +172,7 @@ $(document).ready(function () {
         $.ajax({
             type:"get",
             datatype:"form-data",
-            url:"//localhost:8080/PersonalManagerSystem_war/getthesisbynumber",
+            url:"/PersonalManagerSystem_war/getthesisbynumber",
             data: {
                 "number":number
             },
@@ -200,7 +200,7 @@ $(document).ready(function () {
         $.ajax({
             type:"get",
             datatype:"form-data",
-            url:"//localhost:8080/PersonalManagerSystem_war/gethonorsbylikes",
+            url:"/PersonalManagerSystem_war/gethonorsbylikes",
             data: {
                 "awardname":awardname,
                 "department":department,
@@ -231,7 +231,7 @@ $(document).ready(function () {
         $.ajax({
             type:"get",
             datatype:"form-data",
-            url:"//localhost:8080/PersonalManagerSystem_war/getthesisbylikes",
+            url:"/PersonalManagerSystem_war/getthesisbylikes",
             data: {
                 "name":thesisname,
                 "title":title,
@@ -256,15 +256,11 @@ $(document).ready(function () {
         });
     });
 
-    // 修改个人信息控制
-    $("#change-name").click(function () {
-        $(".name").onchange(function () {
+    $("#changethesisinfo").click(function () {
+       console.log("修改论文信息");
 
-        });
     });
 
-    $("#change-age").click(function () {
-        $(".age").readonly = "";
-    });
+
 
 });

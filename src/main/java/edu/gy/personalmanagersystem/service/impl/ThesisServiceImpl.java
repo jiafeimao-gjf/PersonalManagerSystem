@@ -19,6 +19,10 @@ public class ThesisServiceImpl implements ThesisService {
     @Autowired
     ThesisMapper thesisDao;
 
+    public Thesis getThesisByKey(Integer thesisid) {
+        return thesisDao.selectByPrimaryKey(thesisid);
+    }
+
     public int addThesis(Thesis thesis) {
         return thesisDao.insert(thesis);
     }

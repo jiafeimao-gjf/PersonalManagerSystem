@@ -20,6 +20,8 @@ public interface ThesisService {
 
     int addThesisList(List<Thesis> thesisList);
 
+    Thesis getThesisByKey(Integer thesisid);
+
     List<Thesis> getByItem(Thesis thesis,String rule);
 
     List<Thesis> getByLikes(Thesis thesis);

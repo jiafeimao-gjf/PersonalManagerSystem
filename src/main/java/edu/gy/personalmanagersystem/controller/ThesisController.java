@@ -1,9 +1,11 @@
 package edu.gy.personalmanagersystem.controller;
 
+import com.sun.tools.internal.xjc.model.Model;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Thesis;
 import edu.gy.personalmanagersystem.service.ThesisService;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +28,44 @@ import java.util.logging.Logger;
 @Controller
 public class ThesisController {
 
-    Logger logger = Logger.getLogger("ThesisController.class");
+    private Logger logger = Logger.getLogger("ThesisController.class");
 
     @Autowired
     private ThesisService thesisService;
+
+    @RequestMapping(value = "/addnewthesis",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> addNewThesis(Thesis thesis){
+        int res = thesisService.addThesis(thesis);
+        if (res == 1){
+            logger.info("成功插入新的论文信息");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功插入新的论文信息");
+            return resultVO;
+        } else {
+            logger.warning("插入新的论文信息失败");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            resultVO.setData("插入新的论文信息失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/addnewthesislist",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> addNewThesisList(List<Thesis> thesisList){
+        int res = thesisService.addThesisList(thesisList);
+        if (res == thesisList.size()){
+            logger.info("成功插入新的论文信息");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功插入 "+res+" 条新的论文信息");
+            return resultVO;
+        } else {
+            logger.warning("批量插入新的论文信息失败，插入了"+res+"条有效信息");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            resultVO.setData("批量插入新的论文信息失败，插入了"+res+"条有效信息");
+            return resultVO;
+        }
+    }
 
     @RequestMapping(value = "/getthesisbynumber",method = RequestMethod.GET)
     @ResponseBody
@@ -40,6 +77,24 @@ public class ThesisController {
         return setResultVO(session,thesisList);
     }
 
+    @RequestMapping(value = "/lookthesisinfo",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultVO<String> lookThesisInfo(@RequestParam("thesisid") Integer thesisid, HttpSession session){
+        logger.info("lookThesisInfo");
+        Thesis thesis = thesisService.getThesisByKey(thesisid);
+        if (thesis != null) {
+            logger.info("成功查询到数据");
+            ResultVO<String> resultVO =  new ResultVO<String>(200,"success");
+            session.setAttribute("thesisinfo",thesis);
+            resultVO.setData("成功查询到数据");
+            return resultVO;
+        } else {
+            logger.warning("查询数据失败");
+            ResultVO<String> resultVO =  new ResultVO<String>(-1,"filed");
+            resultVO.setData("查询数据失败");
+            return resultVO;
+        }
+    }
 
     @RequestMapping(value = "/getthesisbylikes",method = RequestMethod.GET)
     @ResponseBody
@@ -67,6 +122,11 @@ public class ThesisController {
             List<Thesis> thesisList = thesisService.getByLikes(thesis);
             return setResultVO(session,thesisList);
         }
+    }
+
+    @RequestMapping(value = "/thesisdetail")
+    public String thesisDetail(HttpSession httpSession){
+        return "thesisdetail";
     }
 
     private ResultVO<String> setResultVO(HttpSession session,List<Thesis> thesisList){

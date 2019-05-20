@@ -17,6 +17,8 @@ public class Honor {
 
     private String grade;
 
+    private Integer checked;
+
     public Integer getHonorid() {
         return honorid;
     }
@@ -81,9 +83,17 @@ public class Honor {
         this.grade = grade == null ? null : grade.trim();
     }
 
+    public Integer getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Integer checked) {
+        this.checked = checked;
+    }
+
     @Override
     public String toString() {
         return "[honorid : "+honorid+", number : "+number+", company : "+company+", awardname : "+awardname+
-                ", awardlevel : "+awardlevel+", awardcpy : "+awardcpy+", reamrks : "+remarks+", grade :" +grade+"]";
+                ", awardlevel : "+awardlevel+", awardcpy : "+awardcpy+", reamrks : "+remarks+", grade :" +grade+", checked : "+ checked +"]";
     }
 }

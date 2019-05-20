@@ -27,10 +27,45 @@ import java.util.logging.Logger;
  **/
 @Controller
 public class HonorController {
-    Logger logger = Logger.getLogger("HonorController.class");
+    private Logger logger = Logger.getLogger("HonorController.class");
 
     @Autowired
     private HonorService honorService;
+
+    @RequestMapping(value = "/addnewhonor",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> addNewHonor(Honor honor){
+        int res = honorService.addHonor(honor);
+        if (res == 1){
+            logger.info("成功插入新的荣誉信息");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功插入新的荣誉信息");
+            return resultVO;
+        } else {
+            logger.warning("插入新的荣誉信息失败");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            resultVO.setData("插入新的荣誉信息失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/addnewhonors",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> addNewHonors(List<Honor> honorList){
+        int res = honorService.addHonors(honorList);
+        if (res == honorList.size()){
+            logger.info("成功插入新的荣誉信息");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功插入 "+res+" 条新的荣誉信息");
+            return resultVO;
+        } else {
+            logger.warning("批量插入新的荣誉信息失败，插入了"+res+"条有效信息");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            resultVO.setData("批量插入新的荣誉信息失败，插入了"+res+"条有效信息");
+            return resultVO;
+        }
+    }
+
 
     @RequestMapping(value = "/gethonorsbynumber",method = RequestMethod.GET)
     @ResponseBody

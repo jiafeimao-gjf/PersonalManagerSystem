@@ -9,9 +9,10 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="classify" jdbcType="VARCHAR" property="classify" />
     <result column="magazine" jdbcType="VARCHAR" property="magazine" />
+    <result column="checked" property="checked" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List">
-    thesisid, number, name, company, title, classify, magazine
+    thesisid, number, name, company, title, classify, magazine,checked
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="edu.gy.personalmanagersystem.pojo.Thesis">
     insert into t_thesis (thesisid, number, name,
       company, title, classify,
-      magazine)
+      magazine,checked)
     values (#{thesisid,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{company,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{classify,jdbcType=VARCHAR},
-      #{magazine,jdbcType=VARCHAR})
+      #{magazine,jdbcType=VARCHAR},#{checked,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="edu.gy.personalmanagersystem.pojo.Thesis">
     insert into t_thesis
@@ -55,6 +56,9 @@
       <if test="magazine != null">
         magazine,
       </if>
+      <if test="checked != null">
+        checked,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="thesisid != null">
@@ -77,6 +81,9 @@
       </if>
       <if test="magazine != null">
         #{magazine,jdbcType=VARCHAR},
+      </if>
+      <if test="checked != null">
+        #{checked,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -101,6 +108,9 @@
       <if test="magazine != null">
         magazine = #{magazine,jdbcType=VARCHAR},
       </if>
+      <if test="checked != null">
+        checked = #{checked,jdbcType=INTEGER},
+      </if>
     </set>
     where thesisid = #{thesisid,jdbcType=INTEGER}
   </update>
@@ -111,16 +121,17 @@
       company = #{company,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       classify = #{classify,jdbcType=VARCHAR},
-      magazine = #{magazine,jdbcType=VARCHAR}
+      magazine = #{magazine,jdbcType=VARCHAR},
+      checked = #{checked,jdbcType=INTEGER}
     where thesisid = #{thesisid,jdbcType=INTEGER}
   </update>
 
   <insert id="addEntitys" parameterType="java.util.List">
-    insert into t_thesis (number, name, company, title, classify,magazine)
+    insert into t_thesis (number, name, company, title, classify,magazine,checked)
       values
       <foreach collection="entitys" item="entity" separator=",">
         (#{entity.number},#{entity.name},#{entity.company},#{entity.title},
-        #{entity.classify},#{entity.magazine})
+        #{entity.classify},#{entity.magazine},#{entity.checked})
       </foreach>
   </insert>
 
@@ -152,6 +163,9 @@
       </if>
       <if test="entity!=null and entity.magazine!=null">
         and magazine=#{entity.magazine}
+      </if>
+      <if test="entity!=null and entity.checked!=null">
+        and checked=#{entity.checked}
       </if>
     </where>
     <if test="rule!=null">

@@ -13,6 +13,7 @@
     People people = (People) session.getAttribute("peopleinfo");
     List<Honor> honorList = (List<Honor>) session.getAttribute("honorList");
     List<Thesis> thesisList = (List<Thesis>) session.getAttribute("thesisList");
+
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>
@@ -21,6 +22,27 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/peopleIndex.css"/>
         <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
         <title><%=people.getName()%></title>
+        <script type="text/javascript">
+            function thesisDetail(thesisid){
+                console.log("查看论文信息");
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"/PersonalManagerSystem_war/lookthesisinfo",
+                    data: {
+                        "thesisid":thesisid
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log("进入详情页");
+                            window.location.href="/PersonalManagerSystem_war/thesisdetail";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                })
+            }
+        </script>
     </head>
 
     <body>
@@ -116,7 +138,7 @@
                 <div class="form-group">
                     <label class="col-sm-3"></label>
                     <div class="col-sm-6">
-                        <input id="changeInfo" class="btn btn-primary col-sm-2" type="button" value="修改信息"/>
+                        <input id="go-back" class="btn btn-primary col-sm-2" type="button" value="返回"/>
                     </div>
                 </div>
             </form>
@@ -228,7 +250,7 @@
                                 <td>${thesis.name}</td>
                                 <td>${thesis.title}</td>
                                 <td>${thesis.classify}</td>
-                                <td><button class="btn btn-primary">查看详情</button> <button class="btn btn-primary">跟新信息</button></td>
+                                <td><button class="thesis-detail btn btn-primary" onclick="thesisDetail(${thesis.thesisid})">查看详情</button> <button class="btn btn-primary">跟新信息</button></td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -259,6 +281,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="peopleawards" hidden>
         <div class="col-xs-10">

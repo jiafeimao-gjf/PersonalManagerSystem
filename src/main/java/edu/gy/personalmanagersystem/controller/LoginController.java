@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +24,7 @@ import java.util.logging.Logger;
 @Controller
 public class LoginController {
 
-    Logger logger = Logger.getLogger("LoginController.class");
+    private Logger logger = Logger.getLogger("LoginController.class");
 
     @Autowired
     private UserService userService;

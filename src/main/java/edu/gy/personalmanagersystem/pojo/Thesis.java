@@ -15,6 +15,8 @@ public class Thesis {
 
     private String magazine;
 
+    private Integer checked;
+
     public Integer getThesisid() {
         return thesisid;
     }
@@ -71,10 +73,18 @@ public class Thesis {
         this.magazine = magazine == null ? null : magazine.trim();
     }
 
+    public Integer getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Integer checked) {
+        this.checked = checked;
+    }
+
     @Override
     public String toString() {
         return "[thesisid : "+thesisid+", number : "+number+", name : "+name+
                 ", company : "+company+", title : "+title+", classify : "+classify+
-                ", magazine : " + magazine + "]";
+                ", magazine : " + magazine + ", checked : "+ checked +"]";
     }
 }
