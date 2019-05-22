@@ -12,6 +12,8 @@ import java.util.List;
  **/
 public interface HonorService {
 
+    Honor getHonorByKey(Integer honorid);
+
     int addHonor(Honor honor);
 
     int updateHonorInfo(Honor honor);

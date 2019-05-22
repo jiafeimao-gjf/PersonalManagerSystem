@@ -8,13 +8,11 @@ import edu.gy.personalmanagersystem.service.ThesisService;
 import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.Response;
+import java.awt.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -125,8 +123,27 @@ public class ThesisController {
     }
 
     @RequestMapping(value = "/thesisdetail")
-    public String thesisDetail(HttpSession httpSession){
+    public String thesisDetail(){
+        logger.info("thesisdetail");
         return "thesisdetail";
+    }
+
+    @RequestMapping(value = "updatethesisinfo",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> updateThesisInfo(Thesis thesis){
+        logger.info("updateThesisInfo");
+        int res = thesisService.updateThesisInfo(thesis);
+        if (res == 1) {
+            logger.info("成功跟新论文信息");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功跟新论文信息");
+            return resultVO;
+        } else {
+            logger.warning("跟新论文信息失败");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"success");
+            resultVO.setData("跟新论文信息失败");
+            return resultVO;
+        }
     }
 
     private ResultVO<String> setResultVO(HttpSession session,List<Thesis> thesisList){

@@ -42,4 +42,9 @@ public class UserController {
             return resultVO;
         }
     }
+
+    @RequestMapping(value = "/adminIndex")
+    public String adminIndex(){
+        return "adminIndex";
+    }
 }

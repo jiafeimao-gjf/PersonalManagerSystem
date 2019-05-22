@@ -7,17 +7,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="edu.gy.personalmanagersystem.pojo.*" %>
-<%@ page import="java.util.List" %>
+<%@ page import="edu.gy.personalmanagersystem.pojo.*" %>
+
+<jsp:include page="common/tag.jsp"/>
 <%
     Thesis thesis = (Thesis) session.getAttribute("thesisinfo");
+    Role role = (Role) session.getAttribute("roleinfo");
 %>
 <html>
 <head>
     <jsp:include page="common/bootstrap.jsp"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/peopleIndex.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
-    <title><%=thesis.getNumber()%>
+    <title><%=thesis.getName()%>
     </title>
 </head>
 
@@ -33,12 +35,12 @@
     </div>
 </nav>
 <div class="thesis-detail">
-    <div class="col-xs-10">
+    <div class="col-xs-12">
         <a class="list-group-item active">
             论文详情
         </a>
     </div>
-    <div class="col-xs-10">
+    <div class="col-xs-12">
         <br>
         <form class="form-horizontal" role="form">
             <div class="form-group">
@@ -50,7 +52,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">教职工编号</label>
                 <div class="col-sm-6">
-                    <input type="text" class="thesis-number form-control" value="<%=thesis.getNumber()%>"/>
+                    <input type="text" readonly="readonly" class="thesis-number form-control" value="<%=thesis.getNumber()%>"/>
                 </div>
             </div>
             <div class="form-group">
@@ -62,7 +64,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">部门</label>
                 <div class="col-sm-6">
-                    <input type="text" class="thesis-dep form-control" value="<%=thesis.getCompany()%>"/>
+                    <input type="text" class="thesis-depart form-control" value="<%=thesis.getCompany()%>"/>
                 </div>
             </div>
             <div class="form-group">
@@ -98,11 +100,18 @@
             <div class="form-group">
                 <label class="col-sm-3"></label>
                 <div class="col-sm-6">
-                    <input id="changethesisinfo" class="btn btn-primary col-sm-2" type="button" value="修改论文信息"/>
+                    <input id="changethesisinfo" class="btn btn-primary col-sm-4" type="button" value="修改论文信息"/>
+                    <label class="col-sm-2">    </label>
+                    <c:if test="<%=role.getRoleid() == 1 && thesis.getChecked() == 2%>">
+                        <button class="btn btn-primary col-sm-4" onclick="checkThesis(<%=thesis.getThesisid()%>)">
+                            审核通过
+                        </button>
+                    </c:if>
                 </div>
             </div>
         </form>
     </div>
 </div>
 </body>
+<jsp:include page="common/frame.jsp"/>
 </html>

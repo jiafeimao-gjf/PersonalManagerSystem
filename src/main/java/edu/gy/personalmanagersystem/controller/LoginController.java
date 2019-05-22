@@ -67,8 +67,14 @@ public class LoginController {
                     List<Thesis> thesisList = thesisService.getByItem(thesis,null);
                     session.setAttribute("honorList",honorList);
                     session.setAttribute("thesisList",thesisList);
+                    resultVO.setData("user");
+                } else if (role.getRoleid() == 1) {
+                    List<Honor> honorList = honorService.getByItem(null,null);
+                    List<Thesis> thesisList = thesisService.getByItem(null,null);
+                    session.setAttribute("honorList",honorList);
+                    session.setAttribute("thesisList",thesisList);
+                    resultVO.setData("admin");
                 }
-                resultVO.setData("验证成功");
                 session.setAttribute("peopleinfo",peopleInfo);
                 session.setAttribute("roleinfo",role);
                 return resultVO;
@@ -81,7 +87,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     public String index(HttpSession session){
         if (session.getAttribute("peopleinfo") != null){
             session.removeAttribute("peopleinfo");

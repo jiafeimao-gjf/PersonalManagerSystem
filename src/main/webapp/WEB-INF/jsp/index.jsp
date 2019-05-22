@@ -2,7 +2,7 @@
 <jsp:include page="common/tag.jsp"/>
 <html>
     <head>
-        <jsp:include page="common/head.jsp"/>
+        <jsp:include page="common/bootstrap.jsp"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/login.css">
         <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
         <title>高校人事管理系统</title>
@@ -27,4 +27,5 @@
             <input id="login" class="btn" type="button" name="登录" value="登录"/>
         </div>
     </body>`
+    <jsp:include page="common/frame.jsp"/>
 </html>

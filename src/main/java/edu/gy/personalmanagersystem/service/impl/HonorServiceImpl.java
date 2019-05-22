@@ -19,6 +19,10 @@ public class HonorServiceImpl implements HonorService {
     @Autowired
     HonorMapper honorDao;
 
+    public Honor getHonorByKey(Integer honorid) {
+        return honorDao.selectByPrimaryKey(honorid);
+    }
+
     public int addHonor(Honor honor) {
         return honorDao.insert(honor);
     }

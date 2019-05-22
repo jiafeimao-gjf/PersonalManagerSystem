@@ -20,9 +20,15 @@ $(document).ready(function () {
                 },
                 success:function (result) {
                     if (result.code === 200) {
-                        console.log(result.data);
+                        console.log(result.info);
                         alert("Log In Successfully");
-                        window.location.href="/PersonalManagerSystem_war/personalIndex";
+                        console.log("用户类型："+result.data);
+                        if (result.data === "user"){
+                            window.location.href="/PersonalManagerSystem_war/personalIndex";
+                        } else if (result.data === "admin"){
+                            alert("欢迎你，系统管理员");
+                            window.location.href="/PersonalManagerSystem_war/adminIndex";
+                        }
                     } else {
                         alert("Log in failed for "+result.info);
                     }
@@ -98,7 +104,7 @@ $(document).ready(function () {
                             if (result.code === 200) {
                                 console.log("修改密码成功");
                                 alert(result.data+"请重新登录！");
-                                window.location.href="/PersonalManagerSystem_war/index";
+                                window.location.href="/PersonalManagerSystem_war/";
                             } else {
                                 alert(result.data);
                             }
@@ -135,14 +141,14 @@ $(document).ready(function () {
     $(".body4").click(function(){
         if (confirm("确定退出登录？")){
             console.log("清除session，重新登录");
-            window.location.href = "/PersonalManagerSystem_war/index";
+            window.location.href = "/PersonalManagerSystem_war/";
         } else {
             console.log("取消重新登录");
         }
     });
 
-    $(".display-all-award").click(function () {
-       console.log("显示全部荣誉信息:");
+    $(".display-my-award").click(function () {
+       console.log("显示我的荣誉信息:");
        var number = $(".number").val();
        $.ajax({
            type:"get",
@@ -166,8 +172,8 @@ $(document).ready(function () {
        });
     });
 
-    $(".display-all-thesis").click(function () {
-        console.log("显示全部论文信息:");
+    $(".display-my-thesis").click(function () {
+        console.log("显示我的论文信息:");
         var number = $(".number").val();
         $.ajax({
             type:"get",
@@ -192,11 +198,11 @@ $(document).ready(function () {
         });
     });
 
-    $(".award-search").click(function () {
-        console.log("搜索荣誉信息");
-        var awardname = $(".honor-awardname").val();
-        var department = $(".honor-department").val();
-        var awardlevel = $(".honor-awardlevel").val();
+    $(".my-award-search").click(function () {
+        console.log("搜索我的荣誉信息");
+        var awardname = $(".key-honor-awardname").val();
+        var department = $(".key-honor-department").val();
+        var awardlevel = $(".key-honor-awardlevel").val();
         $.ajax({
             type:"get",
             datatype:"form-data",
@@ -221,13 +227,13 @@ $(document).ready(function () {
         });
     });
 
-    $(".thesis-search").click(function () {
-        console.log("搜索论文信息");
-        var thesisname = $(".thesis-name").val();
-        var department = $(".thesis-department").val();
-        var title = $(".thesis-title").val();
-        var classify  = $(".thesis-classify").val();
-        var magazine = $(".thesis-magazine").val();
+    $(".my-thesis-search").click(function () {
+        console.log("搜索我的论文信息");
+        var thesisname = $(".key-thesis-name").val();
+        var department = $(".key-thesis-department").val();
+        var title = $(".key-thesis-title").val();
+        var classify  = $(".key-thesis-classify").val();
+        var magazine = $(".key-thesis-magazine").val();
         $.ajax({
             type:"get",
             datatype:"form-data",
@@ -257,10 +263,73 @@ $(document).ready(function () {
     });
 
     $("#changethesisinfo").click(function () {
-       console.log("修改论文信息");
-
+        console.log("修改论文信息");
+        var thesisid = $(".thesis-id").val();
+        var name = $(".thesis-name").val();
+        var department = $(".thesis-depart").val();
+        var title = $(".thesis-title").val();
+        var classify = $(".thesis-classify").val();
+        var magazine = $(".thesis-maga").val();
+        $.ajax({
+            type:"post",
+            datatype:"form-data",
+            url:"/PersonalManagerSystem_war/updatethesisinfo",
+            data:{
+                "thesisid":thesisid,
+                "name":name,
+                "company":department,
+                "title":title,
+                "classify":classify,
+                "magazine":magazine,
+                'checked':2
+            },
+            success:function (result) {
+                if (result.code === 200) {
+                    console.log(result.data);
+                    $(".thesis-checked").val("未审核");
+                    alert(result.data);
+                } else {
+                    console.log(result.data);
+                    alert(result.data);
+                }
+            }
+        });
     });
 
-
+    $('#changehonorinfo').click(function () {
+        console.log("修改荣誉信息");
+        var honorid = $(".honor-id").val();
+        var department = $(".honor-depart").val();
+        var awardname = $(".honor-award-name").val();
+        var awardlevel = $(".honor-award-level").val();
+        var awardcpy = $(".honor-award-depart").val();
+        var grade = $(".honor-grade").val();
+        var remarks = $(".honor-remarks").val();
+        $.ajax({
+            type:"post",
+            datatype:"form-data",
+            url:"/PersonalManagerSystem_war/updatehonorinfo",
+            data:{
+                "honorid":honorid,
+                "awardname":awardname,
+                "company":department,
+                "awardlevel":awardlevel,
+                "awardcpy":awardcpy,
+                "grade":grade,
+                "remarks":remarks,
+                "checked":2
+            },
+            success:function (result) {
+                if (result.code === 200) {
+                    console.log(result.data);
+                    $(".honor-checked").val("未审核");
+                    alert(result.data);
+                } else {
+                    console.log(result.data);
+                    alert(result.data);
+                }
+            }
+        });
+    });
 
 });

@@ -40,7 +40,26 @@
                             alert(result.data);
                         }
                     }
-                })
+                });
+            }
+            function honorDetail(honorid) {
+                console.log("查看荣誉信息");
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"/PersonalManagerSystem_war/lookhonorinfo",
+                    data: {
+                        "honorid":honorid
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log("进入详情页");
+                            window.location.href="/PersonalManagerSystem_war/honordetail";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
             }
         </script>
     </head>
@@ -61,12 +80,12 @@
     </nav>
 
     <div class="peopleinfo">
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <a class="list-group-item active">
                 个人信息
             </a>
         </div>
-        <div class="col-xs-10" >
+        <div class="col-xs-12" >
             <br>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
@@ -143,7 +162,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">密码</label>
@@ -172,56 +191,56 @@
     </div>
 
     <div class="peoplethesis" hidden>
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <a class="list-group-item active"> 论文信息</a>
         </div>
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <br>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">姓名</label>
                     <div class="col-sm-6">
-                        <input type="text" class="thesis-name form-control" name="name" placeholder="论文作者"/>
+                        <input type="text" class="key-thesis-name form-control" name="name" placeholder="论文作者"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" >部门</label>
                     <div class="col-sm-6">
-                        <input type="text" class="thesis-department form-control" name="department" placeholder="所属部门"/>
+                        <input type="text" class="key-thesis-department form-control" name="department" placeholder="所属部门"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">论文标题</label>
                     <div class="col-sm-6">
-                        <input aria-label="论文标题关键字" type="text" class="thesis-title form-control" name="title" placeholder="论文标题关键字"/>
+                        <input aria-label="论文标题关键字" type="text" class="key-thesis-title form-control" name="title" placeholder="论文标题关键字"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">论文分类</label>
                     <div class="col-sm-6">
-                        <input aria-label="期刊关键字" type="text" class="thesis-classify form-control" name="classify" placeholder="论文分类"/>
+                        <input aria-label="期刊关键字" type="text" class="key-thesis-classify form-control" name="classify" placeholder="论文分类"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">期刊名称</label>
                     <div class="col-sm-6">
-                        <input aria-label="期刊关键字" type="text" class="thesis-magazine form-control" name="magazine" placeholder="期刊关键字"/>
+                        <input aria-label="期刊关键字" type="text" class="key-thesis-magazine form-control" name="magazine" placeholder="期刊关键字"/>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label class="col-sm-3"></label>
                     <div class="col-sm-6">
-                        <input type="button" class="thesis-search btn col-sm-2 btn-primary" value="搜索"/>
+                        <input type="button" class="my-thesis-search btn col-sm-2 btn-primary" value="搜索"/>
                         <label class="col-sm-2">    </label>
-                        <input type="button" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
+                        <input type="button" class="display-my-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
                     </div>
                 </div>
             </form>
         </div>
 
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <div class="col-md-12 column">
                 <table class="table">
                     <thead>
@@ -245,12 +264,12 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${thesisList}" var="thesis">
-                            <tr>
+                            <tr class="tr1">
                                 <td>${thesis.thesisid}</td>
                                 <td>${thesis.name}</td>
                                 <td>${thesis.title}</td>
                                 <td>${thesis.classify}</td>
-                                <td><button class="thesis-detail btn btn-primary" onclick="thesisDetail(${thesis.thesisid})">查看详情</button> <button class="btn btn-primary">跟新信息</button></td>
+                                <td><button class="thesis-detail btn btn-primary" onclick="thesisDetail(${thesis.thesisid})">查看详情</button></td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -285,45 +304,45 @@
 
 
     <div class="peopleawards" hidden>
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <a  class="list-group-item active">荣誉信息</a>
         </div>
 
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <br>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">荣誉名称</label>
                     <div class="col-sm-6">
-                        <input type="text" class="honor-awardname form-control" name="awardname" placeholder="荣誉名称"/>
+                        <input type="text" class="key-honor-awardname form-control" name="awardname" placeholder="荣誉名称"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">部门</label>
                     <div class="col-sm-6">
-                        <input type="text" class="honor-department form-control" name="department" placeholder="部门"/>
+                        <input type="text" class="key-honor-department form-control" name="department" placeholder="部门"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">获奖级别</label>
                     <div class="col-sm-6">
-                        <input type="text" class="honor-awardlevel form-control" name="awardlevel" placeholder="获奖级别"/>
+                        <input type="text" class="key-honor-awardlevel form-control" name="awardlevel" placeholder="获奖级别"/>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label class="col-sm-3"></label>
                     <div class="col-sm-6">
-                        <input type="button" class="award-search btn col-sm-2 btn-primary" value="搜索"/>
+                        <input type="button" class="my-award-search btn col-sm-2 btn-primary" value="搜索"/>
                         <label class="col-sm-2">    </label>
-                        <input type="button" class="display-all-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
+                        <input type="button" class="display-my-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
                     </div>
                 </div>
             </form>
 
         </div>
 
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <div class="col-md-12 column">
                 <table class="table">
                     <thead>
@@ -352,7 +371,7 @@
                                 <td>${honor.number}</td>
                                 <td>${honor.awardname}</td>
                                 <td>${honor.awardlevel}</td>
-                                <td><button class="btn btn-primary">查看详情</button> <button class="btn btn-primary">跟新信息</button></td>
+                                <td><button class="btn btn-primary" onclick="honorDetail(${honor.honorid})">查看详情</button> </td>
                             </tr>
                         </c:forEach>
                     </tbody>

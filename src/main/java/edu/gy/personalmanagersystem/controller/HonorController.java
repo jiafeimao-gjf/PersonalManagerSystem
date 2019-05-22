@@ -66,10 +66,9 @@ public class HonorController {
         }
     }
 
-
     @RequestMapping(value = "/gethonorsbynumber",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<String> getHonorsByNumber(@RequestParam("number") String number,HttpSession session){
+    public ResultVO<String> getHonorsByNumber(@RequestParam("number")String number,HttpSession session){
         logger.info("getHonorsByNumber");
         Honor honor = new Honor();
         honor.setNumber(number);
@@ -98,6 +97,48 @@ public class HonorController {
             honor.setAwardlevel(awardlevel);
             List<Honor> honorList = honorService.getByLikes(honor);
             return setResultVO(honorList,session);
+        }
+    }
+    @RequestMapping(value = "/lookhonorinfo",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultVO<String> lookThesisInfo(@RequestParam("honorid") Integer honorid, HttpSession session){
+        logger.info("lookHonorInfo");
+        Honor honor = honorService.getHonorByKey(honorid);
+        if (honor != null) {
+            logger.info("成功查询到数据");
+            ResultVO<String> resultVO =  new ResultVO<String>(200,"success");
+            session.setAttribute("honorinfo",honor);
+            resultVO.setData("成功查询到数据");
+            return resultVO;
+        } else {
+            logger.warning("查询数据失败");
+            ResultVO<String> resultVO =  new ResultVO<String>(-1,"filed");
+            resultVO.setData("查询数据失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/honordetail")
+    public String thesisDetail(){
+        logger.info("honordetail");
+        return "honordetail";
+    }
+
+    @RequestMapping(value = "updatehonorinfo",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> updateThesisInfo(Honor honor){
+        logger.info("updateThesisInfo");
+        int res = honorService.updateHonorInfo(honor);
+        if (res == 1) {
+            logger.info("成功更新荣誉信息");
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功更新荣誉信息");
+            return resultVO;
+        } else {
+            logger.warning("更新荣誉信息失败");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"success");
+            resultVO.setData("更新荣誉信息失败");
+            return resultVO;
         }
     }
 
