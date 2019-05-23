@@ -21,6 +21,13 @@ public class HonorServiceImpl implements HonorService {
     @Autowired
     HonorMapper honorDao;
 
+    public PageInfo<Honor> getAll(Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<Honor> honorList = honorDao.selectAll();
+        PageInfo<Honor> pageInfo = new PageInfo<Honor>(honorList,5);
+        return pageInfo;
+    }
+
     public Honor getHonorByKey(Integer honorid) {
         return honorDao.selectByPrimaryKey(honorid);
     }

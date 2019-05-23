@@ -15,6 +15,9 @@
     <sql id="Base_Column_List">
     honorid, number, company, awardname, awardlevel, awardcpy, remarks, grade, checked
   </sql>
+    <select id="selectAll" resultType="edu.gy.personalmanagersystem.pojo.Honor">
+        select * from t_honor
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

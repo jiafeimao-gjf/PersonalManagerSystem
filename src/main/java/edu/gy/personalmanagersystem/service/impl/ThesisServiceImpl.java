@@ -21,6 +21,13 @@ public class ThesisServiceImpl implements ThesisService {
     @Autowired
     ThesisMapper thesisDao;
 
+    public PageInfo<Thesis> getAll(Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<Thesis> thesisList = thesisDao.selectAll();
+        PageInfo<Thesis> thesisPageInfo = new PageInfo<Thesis>(thesisList,5);
+        return thesisPageInfo;
+    }
+
     public Thesis getThesisByKey(Integer thesisid) {
         return thesisDao.selectByPrimaryKey(thesisid);
     }

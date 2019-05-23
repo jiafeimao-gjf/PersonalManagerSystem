@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ThesisMapper {
+    List<Thesis> selectAll();
+
     int deleteByPrimaryKey(Integer thesisid);
 
     int insert(Thesis record);

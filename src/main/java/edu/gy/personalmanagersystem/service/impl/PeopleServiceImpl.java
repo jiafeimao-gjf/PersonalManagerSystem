@@ -40,9 +40,15 @@ public class PeopleServiceImpl implements PeopleService {
 
     public PageInfo<People> getByLikes(People people, Integer pageNum) {
         PageHelper.startPage(pageNum,5);
-        PageInfo<People> peoplePageInfo = new PageInfo<People>();
         List<People> peopleList = peopleDao.getPeopleInfoByLikes(people);
-        peoplePageInfo.setList(peopleList);
+        PageInfo<People> peoplePageInfo = new PageInfo<People>(peopleList,5);
+        return peoplePageInfo;
+    }
+
+    public PageInfo<People> getAll(Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<People> peopleList = peopleDao.selectAll();
+        PageInfo<People> peoplePageInfo = new PageInfo<People>(peopleList,5);
         return peoplePageInfo;
     }
 }

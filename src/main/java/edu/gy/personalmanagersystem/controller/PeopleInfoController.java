@@ -6,13 +6,11 @@ import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Role;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,11 +71,13 @@ public class PeopleInfoController {
         }
     }
 
-    @RequestMapping(value = "/queryPeopleInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/querypeopleinfo",method = RequestMethod.GET)
     @ResponseBody
     public ResultVO<String> queryPeopleByLikes(@RequestParam("name")String name,
                                                @RequestParam("department")String department,
                                                @RequestParam("birthplace")String birthplace,
+                                               @RequestParam("nation")String nation,
+                                               @RequestParam("position")String position,
                                                @RequestParam("pagenum")Integer pageNum,
                                                HttpSession session){
         People people = new People();
@@ -85,13 +85,28 @@ public class PeopleInfoController {
         people.setName(name);
         people.setDepartment(department);
         people.setBirthplace(birthplace);
+        people.setNation(nation);
+        people.setPosition(position);
 
         PageInfo<People> peoplePageInfo = peopleService.getByLikes(people,pageNum);
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("成功获取教职工信息");
         session.setAttribute("peoplePageInfo",peoplePageInfo);
+        session.setAttribute("peopleType",2);// 2表示模糊查询
         return resultVO;
 
+    }
+
+    @RequestMapping(value = "getallpeople",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultVO<String> getAllPeople(@RequestParam("pagenum")Integer pageNum,
+                                         HttpSession session) {
+        PageInfo<People> peoplePageInfo = peopleService.getAll(pageNum);
+        ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+        resultVO.setData("成功获取教职工信息");
+        session.setAttribute("peoplePageInfo",peoplePageInfo);
+        session.setAttribute("peopleType",1);// 1表示查询全部
+        return resultVO;
     }
 
     @RequestMapping(value = "/deletePeople",method = RequestMethod.POST)
@@ -122,6 +137,5 @@ public class PeopleInfoController {
             return resultVO;
         }
     }
-
 
 }

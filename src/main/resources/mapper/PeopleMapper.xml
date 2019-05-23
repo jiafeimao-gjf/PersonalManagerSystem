@@ -18,6 +18,9 @@
   <sql id="Base_Column_List" >
     number, name, sex, age, department, position, birthplace, nation, identityNo, politicalstatus, phoneNumber,checked
   </sql>
+  <select id="selectAll"  resultType="edu.gy.personalmanagersystem.pojo.People">
+    select * from t_people
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -180,6 +183,12 @@
     <if test="entity.birthplace!=null">
       <bind name="birth_pattern" value="'%'+entity.birthplace+'%'"/>
     </if>
+    <if test="entity.nation!=null">
+      <bind name="nation_pattern" value="'%'+entity.nation+'%'"/>
+    </if>
+    <if test="entity.position!=null">
+      <bind name="position_pattern" value="'%'+entity.position+'%'"/>
+    </if>
     select
     <include refid="Base_Column_List"/>
     from t_people
@@ -190,6 +199,12 @@
       </if>
       <if test="entity.birthplace!=null">
         AND birthplace LIKE #{birth_pattern}
+      </if>
+      <if test="entity.nation!=null">
+        AND nation LIKE #{nation_pattern}
+      </if>
+      <if test="entity.position!=null">
+        AND position LIKE #{position_pattern}
       </if>
   </select>
 </mapper>

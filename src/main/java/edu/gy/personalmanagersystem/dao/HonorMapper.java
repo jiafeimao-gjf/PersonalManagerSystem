@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface HonorMapper {
+    List<Honor> selectAll();
+
     int deleteByPrimaryKey(Integer honorid);
 
     int insert(Honor record);

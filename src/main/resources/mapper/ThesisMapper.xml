@@ -14,6 +14,9 @@
   <sql id="Base_Column_List">
     thesisid, number, name, company, title, classify, magazine,checked
   </sql>
+  <select id="selectAll" resultType="edu.gy.personalmanagersystem.pojo.Thesis">
+    select * from t_thesis
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

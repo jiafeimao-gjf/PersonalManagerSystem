@@ -13,6 +13,8 @@ import java.util.List;
  **/
 public interface ThesisService {
 
+    PageInfo<Thesis> getAll(Integer pageNum);
+
     int addThesis(Thesis thesis);
 
     int updateThesisInfo(Thesis thesis);

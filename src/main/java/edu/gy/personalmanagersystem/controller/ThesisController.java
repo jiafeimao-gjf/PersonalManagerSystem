@@ -101,9 +101,7 @@ public class ThesisController {
 
     @RequestMapping(value = "/getthesisbylikes",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<String> getThesisByLikes(@RequestParam("name")String name,
-                                             @RequestParam("title")String title,
-                                             @RequestParam("department")String department,
+    public ResultVO<String> getThesisByLikes(@RequestParam("title")String title,
                                              @RequestParam("classify")String classify,
                                              @RequestParam("magazine")String magazine,
                                              @RequestParam(value = "pagenum",required = false)Integer pageNum,
@@ -118,11 +116,10 @@ public class ThesisController {
             logger.info("getThesisByLikes");
             Thesis thesis = new Thesis();
             thesis.setNumber(people.getNumber());
-            thesis.setName(name);
+            thesis.setName(people.getName());
             thesis.setTitle(title);
             thesis.setClassify(classify);
             thesis.setMagazine(magazine);
-            thesis.setCompany(department);
             PageInfo<Thesis> thesisPageInfo;
             if (pageNum == null){
                 thesisPageInfo = thesisService.getByLikes(thesis,1);

@@ -121,6 +121,7 @@ $(document).ready(function () {
         console.log("个人信息页");
         $(".peopleinfo").show();
         $(".peoplethesis").hide();
+        $(".stuffinfo").hide();
         $(".peopleawards").hide();
     });
 
@@ -128,6 +129,7 @@ $(document).ready(function () {
         console.log("论文信息");
         $(".peopleinfo").hide();
         $(".peoplethesis").show();
+        $(".stuffinfo").hide();
         $(".peopleawards").hide();
     });
 
@@ -135,7 +137,15 @@ $(document).ready(function () {
         console.log("荣誉信息");
         $(".peopleinfo").hide();
         $(".peoplethesis").hide();
+        $(".stuffinfo").hide();
         $(".peopleawards").show();
+    });
+    $(".body5").click(function(){
+        console.log("荣誉信息");
+        $(".peopleinfo").hide();
+        $(".peoplethesis").hide();
+        $(".stuffinfo").show();
+        $(".peopleawards").hide();
     });
 
     $(".body4").click(function(){
@@ -155,16 +165,12 @@ $(document).ready(function () {
            datatype:"form-data",
            url:"//localhost:8080/PersonalManagerSystem_war/gethonorsbynumber",
            data: {
-               "number":number
+               "number":number,
            },
            success:function (result) {
                if (result.code === 200) {
                    console.log(result.info);
-                   alert(result.data);
-                   window.location.href="/PersonalManagerSystem_war/personalIndex";
-                   $(".peopleinfo").hide();
-                   $(".peoplethesis").hide();
-                   $(".peopleawards").show();
+                   window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
                } else {
                    alert(result.data);
                }
@@ -185,8 +191,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    alert(result.data);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex";
+                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
                 } else {
                     alert(result.data);
                 }
@@ -206,13 +211,13 @@ $(document).ready(function () {
             data: {
                 "awardname":awardname,
                 "department":department,
-                "awardlevel":awardlevel
+                "awardlevel":awardlevel,
+                "pagenum":1
             },
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    alert(result.data);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex";
+                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
                 } else {
                     alert(result.data);
                 }
@@ -222,8 +227,6 @@ $(document).ready(function () {
 
     $(".my-thesis-search").click(function () {
         console.log("搜索我的论文信息");
-        var thesisname = $(".key-thesis-name").val();
-        var department = $(".key-thesis-department").val();
         var title = $(".key-thesis-title").val();
         var classify  = $(".key-thesis-classify").val();
         var magazine = $(".key-thesis-magazine").val();
@@ -232,24 +235,23 @@ $(document).ready(function () {
             datatype:"form-data",
             url:"/PersonalManagerSystem_war/getthesisbylikes",
             data: {
-                "name":thesisname,
                 "title":title,
-                "department":department,
                 "classify":classify,
-                "magazine":magazine
-
+                "magazine":magazine,
+                "pagenum":1
             },
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    alert(result.data);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex";
+                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
                 } else {
                     alert(result.data);
                 }
             }
         });
     });
+
+
 
     $("#changethesisinfo").click(function () {
         console.log("修改论文信息");
@@ -320,5 +322,7 @@ $(document).ready(function () {
             }
         });
     });
+
+
 
 });

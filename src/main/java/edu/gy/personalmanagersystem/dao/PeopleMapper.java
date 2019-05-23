@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PeopleMapper {
+    List<People> selectAll();
+
     int deleteByPrimaryKey(String number);
 
     int insert(People record);

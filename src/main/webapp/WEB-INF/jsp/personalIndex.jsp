@@ -18,6 +18,10 @@
     List<Thesis> thesisList = thesisPageInfo.getList();
     int honorType = (int)session.getAttribute("honorType");
     int thesisType = (int)session.getAttribute("thesisType");
+
+    String isInfoShow = (String)session.getAttribute("isinfoshow");
+    String isHonorShow = (String)session.getAttribute("ishonorshow");
+    String isThesisShow = (String)session.getAttribute("isthesisshow");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>
@@ -65,8 +69,103 @@
                     }
                 });
             }
-            function jumpTo(target,pageNumber) {
+            function honorJumpByLikes(pageNumber) {
+                console.log("跳转到第"+pageNumber+"页");
+                var awardname = $(".key-honor-awardname").val();
+                var department = $(".key-honor-department").val();
+                var awardlevel = $(".key-honor-awardlevel").val();
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"/PersonalManagerSystem_war/gethonorsbylikes",
+                    data: {
+                        "awardname":awardname,
+                        "department":department,
+                        "awardlevel":awardlevel,
+                        "pagenum":pageNumber
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.info);
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
+            function honorJumpByNumber(pageNumber) {
+                console.log("跳转到第"+pageNumber+"页");
+                console.log("显示我的荣誉信息:");
+                var number = $(".number").val();
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"//localhost:8080/PersonalManagerSystem_war/gethonorsbynumber",
+                    data: {
+                        "number":number,
+                        "pagenum":pageNumber
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.info);
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
+            function thesisJumpByLikes(pageNumber)  {
+                console.log("搜索我的论文信息");
+                var thesisname = $(".key-thesis-name").val();
+                var department = $(".key-thesis-department").val();
+                var title = $(".key-thesis-title").val();
+                var classify  = $(".key-thesis-classify").val();
+                var magazine = $(".key-thesis-magazine").val();
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"/PersonalManagerSystem_war/getthesisbylikes",
+                    data: {
+                        "name":thesisname,
+                        "title":title,
+                        "department":department,
+                        "classify":classify,
+                        "magazine":magazine,
+                        "pagenum":pageNumber
 
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.info);
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
+            function thesisJumpByNumber(pageNumber) {
+                console.log("显示我的论文信息:");
+                var number = $(".number").val();
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"/PersonalManagerSystem_war/getthesisbynumber",
+                    data: {
+                        "number":number,
+                        "pagenum":pageNumber
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.info)
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
             }
         </script>
     </head>
@@ -86,7 +185,7 @@
         </div>
     </nav>
 
-    <div class="peopleinfo" >
+    <div class="peopleinfo" <%=isInfoShow%> >
         <div class="col-xs-12">
             <a class="list-group-item active">
                 个人信息
@@ -197,26 +296,13 @@
 
     </div>
 
-    <div class="peoplethesis" hidden>
+    <div class="peoplethesis" <%=isThesisShow%>>
         <div class="col-xs-12">
             <a class="list-group-item active"> 论文信息</a>
         </div>
         <div class="col-xs-12">
             <br>
             <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">姓名</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="key-thesis-name form-control" name="name" placeholder="论文作者"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" >部门</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="key-thesis-department form-control" name="department" placeholder="所属部门"/>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label class="col-sm-2 control-label">论文标题</label>
                     <div class="col-sm-6">
@@ -287,27 +373,30 @@
         <div class="row">
             <%--显示分页信息摘要--%>
             <div class="col-md-6">
-                <strong>当前${thesisPageInfo.pageNum }页,总${thesisPageInfo.pages }页,总${thesisPageInfo.total }条记录</strong>
+                <label class="col-md-2">      </label>
+                <strong style="color: #1592ef">当前${thesisPageInfo.pageNum }页,总${thesisPageInfo.pages }页,总${thesisPageInfo.total }条记录</strong>
             </div>
             <div class="col-md-6">
                 <nav aria-label="=Page navigation">
                     <ul class="pagination">
-                        <li><a href="${pageContext.request.contextPath}/personalIndex">首页</a></li>
+                        <li>
+                            <c:if test="${thesisType == 1}">
+                                <a onclick="thesisJumpByLikes(1)">首页</a>
+                            </c:if>
+                            <c:if test="${thesisType == 2}">
+                                <a onclick="thesisJumpByNumber(1)">首页</a>
+                            </c:if>
+                        </li>
                         <!-- 判断是否有上一页，以便显示点击按钮 -->
                         <c:if test="${thesisPageInfo.hasPreviousPage }">
                             <li>
                                 <c:if test="${thesisType == 1}">
-                                    <a onclick="jumpTo('getthesisbylikes',${thesisPageInfo.pageNum-1})" aria-label="Previous">
+                                    <a onclick="thesisJumpByLikes(${thesisPageInfo.pageNum-1})" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </c:if>
                                 <c:if test="${thesisType == 2}">
-                                    <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${thesisPageInfo.pageNum-1}" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </c:if>
-                                <c:if test="${thesisType == 3}">
-                                    <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${thesisPageInfo.pageNum-1}" aria-label="Previous">
+                                    <a onclick="thesisJumpByNumber(${thesisPageInfo.pageNum-1})" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </c:if>
@@ -316,18 +405,15 @@
                         <!-- 遍历页码 -->
                         <c:forEach items="${thesisPageInfo.navigatepageNums }" var="page_Num">
                             <c:if test="${page_Num == thesisPageInfo.pageNum }">
-                                <li class="active"><a href="#">${page_Num }</a></li>
+                                <li class="active"><a href="#">${page_Num}</a></li>
                             </c:if>
                             <c:if test="${page_Num != thesisPageInfo.pageNum }">
                                 <li>
                                     <c:if test="${thesisType == 1}">
-                                        <a onclick="jumpTo('getthesisbylikes',${page_Num})">${page_Num }</a>
+                                        <a onclick="thesisJumpByLikes(${page_Num})">${page_Num }</a>
                                     </c:if>
                                     <c:if test="${thesisType == 2}">
-                                        <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${page_Num }">${page_Num }</a>
-                                    </c:if>
-                                    <c:if test="${thesisType == 3}">
-                                        <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${page_Num }">${page_Num }</a>
+                                        <a onclick="thesisJumpByNumber(${page_Num})">${page_Num }</a>
                                     </c:if>
                                 </li>
                             </c:if>
@@ -336,32 +422,23 @@
                         <c:if test="${thesisPageInfo.hasNextPage }">
                             <li>
                                 <c:if test="${thesisType == 1}">
-                                    <a href="${pageContext.request.contextPath}/getthesisbylikes?pagenum=${thesisPageInfo.pageNum+1}" >
-                                        <span aria-hidden="true">&laquo;</span>
+                                    <a onclick="thesisJumpByLikes(${thesisPageInfo.pageNum+1})" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </c:if>
                                 <c:if test="${thesisType == 2}">
-                                    <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${thesisPageInfo.pageNum+1}">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </c:if>
-                                <c:if test="${thesisType == 3}">
-                                    <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${thesisPageInfo.pageNum+1}" >
-                                        <span aria-hidden="true">&laquo;</span>
+                                    <a onclick="thesisJumpByNumber(${thesisPageInfo.pageNum+1})" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </c:if>
                             </li>
                         </c:if>
                         <li>
-                            <a href="${path }/getthesisbylikes?pagenum=${thesisPageInfo.pages }">末页</a>
-                            <c:if test="${thesisType == 1}">
-                                <a href="${pageContext.request.contextPath}/getthesisbylikes?pagenum=${thesisPageInfo.pages }">末页</a>
+                            <c:if test="${thesisType == 1}">`
+                                <a onclick="thesisJumpByLikes(${thesisPageInfo.pages})">末页</a>
                             </c:if>
                             <c:if test="${thesisType == 2}">
-                                <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${thesisPageInfo.pages }">末页</a>
-                            </c:if>
-                            <c:if test="${thesisType == 3}">
-                                <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${thesisPageInfo.pages }">末页</a>
+                                <a onclick="thesisJumpByNumber(${thesisPageInfo.pages})">末页</a>
                             </c:if>
                         </li>
                     </ul>
@@ -372,7 +449,7 @@
 
 
 
-    <div class="peopleawards" hidden>
+    <div class="peopleawards" <%=isHonorShow%> >
         <div class="col-xs-12">
             <a  class="list-group-item active">荣誉信息</a>
         </div>
@@ -445,31 +522,83 @@
                         </c:forEach>
                     </tbody>
                 </table>
-
-                <ul class="pagination pagination-sm">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
             </div>
+        </div>
+        <div class="row">
+            <%--显示分页信息摘要--%>
+            <div class="col-md-6">
+                <label class="col-md-2">      </label>
+                <strong style="color:darkcyan">当前${honorPageInfo.pageNum }页,总${honorPageInfo.pages }页,总${honorPageInfo.total }条记录</strong>
+            </div>
+            <div class="col-md-6">
+                <nav aria-label="=Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <c:if test="${honorType == 1}">
+                                <a onclick="honorJumpByLikes(1)">首页</a>
+                            </c:if>
+                            <c:if test="${honorType == 2}">
+                                <a onclick="honorJumpByNumber(1)">首页</a>
+                            </c:if>
+                        </li>
+                        <!-- 判断是否有上一页，以便显示点击按钮 -->
+                        <c:if test="${honorPageInfo.hasPreviousPage }">
+                            <li>
+                                <c:if test="${honorType == 1}">
+                                    <a onclick="honorJumpByLikes(${honorPageInfo.pageNum-1})" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${honorType == 2}">
+                                    <a onclick="honorJumpByNumber(${honorPageInfo.pageNum-1})" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                            </li>
+                        </c:if>
+                        <!-- 遍历页码 -->
+                        <c:forEach items="${honorPageInfo.navigatepageNums }" var="page_Num">
+                            <c:if test="${page_Num == honorPageInfo.pageNum }">
+                                <li class="active"><a href="#">${page_Num }</a></li>
+                            </c:if>
+                            <c:if test="${page_Num != honorPageInfo.pageNum }">
+                                <li>
+                                    <c:if test="${honorType == 1}">
+                                        <a onclick="honorJumpByLikes(${page_Num})">${page_Num }</a>
+                                    </c:if>
+                                    <c:if test="${honorType == 2}">
+                                        <a onclick="honorJumpByNumber(${page_Num})">${page_Num }</a>
+                                    </c:if>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                        <!-- 判断是否有下一页 -->
+                        <c:if test="${honorPageInfo.hasNextPage }">
+                            <li>
+                                <c:if test="${honorType == 1}">
+                                    <a onclick="honorJumpByLikes(${honorPageInfo.pageNum+1})" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${honorType == 2}">
+                                    <a onclick="honorJumpByNumber(${honorPageInfo.pageNum+1})" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </c:if>
+                            </li>
+                        </c:if>
+                        <li>
+                            <c:if test="${honorType == 1}">
+                                <a onclick="honorJumpByLikes(${honorPageInfo.pages})">末页</a>
+                            </c:if>
+                            <c:if test="${honorType == 2}">
+                                <a onclick="honorJumpByNumber(${honorPageInfo.pages})">末页</a>
+                            </c:if>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
         </div>
     </div>
     </body>

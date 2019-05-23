@@ -13,6 +13,8 @@ import java.util.List;
  **/
 public interface HonorService {
 
+    PageInfo<Honor> getAll(Integer pageNum);
+
     Honor getHonorByKey(Integer honorid);
 
     int addHonor(Honor honor);

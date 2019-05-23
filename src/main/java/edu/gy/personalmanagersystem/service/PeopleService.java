@@ -43,4 +43,6 @@ public interface PeopleService {
 
     PageInfo<People> getByLikes(People people,Integer pageNum);
 
+    PageInfo<People> getAll(Integer pageNum);
+
 }

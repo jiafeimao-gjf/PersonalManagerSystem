@@ -30,7 +30,7 @@
     </div>
     <div>
         <ul class="nav nav-tabs navbar-right">
-            <li class="body1"><a href="${pageContext.request.contextPath}/personalIndex">返回个人主页</a></li>
+            <li class="body1"><a href="${pageContext.request.contextPath}/personalIndex?chosenmune=honorinfo">返回个人主页</a></li>
         </ul>
     </div>
 </nav>

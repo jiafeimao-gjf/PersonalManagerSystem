@@ -72,10 +72,15 @@ public class LoginController {
                     session.setAttribute("honorType",2);// 2表示具体某个人的信息
                     resultVO.setData("user");
                 } else if (role.getRoleid() == 1) {
-                    PageInfo<Honor> honorPageInfo = honorService.getByItem(null,null,1);
-                    PageInfo<Thesis> thesisPageInfo = thesisService.getByItem(null,null,1);
+                    PageInfo<Honor> honorPageInfo = honorService.getAll(1);
+                    PageInfo<Thesis> thesisPageInfo = thesisService.getAll(1);
+                    PageInfo<People> peoplePageInfo = peopleService.getAll(1);
                     session.setAttribute("honorPageInfo",honorPageInfo);
                     session.setAttribute("thesisPageInfo",thesisPageInfo);
+                    session.setAttribute("peoplePageInfo",peoplePageInfo);
+                    session.setAttribute("thesisType",3);// 2表示具体某个人的信息
+                    session.setAttribute("honorType",3);// 2表示具体某个人的信息
+                    session.setAttribute("peopleType",1);// 1 全部人员
                     resultVO.setData("admin");
                 }
                 session.setAttribute("peopleinfo",peopleInfo);
@@ -102,7 +107,29 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/personalIndex")
-    public String personalIndex(){
+    public String personalIndex(@RequestParam(value = "chosenmune",required = false)String chosenmune
+                                ,HttpSession session){
+        if ("honorinfo".equals(chosenmune)) {
+            session.setAttribute("isinfoshow","hidden");
+            session.setAttribute("ispeopleshow","hidden");
+            session.setAttribute("ishonorshow","");
+            session.setAttribute("isthesisshow","hidden");
+        } else if("thesisinfo".equals(chosenmune)) {
+            session.setAttribute("isinfoshow", "hidden");
+            session.setAttribute("ishonorshow", "hidden");
+            session.setAttribute("ispeopleshow","hidden");
+            session.setAttribute("isthesisshow", "");
+        }else if("peoplesinfo".equals(chosenmune)) {
+            session.setAttribute("isinfoshow", "hidden");
+            session.setAttribute("ishonorshow", "hidden");
+            session.setAttribute("ispeopleshow","");
+            session.setAttribute("isthesisshow", "hidden");
+        } else {
+            session.setAttribute("isinfoshow","");
+            session.setAttribute("ispeopleshow","hidden");
+            session.setAttribute("ishonorshow","hidden");
+            session.setAttribute("isthesisshow","hidden");
+        }
         return "personalIndex";
     }
 }

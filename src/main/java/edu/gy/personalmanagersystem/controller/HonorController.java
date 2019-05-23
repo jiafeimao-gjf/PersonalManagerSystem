@@ -154,6 +154,19 @@ public class HonorController {
         }
     }
 
+    @RequestMapping(value = "getallhonor",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultVO<String> getAllHonor(@RequestParam(value = "pagenum",required = false)Integer pageNum,
+                                        HttpSession session){
+        PageInfo<Honor> honorPageInfo;
+        if (pageNum != null) {
+            honorPageInfo = honorService.getAll(pageNum);
+        } else {
+            honorPageInfo = honorService.getAll(1);
+        }
+        return setResultVO(honorPageInfo,session);
+    }
+
     private ResultVO<String> setResultVO(PageInfo<Honor> honorPageInfo,HttpSession session){
         if (honorPageInfo.getList() == null) {
             logger.info("没有荣誉信息");
