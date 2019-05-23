@@ -1,5 +1,6 @@
 package edu.gy.personalmanagersystem.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.pojo.Thesis;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public interface ThesisService {
 
     Thesis getThesisByKey(Integer thesisid);
 
-    List<Thesis> getByItem(Thesis thesis,String rule);
+    PageInfo<Thesis> getByItem(Thesis thesis, String rule,Integer pageNum);
 
-    List<Thesis> getByLikes(Thesis thesis);
+    PageInfo<Thesis> getByLikes(Thesis thesis,Integer pageInfo);
 
 }

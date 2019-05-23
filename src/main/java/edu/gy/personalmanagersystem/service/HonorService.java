@@ -1,5 +1,6 @@
 package edu.gy.personalmanagersystem.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.pojo.Honor;
 
 import java.util.List;
@@ -19,11 +20,11 @@ public interface HonorService {
     int updateHonorInfo(Honor honor);
 
 
-    List<Honor> getByItem(Honor honor,String rule);
+    PageInfo<Honor> getByItem(Honor honor, String rule,Integer pageNum);
 
     int addHonors(List<Honor> honorList);
 
     int deleteHonor(Integer number);
 
-    List<Honor> getByLikes(Honor honor);
+    PageInfo<Honor> getByLikes(Honor honor,Integer pageNum);
 }

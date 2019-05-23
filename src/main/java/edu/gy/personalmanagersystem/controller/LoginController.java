@@ -1,5 +1,6 @@
 package edu.gy.personalmanagersystem.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.*;
 import edu.gy.personalmanagersystem.service.*;
@@ -62,17 +63,19 @@ public class LoginController {
                 if (role.getRoleid() == 2) {
                     Honor honor = new Honor();
                     honor.setNumber(number);
-                    List<Honor> honorList = honorService.getByItem(honor,null);
+                    PageInfo<Honor> honorPageInfo = honorService.getByItem(honor,null,1);
                     Thesis thesis = new Thesis();thesis.setNumber(number);
-                    List<Thesis> thesisList = thesisService.getByItem(thesis,null);
-                    session.setAttribute("honorList",honorList);
-                    session.setAttribute("thesisList",thesisList);
+                    PageInfo<Thesis> thesisPageInfo = thesisService.getByItem(thesis,null,1);
+                    session.setAttribute("honorPageInfo",honorPageInfo);
+                    session.setAttribute("thesisPageInfo",thesisPageInfo);
+                    session.setAttribute("thesisType",2);// 2表示具体某个人的信息
+                    session.setAttribute("honorType",2);// 2表示具体某个人的信息
                     resultVO.setData("user");
                 } else if (role.getRoleid() == 1) {
-                    List<Honor> honorList = honorService.getByItem(null,null);
-                    List<Thesis> thesisList = thesisService.getByItem(null,null);
-                    session.setAttribute("honorList",honorList);
-                    session.setAttribute("thesisList",thesisList);
+                    PageInfo<Honor> honorPageInfo = honorService.getByItem(null,null,1);
+                    PageInfo<Thesis> thesisPageInfo = thesisService.getByItem(null,null,1);
+                    session.setAttribute("honorPageInfo",honorPageInfo);
+                    session.setAttribute("thesisPageInfo",thesisPageInfo);
                     resultVO.setData("admin");
                 }
                 session.setAttribute("peopleinfo",peopleInfo);
@@ -91,8 +94,8 @@ public class LoginController {
     public String index(HttpSession session){
         if (session.getAttribute("peopleinfo") != null){
             session.removeAttribute("peopleinfo");
-            session.removeAttribute("honorList");
-            session.removeAttribute("thesisList");
+            session.removeAttribute("honorPageInfo");
+            session.removeAttribute("thesisPageInfo");
             logger.info("用户已退出登录");
         }
         return "index";

@@ -1,5 +1,7 @@
 package edu.gy.personalmanagersystem.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.dao.ThesisMapper;
 import edu.gy.personalmanagersystem.pojo.Thesis;
 import edu.gy.personalmanagersystem.service.ThesisService;
@@ -39,11 +41,17 @@ public class ThesisServiceImpl implements ThesisService {
         return thesisDao.addEntitys(thesisList);
     }
 
-    public List<Thesis> getByItem(Thesis thesis, String rule) {
-        return thesisDao.getByItem(thesis,rule);
+    public PageInfo<Thesis> getByItem(Thesis thesis, String rule,Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<Thesis> thesisList = thesisDao.getByItem(thesis,rule);
+        PageInfo<Thesis> thesisPageInfo = new PageInfo<Thesis>(thesisList,5);
+        return thesisPageInfo;
     }
 
-    public List<Thesis> getByLikes(Thesis thesis) {
-        return thesisDao.getThesisInfoByLikes(thesis);
+    public PageInfo<Thesis> getByLikes(Thesis thesis,Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<Thesis> thesisList = thesisDao.getThesisInfoByLikes(thesis);
+        PageInfo<Thesis> thesisPageInfo = new PageInfo<Thesis>(thesisList,5);
+        return thesisPageInfo;
     }
 }

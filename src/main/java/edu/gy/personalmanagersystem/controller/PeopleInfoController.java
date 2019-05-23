@@ -1,5 +1,6 @@
 package edu.gy.personalmanagersystem.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Role;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,21 +75,21 @@ public class PeopleInfoController {
 
     @RequestMapping(value = "/queryPeopleInfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<List<People>> queryPeopleByLikes(@RequestParam("name")String name, @RequestParam("department")String department,
-                                   @RequestParam("birthplace")String birthplace){
+    public ResultVO<String> queryPeopleByLikes(@RequestParam("name")String name,
+                                               @RequestParam("department")String department,
+                                               @RequestParam("birthplace")String birthplace,
+                                               @RequestParam("pagenum")Integer pageNum,
+                                               HttpSession session){
         People people = new People();
-        if("".equals(name)){
 
-        } else {
-            people.setName(name);
-            people.setDepartment(department);
-            people.setBirthplace(birthplace);
-        }
+        people.setName(name);
+        people.setDepartment(department);
+        people.setBirthplace(birthplace);
 
-        List<People> peopleList = peopleService.getByLikes(people);
-
-        ResultVO<List<People>> resultVO = new ResultVO<List<People>>(200,"success");
-
+        PageInfo<People> peoplePageInfo = peopleService.getByLikes(people,pageNum);
+        ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+        resultVO.setData("成功获取教职工信息");
+        session.setAttribute("peoplePageInfo",peoplePageInfo);
         return resultVO;
 
     }

@@ -1,18 +1,15 @@
 package edu.gy.personalmanagersystem.controller;
 
-import com.sun.tools.internal.xjc.model.Model;
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Thesis;
 import edu.gy.personalmanagersystem.service.ThesisService;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
-import java.awt.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,12 +64,20 @@ public class ThesisController {
 
     @RequestMapping(value = "/getthesisbynumber",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<String> getThesisByNumber(@RequestParam("number")String number, HttpSession session){
+    public ResultVO<String> getThesisByNumber(@RequestParam("number")String number,
+                                              @RequestParam(value = "pagenum",required = false)Integer pageNum,
+                                              HttpSession session){
         logger.info("getThesisByNumber");
         Thesis thesis = new Thesis();
         thesis.setNumber(number);
-        List<Thesis> thesisList = thesisService.getByItem(thesis,null);
-        return setResultVO(session,thesisList);
+        PageInfo<Thesis> thesisPageInfo;
+        if (pageNum == null){
+            thesisPageInfo = thesisService.getByItem(thesis,null,1);
+        } else{
+            thesisPageInfo = thesisService.getByItem(thesis,null,pageNum);
+        }
+        session.setAttribute("thesisType",2);// 1表示具体某个人的信息
+        return setResultVO(session,thesisPageInfo);
     }
 
     @RequestMapping(value = "/lookthesisinfo",method = RequestMethod.GET)
@@ -101,6 +106,7 @@ public class ThesisController {
                                              @RequestParam("department")String department,
                                              @RequestParam("classify")String classify,
                                              @RequestParam("magazine")String magazine,
+                                             @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                              HttpSession session){
         People people = (People) session.getAttribute("peopleinfo");
         if (people == null) {
@@ -117,8 +123,14 @@ public class ThesisController {
             thesis.setClassify(classify);
             thesis.setMagazine(magazine);
             thesis.setCompany(department);
-            List<Thesis> thesisList = thesisService.getByLikes(thesis);
-            return setResultVO(session,thesisList);
+            PageInfo<Thesis> thesisPageInfo;
+            if (pageNum == null){
+                thesisPageInfo = thesisService.getByLikes(thesis,1);
+            } else{
+                thesisPageInfo = thesisService.getByLikes(thesis,pageNum);
+            }
+            session.setAttribute("thesisType",1);// 1表示具体某个人的信息
+            return setResultVO(session,thesisPageInfo);
         }
     }
 
@@ -146,15 +158,18 @@ public class ThesisController {
         }
     }
 
-    private ResultVO<String> setResultVO(HttpSession session,List<Thesis> thesisList){
-        if (thesisList == null){
+    private ResultVO<String> setResultVO(HttpSession session,PageInfo<Thesis> thesisPageInfo){
+        if (thesisPageInfo.getList() == null){
             logger.log(Level.WARNING,"没有论文信息");
+            session.removeAttribute("thesisPageInfo");
+            session.setAttribute("thesisPageInfo",null);
             ResultVO<String> resultVO = new ResultVO<String>(-1,"none");
             resultVO.setData("没有论文信息");
             return resultVO;
         } else {
             logger.info("已获取论文信息");
-            session.setAttribute("thesisList",thesisList);
+            session.removeAttribute("thesisPageInfo");
+            session.setAttribute("thesisPageInfo",thesisPageInfo);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("已获取论文信息");
             return resultVO;

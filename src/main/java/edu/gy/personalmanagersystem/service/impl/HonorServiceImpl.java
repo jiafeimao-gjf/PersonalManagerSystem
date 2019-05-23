@@ -1,5 +1,7 @@
 package edu.gy.personalmanagersystem.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.dao.HonorMapper;
 import edu.gy.personalmanagersystem.pojo.Honor;
 import edu.gy.personalmanagersystem.service.HonorService;
@@ -32,8 +34,11 @@ public class HonorServiceImpl implements HonorService {
     }
 
 
-    public List<Honor> getByItem(Honor honor, String rule) {
-        return honorDao.getByItem(honor,rule);
+    public PageInfo<Honor> getByItem(Honor honor, String rule,Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<Honor> honorList = honorDao.getByItem(honor,rule);
+        PageInfo<Honor> pageInfo = new PageInfo<Honor>(honorList,5);
+        return pageInfo;
     }
 
     public int addHonors(List<Honor> honorList) {
@@ -44,7 +49,10 @@ public class HonorServiceImpl implements HonorService {
         return honorDao.deleteByPrimaryKey(honorid);
     }
 
-    public List<Honor> getByLikes(Honor honor) {
-        return honorDao.getHonorInfoByLikes(honor);
+    public PageInfo<Honor> getByLikes(Honor honor,Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<Honor> honorList = honorDao.getHonorInfoByLikes(honor);
+        PageInfo<Honor> pageInfo = new PageInfo<Honor>(honorList,5);
+        return pageInfo;
     }
 }

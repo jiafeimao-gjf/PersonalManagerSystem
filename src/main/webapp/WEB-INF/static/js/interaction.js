@@ -187,10 +187,6 @@ $(document).ready(function () {
                     console.log(result.info);
                     alert(result.data);
                     window.location.href="/PersonalManagerSystem_war/personalIndex";
-                    console.log("论文信息");
-                    $(".peopleinfo").hide();
-                    $(".peoplethesis").show();
-                    $(".peopleawards").hide();
                 } else {
                     alert(result.data);
                 }
@@ -217,9 +213,6 @@ $(document).ready(function () {
                     console.log(result.info);
                     alert(result.data);
                     window.location.href="/PersonalManagerSystem_war/personalIndex";
-                    $(".peopleinfo").hide();
-                    $(".peoplethesis").hide();
-                    $(".peopleawards").show();
                 } else {
                     alert(result.data);
                 }
@@ -251,10 +244,6 @@ $(document).ready(function () {
                     console.log(result.info);
                     alert(result.data);
                     window.location.href="/PersonalManagerSystem_war/personalIndex";
-                    console.log("论文信息");
-                    $(".peopleinfo").hide();
-                    $(".peoplethesis").show();
-                    $(".peopleawards").hide();
                 } else {
                     alert(result.data);
                 }

@@ -1,5 +1,6 @@
 package edu.gy.personalmanagersystem.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.Honor;
 import edu.gy.personalmanagersystem.pojo.People;
@@ -11,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.POST;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,12 +66,19 @@ public class HonorController {
 
     @RequestMapping(value = "/gethonorsbynumber",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<String> getHonorsByNumber(@RequestParam("number")String number,HttpSession session){
+    public ResultVO<String> getHonorsByNumber(@RequestParam("number")String number,
+                                              @RequestParam(value = "pagenum",required = false) Integer pageNum,HttpSession session){
         logger.info("getHonorsByNumber");
         Honor honor = new Honor();
         honor.setNumber(number);
-        List<Honor> honorList = honorService.getByItem(honor,null);
-        return setResultVO(honorList,session);
+        PageInfo<Honor> honorPageInfo;
+        if (pageNum != null){
+            honorPageInfo = honorService.getByItem(honor,null,pageNum);
+        } else {
+            honorPageInfo = honorService.getByItem(honor,null,1);
+        }
+        session.setAttribute("honorType",2);// 1表示具体某个人的信息
+        return setResultVO(honorPageInfo,session);
     }
 
     @RequestMapping(value = "/gethonorsbylikes",method = RequestMethod.GET)
@@ -81,6 +86,7 @@ public class HonorController {
     public ResultVO<String> getOnceHonorsByLikes(@RequestParam("awardname")String awardname,
                                              @RequestParam("department")String department,
                                              @RequestParam("awardlevel")String awardlevel,
+                                                 @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                                  HttpSession session){
         logger.info("getOnceHonorsByLikes");
         People people = (People) session.getAttribute("peopleinfo");
@@ -95,8 +101,14 @@ public class HonorController {
             honor.setAwardname(awardname);
             honor.setCompany(department);
             honor.setAwardlevel(awardlevel);
-            List<Honor> honorList = honorService.getByLikes(honor);
-            return setResultVO(honorList,session);
+            PageInfo<Honor> honorPageInfo;
+            if (pageNum != null) {
+                honorPageInfo = honorService.getByLikes(honor,pageNum);
+            } else {
+                honorPageInfo = honorService.getByLikes(honor,1);
+            }
+            session.setAttribute("honorType",1);// 1表示具体某个人的信息
+            return setResultVO(honorPageInfo,session);
         }
     }
     @RequestMapping(value = "/lookhonorinfo",method = RequestMethod.GET)
@@ -142,18 +154,18 @@ public class HonorController {
         }
     }
 
-    private ResultVO<String> setResultVO(List<Honor> honorList,HttpSession session){
-        if (honorList == null) {
+    private ResultVO<String> setResultVO(PageInfo<Honor> honorPageInfo,HttpSession session){
+        if (honorPageInfo.getList() == null) {
             logger.info("没有荣誉信息");
-            session.removeAttribute("honorList");
-            session.setAttribute("honorList",null);
+            session.removeAttribute("honorPageInfo");
+            session.setAttribute("honorPageInfo",null);
             ResultVO<String> resultVO = new ResultVO<String>(-1,"none");
             resultVO.setData("没有荣誉信息");
             return resultVO;
         } else {
             logger.info("成功获取荣誉信息");
-            session.removeAttribute("honorList");
-            session.setAttribute("honorList",honorList);
+            session.removeAttribute("honorPageInfo");
+            session.setAttribute("honorPageInfo",honorPageInfo);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("成功获取荣誉信息");
             return resultVO;

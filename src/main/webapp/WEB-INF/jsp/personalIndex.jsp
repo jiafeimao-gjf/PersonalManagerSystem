@@ -9,11 +9,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.github.pagehelper.PageInfo" %>
 <%
     People people = (People) session.getAttribute("peopleinfo");
-    List<Honor> honorList = (List<Honor>) session.getAttribute("honorList");
-    List<Thesis> thesisList = (List<Thesis>) session.getAttribute("thesisList");
-
+    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("honorPageInfo");
+    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
+    List<Honor> honorList = honorPageInfo.getList();
+    List<Thesis> thesisList = thesisPageInfo.getList();
+    int honorType = (int)session.getAttribute("honorType");
+    int thesisType = (int)session.getAttribute("thesisType");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>
@@ -61,6 +65,9 @@
                     }
                 });
             }
+            function jumpTo(target,pageNumber) {
+
+            }
         </script>
     </head>
 
@@ -79,7 +86,7 @@
         </div>
     </nav>
 
-    <div class="peopleinfo">
+    <div class="peopleinfo" >
         <div class="col-xs-12">
             <a class="list-group-item active">
                 个人信息
@@ -263,8 +270,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${thesisList}" var="thesis">
-                            <tr class="tr1">
+                        <c:forEach items="${thesisPageInfo.list}" var="thesis">
+                            <tr>
                                 <td>${thesis.thesisid}</td>
                                 <td>${thesis.name}</td>
                                 <td>${thesis.title}</td>
@@ -274,29 +281,91 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <ul class="pagination pagination-sm">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
+            </div>
+        </div>
+        <%--显示分页信息--%>
+        <div class="row">
+            <%--显示分页信息摘要--%>
+            <div class="col-md-6">
+                <strong>当前${thesisPageInfo.pageNum }页,总${thesisPageInfo.pages }页,总${thesisPageInfo.total }条记录</strong>
+            </div>
+            <div class="col-md-6">
+                <nav aria-label="=Page navigation">
+                    <ul class="pagination">
+                        <li><a href="${pageContext.request.contextPath}/personalIndex">首页</a></li>
+                        <!-- 判断是否有上一页，以便显示点击按钮 -->
+                        <c:if test="${thesisPageInfo.hasPreviousPage }">
+                            <li>
+                                <c:if test="${thesisType == 1}">
+                                    <a onclick="jumpTo('getthesisbylikes',${thesisPageInfo.pageNum-1})" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${thesisType == 2}">
+                                    <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${thesisPageInfo.pageNum-1}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${thesisType == 3}">
+                                    <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${thesisPageInfo.pageNum-1}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                            </li>
+                        </c:if>
+                        <!-- 遍历页码 -->
+                        <c:forEach items="${thesisPageInfo.navigatepageNums }" var="page_Num">
+                            <c:if test="${page_Num == thesisPageInfo.pageNum }">
+                                <li class="active"><a href="#">${page_Num }</a></li>
+                            </c:if>
+                            <c:if test="${page_Num != thesisPageInfo.pageNum }">
+                                <li>
+                                    <c:if test="${thesisType == 1}">
+                                        <a onclick="jumpTo('getthesisbylikes',${page_Num})">${page_Num }</a>
+                                    </c:if>
+                                    <c:if test="${thesisType == 2}">
+                                        <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${page_Num }">${page_Num }</a>
+                                    </c:if>
+                                    <c:if test="${thesisType == 3}">
+                                        <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${page_Num }">${page_Num }</a>
+                                    </c:if>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                        <!-- 判断是否有下一页 -->
+                        <c:if test="${thesisPageInfo.hasNextPage }">
+                            <li>
+                                <c:if test="${thesisType == 1}">
+                                    <a href="${pageContext.request.contextPath}/getthesisbylikes?pagenum=${thesisPageInfo.pageNum+1}" >
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${thesisType == 2}">
+                                    <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${thesisPageInfo.pageNum+1}">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${thesisType == 3}">
+                                    <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${thesisPageInfo.pageNum+1}" >
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </c:if>
+                            </li>
+                        </c:if>
+                        <li>
+                            <a href="${path }/getthesisbylikes?pagenum=${thesisPageInfo.pages }">末页</a>
+                            <c:if test="${thesisType == 1}">
+                                <a href="${pageContext.request.contextPath}/getthesisbylikes?pagenum=${thesisPageInfo.pages }">末页</a>
+                            </c:if>
+                            <c:if test="${thesisType == 2}">
+                                <a href="${pageContext.request.contextPath}/getthesisbynumber?number=<%=people.getNumber()%>&pagenum=${thesisPageInfo.pages }">末页</a>
+                            </c:if>
+                            <c:if test="${thesisType == 3}">
+                                <a href="${pageContext.request.contextPath}/getallthesis?pagenum=${thesisPageInfo.pages }">末页</a>
+                            </c:if>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -365,7 +434,7 @@
                     </tr>
                     </thead>
                     <tbody id="honors-body">
-                        <c:forEach items="${honorList}" var="honor">
+                        <c:forEach items="${honorPageInfo.list}" var="honor">
                             <tr>
                                 <td>${honor.honorid}</td>
                                 <td>${honor.number}</td>

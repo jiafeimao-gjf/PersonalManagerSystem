@@ -1,5 +1,6 @@
 package edu.gy.personalmanagersystem.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.pojo.People;
 
 import java.util.List;
@@ -40,6 +41,6 @@ public interface PeopleService {
      **/
     int updatePeopleInfo(People people);
 
-    List<People> getByLikes(People people);
+    PageInfo<People> getByLikes(People people,Integer pageNum);
 
 }

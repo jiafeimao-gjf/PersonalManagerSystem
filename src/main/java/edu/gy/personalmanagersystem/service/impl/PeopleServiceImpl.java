@@ -1,5 +1,7 @@
 package edu.gy.personalmanagersystem.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.dao.PeopleMapper;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.service.PeopleService;
@@ -36,7 +38,11 @@ public class PeopleServiceImpl implements PeopleService {
         return peopleDao.updateByPrimaryKeySelective(people);
     }
 
-    public List<People> getByLikes(People people) {
-        return peopleDao.getPeopleInfoByLikes(people);
+    public PageInfo<People> getByLikes(People people, Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        PageInfo<People> peoplePageInfo = new PageInfo<People>();
+        List<People> peopleList = peopleDao.getPeopleInfoByLikes(people);
+        peoplePageInfo.setList(peopleList);
+        return peoplePageInfo;
     }
 }

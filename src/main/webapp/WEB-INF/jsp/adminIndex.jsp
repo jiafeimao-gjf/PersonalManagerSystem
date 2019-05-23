@@ -73,7 +73,7 @@
             <li class="body1"><a>个人信息</a></li>
             <li class="body2"><a>论文管理</a></li>
             <li class="body3"><a>荣誉管理</a></li>
-            <li class="body4"><a href="${pageContext.request.contextPath}/index">退出登陆</a></li>
+            <li class="body4"><a href="${pageContext.request.contextPath}/">退出登陆</a></li>
         </ul>
     </div>
 </nav>
@@ -189,7 +189,7 @@
 
 <div class="peoplethesis" hidden>
     <div class="col-xs-12">
-        <a class="list-group-item active"> 论文信息</a>
+        <a class="list-group-item active">论文信息</a>
     </div>
     <div class="col-xs-12">
         <br>
@@ -232,6 +232,8 @@
                     <input type="button" class="thesis-search btn col-sm-2 btn-primary" value="搜索"/>
                     <label class="col-sm-2">    </label>
                     <input type="button" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
+                    <label class="col-sm-2">    </label>
+                    <input type="button" class="add-a-thesis btn col-sm-2 btn-primary" value="新增论文"/>
                 </div>
             </div>
         </form>
@@ -329,10 +331,12 @@
             <hr>
             <div class="form-group">
                 <label class="col-sm-3"></label>
-                <div class="col-sm-6">
+                <div class="col-sm-10">
                     <input type="button" class="award-search btn col-sm-2 btn-primary" value="搜索"/>
                     <label class="col-sm-2">    </label>
                     <input type="button" class="display-all-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
+                    <label class="col-sm-2">    </label>
+                    <input type="button" class="add-an-award btn col-sm-2 btn-primary" value="新增荣誉"/>
                 </div>
             </div>
         </form>
