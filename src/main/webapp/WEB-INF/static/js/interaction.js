@@ -212,9 +212,9 @@ $(document).ready(function () {
        $.ajax({
            type:"get",
            datatype:"form-data",
-           url:"//localhost:8080/PersonalManagerSystem_war/gethonorsbynumber",
+           url:"/PersonalManagerSystem_war/gethonorsbynumber",
            data: {
-               "number":number,
+               "number":number
            },
            success:function (result) {
                if (result.code === 200) {

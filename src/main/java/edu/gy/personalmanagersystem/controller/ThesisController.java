@@ -162,7 +162,8 @@ public class ThesisController {
         }
     }
 
-    @RequestMapping(value = "/getallthesis")
+    @RequestMapping(value = "/getallthesis",method = RequestMethod.GET)
+    @ResponseBody
     public ResultVO<String> getAllThesis(@RequestParam(value = "pagenum",required = false)Integer pageNum,
                                          HttpSession session){
         PageInfo<Thesis> thesisPageInfo ;

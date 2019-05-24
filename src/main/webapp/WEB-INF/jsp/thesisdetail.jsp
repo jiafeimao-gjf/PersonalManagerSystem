@@ -103,16 +103,14 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-3"></label>
-                <div class="col-sm-6">
-                    <input id="changethesisinfo" class="btn btn-primary col-sm-4" type="button" value="修改论文信息"/>
+                <div class="col-sm-8">
                     <label class="col-sm-2">    </label>
+                    <input id="changethesisinfo" class="btn btn-primary col-sm-3" type="button" value="修改论文信息"/>
                     <c:if test="<%=role.getRoleid() == 1 && thesis.getChecked() == 2%>">
-                        <button class="btn btn-primary col-sm-4" onclick="checkThesis(<%=thesis.getThesisid()%>)">
-                            审核通过
-                        </button>
-                        <label class="col-md-2">   </label>
-                        <button class="btn btn-primary col-sm-2" onclick="deletethesisinfo(<%=thesis.getThesisid()%>)">删除荣誉信息</button>
+                        <label class="col-sm-1">    </label>
+                        <button class="btn btn-primary col-sm-2" onclick="checkThesis(<%=thesis.getThesisid()%>)">审核通过</button>
+                        <label class="col-sm-1">    </label>
+                        <button class="btn btn-primary col-sm-3" onclick="deletethesisinfo(<%=thesis.getThesisid()%>)">删除论文信息</button>
                     </c:if>
                 </div>
             </div>

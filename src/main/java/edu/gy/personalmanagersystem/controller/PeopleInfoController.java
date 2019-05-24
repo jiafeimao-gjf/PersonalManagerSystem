@@ -71,7 +71,7 @@ public class PeopleInfoController {
         }
     }
 
-    @RequestMapping(value = "/querypeopleinfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/querypeoplebylikes",method = RequestMethod.GET)
     @ResponseBody
     public ResultVO<String> queryPeopleByLikes(@RequestParam("name")String name,
                                                @RequestParam("department")String department,
@@ -93,7 +93,7 @@ public class PeopleInfoController {
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("成功获取教职工信息");
         session.setAttribute("peoplePageInfo",peoplePageInfo);
-        session.setAttribute("peopleType",2);// 2表示模糊查询
+        session.setAttribute("peopleType",1);// 1表示模糊查询
         return resultVO;
 
     }
@@ -103,10 +103,11 @@ public class PeopleInfoController {
     public ResultVO<String> getAllPeople(@RequestParam("pagenum")Integer pageNum,
                                          HttpSession session) {
         PageInfo<People> peoplePageInfo = peopleService.getAll(pageNum);
+        logger.info("成功获取教职工信息");
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("成功获取教职工信息");
         session.setAttribute("peoplePageInfo",peoplePageInfo);
-        session.setAttribute("peopleType",1);// 1表示查询全部
+        session.setAttribute("peopleType",2);// 2表示查询全部
         return resultVO;
     }
 

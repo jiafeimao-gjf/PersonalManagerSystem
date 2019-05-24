@@ -80,7 +80,7 @@ public class LoginController {
                     session.setAttribute("peoplePageInfo",peoplePageInfo);
                     session.setAttribute("thesisType",3);// 2表示具体某个人的信息
                     session.setAttribute("honorType",3);// 2表示具体某个人的信息
-                    session.setAttribute("peopleType",1);// 1 全部人员
+                    session.setAttribute("peopleType",2);// 2 全部人员
                     resultVO.setData("admin");
                 }
                 session.setAttribute("peopleinfo",peopleInfo);

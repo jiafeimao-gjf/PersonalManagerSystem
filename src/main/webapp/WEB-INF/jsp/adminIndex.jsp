@@ -8,7 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
     People people = (People) session.getAttribute("peopleinfo");
@@ -97,7 +96,7 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "//localhost:8080/PersonalManagerSystem_war/getallhonor",
+                url: "/PersonalManagerSystem_war/getallhonor",
                 data: {
                     "pagenum": pageNumber
                 },
@@ -181,7 +180,7 @@
                 },
                 success: function (result) {
                     if (result.code === 200) {
-                        console.log(result.info)
+                        console.log(result.info);
                         window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=thesisinfo";
                     } else {
                         alert(result.data);
@@ -191,6 +190,7 @@
         }
 
         function peopleJumpByLikes(pageNumber) {
+            console.log("peopleJumpByLikes");
             var name = $(".key-people-name").val();
             var department = $(".key-people-department").val();
             var birthplace = $(".key-people-birth-place").val();
@@ -199,7 +199,7 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/getthesisbylikes",
+                url: "/PersonalManagerSystem_war/querypeoplebylikes",
                 data: {
                     "name": name,
                     "birthplace": birthplace,
@@ -220,6 +220,7 @@
         }
 
         function peopleJumpByAll(pageNumber) {
+            console.log("peopleJumpByAll");
             $.ajax({
                 type: "get",
                 datatype: "form-data",
@@ -229,7 +230,7 @@
                 },
                 success: function (result) {
                     if (result.code === 200) {
-                        console.log(result.info)
+                        console.log(result.info);
                         window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=peoplesinfo";
                     } else {
                         alert(result.data);
@@ -253,7 +254,7 @@
             <li class="body5"><a>教职工管理</a></li>
             <li class="body2"><a>论文管理</a></li>
             <li class="body3"><a>荣誉管理</a></li>
-            <li class="body4"><a href="${pageContext.request.contextPath}/">退出登陆</a></li>
+            <li class="body4"><a>退出登陆</a></li>
         </ul>
     </div>
 </nav>
@@ -410,14 +411,14 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-3"></label>
-                <div class="col-sm-6">
+                <label class="col-sm-2">    </label>
+                <div class="col-sm-8">
                     <input type="button" onclick="peopleJumpByLikes(1)" class="people-search btn col-sm-2 btn-primary"
                            value="搜索"/>
-                    <label class="col-sm-2"> </label>
+                    <label class="col-sm-2">    </label>
                     <input type="button" onclick="peopleJumpByAll(1)"
-                           class="display-all-people btn col-sm-4 btn-primary" value="显示全部教职工信息"/>
-                    <label class="col-sm-2"> </label>
+                           class="display-all-people btn col-sm-3 btn-primary" value="显示全部教职工信息"/>
+                    <label class="col-sm-2">    </label>
                     <input type="button" class="add-a-people btn col-sm-2 btn-primary" value="新增教职工"/>
                 </div>
             </div>
@@ -593,10 +594,10 @@
             <hr>
             <div class="form-group">
                 <label class="col-sm-3"></label>
-                <div class="col-sm-6">
-                    <input type="button" class="thesis-search btn col-sm-2 btn-primary" value="搜索"/>
+                <div class="col-sm-8">
+                    <input type="button" onclick="thesisJumpByLikes(1)" class="thesis-search btn col-sm-2 btn-primary" value="搜索"/>
                     <label class="col-sm-2"> </label>
-                    <input type="button" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
+                    <input type="button" onclick="thesisJumpByAll(1)" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
                     <label class="col-sm-2"> </label>
                     <input type="button" class="add-a-thesis btn col-sm-2 btn-primary" value="新增论文"/>
                 </div>
@@ -752,11 +753,11 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-3"></label>
-                <div class="col-sm-10">
-                    <input type="button" class="award-search btn col-sm-2 btn-primary" value="搜索"/>
+                <label class="col-sm-3"> </label>
+                <div class="col-sm-8">
+                    <input type="button" onclick="honorJumpByLikes(1)" class="award-search btn col-sm-2 btn-primary" value="搜索"/>
                     <label class="col-sm-2"> </label>
-                    <input type="button" class="display-all-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
+                    <input type="button" onclick="honorJumpByAll(1)" class="display-all-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
                     <label class="col-sm-2"> </label>
                     <input type="button" class="add-an-award btn col-sm-2 btn-primary" value="新增荣誉"/>
                 </div>

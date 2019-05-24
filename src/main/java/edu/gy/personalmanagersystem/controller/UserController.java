@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminIndex")
-    public String adminIndex(@RequestParam(value = "ischosenmenu",required = false)String chosenmenu,
+    public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu,
                              HttpSession session){
         SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
         return "adminIndex";

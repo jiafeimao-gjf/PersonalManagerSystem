@@ -153,16 +153,14 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-3"></label>
-                <div class="col-sm-6">
-                    <input id="changeStuffInfo" class="btn btn-primary col-sm-2" type="button" value="修改信息"/>
+                <div class="col-sm-8">
+                    <label class="col-sm-2">    </label>
+                    <input id="changeStuffInfo" class="btn btn-primary col-sm-3" type="button" value="修改教职工信息"/>
                     <c:if test="<%=role.getRoleid() == 1 && stuff.getChecked() == 2%>">
-                        <label class="col-sm-2">    </label>
-                        <button class="btn btn-primary col-sm-2" onclick="checkStuff(<%=stuff.getNumber()%>)">
-                            审核通过
-                        </button>
-                        <label class="col-md-2">   </label>
-                        <button class="btn btn-primary col-sm-2" onclick="deleteStuff(<%=stuff.getNumber()%>)">删除教职工信息</button>
+                        <label class="col-sm-1">    </label>
+                        <button class="btn btn-primary col-sm-2" onclick="checkStuff(<%=stuff.getNumber()%>)">审核通过</button>
+                        <label class="col-sm-1">    </label>
+                        <button class="btn btn-primary col-sm-3" onclick="deleteStuff(<%=stuff.getNumber()%>)">删除教职工信息</button>
                     </c:if>
                 </div>
             </div>
