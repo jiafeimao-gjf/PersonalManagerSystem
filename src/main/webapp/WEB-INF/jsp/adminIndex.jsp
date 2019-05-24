@@ -16,9 +16,6 @@
     PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
     PageInfo<People> peoplePageInfo = (PageInfo<People>) session.getAttribute("peoplePageInfo");
 
-    List<Honor> honorList = honorPageInfo.getList();
-    List<Thesis> thesisList = thesisPageInfo.getList();
-    List<People> peopleList = peoplePageInfo.getList();
     int honorType = (int) session.getAttribute("honorType");
     int thesisType = (int) session.getAttribute("thesisType");
     int peopleType = (int) session.getAttribute("thesisType");
@@ -34,8 +31,7 @@
     <jsp:include page="common/bootstrap.jsp"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/peopleIndex.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
-    <title><%=people.getName()%>
-    </title>
+    <title><%=people.getName()%></title>
     <script type="text/javascript">
         function thesisDetail(thesisid) {
             console.log("查看论文信息");
@@ -76,7 +72,22 @@
         }
 
         function peopleDetail(number) {
-
+            console.log("查看教职工信息");
+            $.ajax({
+                type:"get",
+                datatype:"form-date",
+                url:"/PersonalManagerSystem_war/lookpeopleinfo",
+                data:{
+                    "number":number
+                },
+                success:function(result){
+                    if (result.code === 200){
+                        window.location.href="/PersonalManagerSystem_war/peopledetail";
+                    } else {
+                        alert(result.data);
+                    }
+                }
+            })
         }
 
         function honorJumpByAll(pageNumber) {
@@ -93,7 +104,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=honorinfo";
                     } else {
                         alert(result.data);
                     }
@@ -119,7 +130,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=honorinfo";
                     } else {
                         alert(result.data);
                     }
@@ -139,6 +150,7 @@
                 datatype: "form-data",
                 url: "/PersonalManagerSystem_war/getthesisbylikes",
                 data: {
+                    "who":'admin',
                     "name": thesisname,
                     "title": title,
                     "department": department,
@@ -150,7 +162,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=thesisinfo";
                     } else {
                         alert(result.data);
                     }
@@ -170,7 +182,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info)
-                        window.location.href = "/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=thesisinfo";
                     } else {
                         alert(result.data);
                     }
@@ -199,7 +211,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/personalIndex?chosenmune=peoplesinfo";
+                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=peoplesinfo";
                     } else {
                         alert(result.data);
                     }
@@ -218,7 +230,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info)
-                        window.location.href = "/PersonalManagerSystem_war/personalIndex?chosenmune=peoplesinfo";
+                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=peoplesinfo";
                     } else {
                         alert(result.data);
                     }
@@ -229,10 +241,12 @@
 </head>
 
 <body>
+<!--菜单栏-->
 <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">高校人事管理系统</a>
     </div>
+
     <div>
         <ul class="nav nav-tabs navbar-right">
             <li class="body1"><a>个人信息</a></li>
@@ -250,7 +264,7 @@
             个人信息
         </a>
     </div>
-    <hr>
+
     <div class="col-xs-10">
         <br>
         <form class="form-horizontal" role="form">
@@ -354,9 +368,11 @@
 </div>
 
 <div class="stuffinfo" <%=isPeopleShow%> >
+    <!--标题-->
     <div class="col-xs-12">
         <a class="list-group-item active">教职工信息</a>
     </div>
+    <!--数据检索-->
     <div class="col-xs-12">
         <br>
         <form class="form-horizontal" role="form">
@@ -407,7 +423,7 @@
             </div>
         </form>
     </div>
-
+    <%--当前页面信息--%>
     <div class="col-xs-12">
         <div class="col-md-12 column">
             <table class="table">
@@ -434,7 +450,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${peopleList}" var="one">
+                <c:forEach items="${peoplePageInfo.list}" var="one">
                     <tr>
                         <td>${one.number}</td>
                         <td>${one.name}</td>
@@ -443,7 +459,7 @@
                         <td>${one.phonenumber}</td>
                         <td>
                             <button class="thesis-detail btn btn-primary" onclick="peopleDetail(${one.number})">
-                                查看详情e
+                                查看详情
                             </button>
                         </td>
                     </tr>
@@ -452,7 +468,7 @@
             </table>
         </div>
     </div>
-    <%--显示分页信息--%>
+    <%--显示分页页码--%>
     <div class="row">
         <%--显示分页信息摘要--%>
         <div class="col-md-6">
@@ -466,7 +482,7 @@
                         <c:if test="${peopleType == 1}">
                             <a onclick="peopleJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${peopleType == 3}">
+                        <c:if test="${peopleType == 2}">
                             <a onclick="peopleJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
@@ -532,9 +548,11 @@
 </div>
 
 <div class="peoplethesis" <%=isThesisShow%>>
+    <!--标题-->
     <div class="col-xs-12">
         <a class="list-group-item active">论文信息</a>
     </div>
+    <!--数据检索-->
     <div class="col-xs-12">
         <br>
         <form class="form-horizontal" role="form">
@@ -585,7 +603,7 @@
             </div>
         </form>
     </div>
-
+    <%--当前页面信息--%>
     <div class="col-xs-12">
         <div class="col-md-12 column">
             <table class="table">
@@ -609,7 +627,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${thesisList}" var="thesis">
+                <c:forEach items="${thesisPageInfo.list}" var="thesis">
                     <tr>
                         <td>${thesis.thesisid}</td>
                         <td>${thesis.name}</td>
@@ -626,7 +644,7 @@
             </table>
         </div>
     </div>
-    <%--显示分页信息--%>
+    <%--显示分页页码--%>
     <div class="row">
         <%--显示分页信息摘要--%>
         <div class="col-md-6">
@@ -640,7 +658,7 @@
                         <c:if test="${thesisType == 1}">
                             <a onclick="thesisJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${thesisType == 2}">
+                        <c:if test="${thesisType == 3}">
                             <a onclick="thesisJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
@@ -652,7 +670,7 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${thesisType == 2}">
+                            <c:if test="${thesisType == 3}">
                                 <a onclick="thesisJumpByAll(${thesisPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -669,7 +687,7 @@
                                 <c:if test="${thesisType == 1}">
                                     <a onclick="thesisJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${thesisType == 2}">
+                                <c:if test="${thesisType == 3}">
                                     <a onclick="thesisJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -683,7 +701,7 @@
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${thesisType == 2}">
+                            <c:if test="${thesisType == 3}">
                                 <a onclick="thesisJumpByAll(${thesisPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -694,7 +712,7 @@
                         <c:if test="${thesisType == 1}">
                             <a onclick="thesisJumpByLikes(${thesisPageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${thesisType == 2}">
+                        <c:if test="${thesisType == 3}">
                             <a onclick="thesisJumpByAll(${thesisPageInfo.pages})">末页</a>
                         </c:if>
                     </li>
@@ -706,10 +724,11 @@
 
 
 <div class="peopleawards" <%=isHonorShow%>>
+    <!--标题-->
     <div class="col-xs-12">
         <a class="list-group-item active">荣誉信息</a>
     </div>
-
+    <!--数据检索-->
     <div class="col-xs-12">
         <br>
         <form class="form-horizontal" role="form">
@@ -745,7 +764,7 @@
         </form>
 
     </div>
-
+    <%--当前页面信息--%>
     <div class="col-xs-12">
         <div class="col-md-12 column">
             <table class="table">
@@ -769,7 +788,7 @@
                 </tr>
                 </thead>
                 <tbody id="honors-body">
-                <c:forEach items="${honorList}" var="honor">
+                <c:forEach items="${honorPageInfo.list}" var="honor">
                     <tr>
                         <td>${honor.honorid}</td>
                         <td>${honor.number}</td>
@@ -785,6 +804,7 @@
 
         </div>
     </div>
+    <%--显示分页页码--%>
     <div class="row">
         <%--显示分页信息摘要--%>
         <div class="col-md-6">
@@ -798,7 +818,7 @@
                         <c:if test="${honorType == 1}">
                             <a onclick="honorJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${honorType == 2}">
+                        <c:if test="${honorType == 3}">
                             <a onclick="honorJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
@@ -810,7 +830,7 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${honorType == 2}">
+                            <c:if test="${honorType == 3}">
                                 <a onclick="honorJumpByAll(${honorPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -827,7 +847,7 @@
                                 <c:if test="${honorType == 1}">
                                     <a onclick="honorJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${honorType == 2}">
+                                <c:if test="${honorType == 3}">
                                     <a onclick="honorJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -841,7 +861,7 @@
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${honorType == 2}">
+                            <c:if test="${honorType == 3}">
                                 <a onclick="honorJumpByAll(${honorPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -852,7 +872,7 @@
                         <c:if test="${honorType == 1}">
                             <a onclick="honorJumpByLikes(${honorPageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${honorType == 2}">
+                        <c:if test="${honorType == 3}">
                             <a onclick="honorJumpByAll(${honorPageInfo.pages})">末页</a>
                         </c:if>
                     </li>

@@ -30,7 +30,12 @@
     </div>
     <div>
         <ul class="nav nav-tabs navbar-right">
-            <li class="body1"><a href="${pageContext.request.contextPath}/personalIndex?chosenmune=thesisinfo">返回个人主页</a></li>
+            <c:if test="<%=role.getRoleid() == 2%>">
+                <li ><a href="${pageContext.request.contextPath}/personalIndex?chosenmenu=thesisinfo">返回个人主页</a></li>
+            </c:if>
+            <c:if test="<%=role.getRoleid() == 1%>">
+                <li ><a href="${pageContext.request.contextPath}/adminIndex?chosenmenu=thesisinfo">返回管理员主页</a></li>
+            </c:if>
         </ul>
     </div>
 </nav>
@@ -106,6 +111,8 @@
                         <button class="btn btn-primary col-sm-4" onclick="checkThesis(<%=thesis.getThesisid()%>)">
                             审核通过
                         </button>
+                        <label class="col-md-2">   </label>
+                        <button class="btn btn-primary col-sm-2" onclick="deletethesisinfo(<%=thesis.getThesisid()%>)">删除荣誉信息</button>
                     </c:if>
                 </div>
             </div>

@@ -89,6 +89,7 @@ public class PeopleInfoController {
         people.setPosition(position);
 
         PageInfo<People> peoplePageInfo = peopleService.getByLikes(people,pageNum);
+        logger.info("成功获取教职工信息");
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("成功获取教职工信息");
         session.setAttribute("peoplePageInfo",peoplePageInfo);
@@ -109,18 +110,23 @@ public class PeopleInfoController {
         return resultVO;
     }
 
-    @RequestMapping(value = "/deletePeople",method = RequestMethod.POST)
+    @RequestMapping(value = "/deletepeople",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> deletePeopleInfo(@RequestParam("number")String number){
+    public ResultVO<String> deletePeopleInfo(@RequestParam("number")String number,
+                                             HttpSession session){
 
         int res = peopleService.deletePeople(number);
-
         if (res == 1){
+            logger.info("成功删除该职工相关的信息");
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            PageInfo<People> peoplePageInfo = peopleService.getAll(1);
+            session.setAttribute("peoplePageInfo",peoplePageInfo);
             resultVO.setData("成功删除该职工相关的信息");
             return resultVO;
         } else {
+            logger.warning("删除该职工相关的信息失败");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("删除该职工相关的信息失败");
             return resultVO;
         }
     }
@@ -130,12 +136,43 @@ public class PeopleInfoController {
     public ResultVO<String> updatePeopleInfo(People people){
         int res = peopleService.updatePeopleInfo(people);
         if (res == 1) {
+            logger.info("成功修改教职工信息");
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功修改教职工信息");
             return resultVO;
         } else {
+            logger.info("修改教职工信息失败");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("修改教职工信息失败");
             return resultVO;
         }
     }
+
+    @RequestMapping(value = "lookpeopleinfo",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultVO<String> lookPeopleInfo(@RequestParam("number")String number,
+                                       HttpSession session){
+        People people = peopleService.getPeople(number);
+
+        if (people != null){
+            logger.info("成功获取职工信息");
+            session.setAttribute("stuffinfo",people);
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("成功获取职工信息");
+            return resultVO;
+        } else {
+            logger.warning("获取职工信息失败");
+            session.setAttribute("stuffinfo",null);
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            resultVO.setData("获取职工信息失败");
+            return  resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/peopledetail")
+    public String peopleDetail(){
+        return "peopledetail";
+    }
+
 
 }

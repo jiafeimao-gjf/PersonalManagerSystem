@@ -14,8 +14,6 @@
     People people = (People) session.getAttribute("peopleinfo");
     PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("honorPageInfo");
     PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
-    List<Honor> honorList = honorPageInfo.getList();
-    List<Thesis> thesisList = thesisPageInfo.getList();
     int honorType = (int)session.getAttribute("honorType");
     int thesisType = (int)session.getAttribute("thesisType");
 
@@ -87,7 +85,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info);
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
                         } else {
                             alert(result.data);
                         }
@@ -109,7 +107,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info);
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
                         } else {
                             alert(result.data);
                         }
@@ -139,7 +137,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info);
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
                         } else {
                             alert(result.data);
                         }
@@ -160,7 +158,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info)
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
                         } else {
                             alert(result.data);
                         }
@@ -446,8 +444,6 @@
             </div>
         </div>
     </div>
-
-
 
     <div class="peopleawards" <%=isHonorShow%> >
         <div class="col-xs-12">

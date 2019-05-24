@@ -167,6 +167,7 @@ public class HonorController {
         return setResultVO(honorPageInfo,session);
     }
 
+
     private ResultVO<String> setResultVO(PageInfo<Honor> honorPageInfo,HttpSession session){
         if (honorPageInfo.getList() == null) {
             logger.info("没有荣誉信息");

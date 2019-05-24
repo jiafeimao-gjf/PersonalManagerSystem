@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // 登陆实现
     $("#login").click(function () {
         console.log("login");
         var no = $("#username").val();
@@ -71,7 +72,55 @@ $(document).ready(function () {
                 success:function (resultVO) {
                     if (resultVO.code === 200) {
                         console.log("修改成功");
-                        alert("个人信息修改成功");
+                        if (result.data === "user"){
+                            window.location.href="/PersonalManagerSystem_war/personalIndex";
+                        } else if (result.data === "admin"){
+                            window.location.href="/PersonalManagerSystem_war/adminIndex";
+                        }
+                    } else {
+                        alert("个人信息修改失败，因为"+resultVO.info);
+                    }
+                }
+            });
+        }
+    });
+
+    $("#changeStuffInfo").click(function () {
+        if (confirm("确定要修改信息？")){
+            console.log("修改信息");
+            var number = $(".stuff-number").val();
+            var name = $(".stuff-name").val();
+            var age = $(".stuff-age").val();
+            var sex = $(".stuff-sex").val();
+            var depart = $(".stuff-department").val();
+            var position = $(".stuff-position").val();
+            var birthplace = $(".stuff-birthplace").val();
+            var nation = $(".stuff-nation").val();
+            var identityno = $(".stuff-identityno").val();
+            var politicalstatus = $(".stuff-politicalstatus").val();
+            var phonenumber = $(".stuff-phonenumber").val();
+            $.ajax({
+                type:"post",
+                datatype:"form-data",
+                url:"/PersonalManagerSystem_war/updatePeopleInfo",
+                data:{
+                    "number":number,
+                    "name":name,
+                    "age":age,
+                    "sex":sex,
+                    "department":depart,
+                    "position":position,
+                    "birthplace":birthplace,
+                    "nation":nation,
+                    "identityno":identityno,
+                    "politicalstatus":politicalstatus,
+                    "phonenumber":phonenumber,
+                    "checked":1
+                },
+                success:function (resultVO) {
+                    if (resultVO.code === 200) {
+                        console.log("修改成功");
+                        window.location.href="/PersonalManagerSystem_war/personalIndex";
                     } else {
                         alert("个人信息修改失败，因为"+resultVO.info);
                     }
@@ -170,7 +219,7 @@ $(document).ready(function () {
            success:function (result) {
                if (result.code === 200) {
                    console.log(result.info);
-                   window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                   window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
                } else {
                    alert(result.data);
                }
@@ -191,7 +240,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
                 } else {
                     alert(result.data);
                 }
@@ -217,7 +266,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=honorinfo";
+                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
                 } else {
                     alert(result.data);
                 }
@@ -243,7 +292,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmune=thesisinfo";
+                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
                 } else {
                     alert(result.data);
                 }

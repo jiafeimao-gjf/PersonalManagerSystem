@@ -19,8 +19,12 @@
     <jsp:include page="common/bootstrap.jsp"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/peopleIndex.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
-    <title><%=people.getName()%>
-    </title>
+    <title><%=people.getName()%></title>
+    <script type="text/javascript">
+        function honorChecked(honorid) {
+
+        }
+    </script>
 </head>
 
 <body>
@@ -30,7 +34,12 @@
     </div>
     <div>
         <ul class="nav nav-tabs navbar-right">
-            <li class="body1"><a href="${pageContext.request.contextPath}/personalIndex?chosenmune=honorinfo">返回个人主页</a></li>
+            <c:if test="<%=role.getRoleid() == 2%>">
+                <li ><a href="${pageContext.request.contextPath}/personalIndex?chosenmenu=honorinfo">返回个人主页</a></li>
+            </c:if>
+            <c:if test="<%=role.getRoleid() == 1%>">
+                <li ><a href="${pageContext.request.contextPath}/adminIndex?chosenmenu=honorinfo">返回管理员主页</a></li>
+            </c:if>
         </ul>
     </div>
 </nav>
@@ -109,11 +118,13 @@
                 <label class="col-sm-3"></label>
                 <div class="col-sm-6">
                     <input id="changehonorinfo" class="btn btn-primary col-sm-4" type="button" value="修改论文信息"/>
-                    <label class="col-sm-2">    </label>
                     <c:if test="<%=role.getRoleid() == 1 && honor.getChecked() == 2%>">
-                        <button class="btn btn-primary col-sm-4" onclick="checkHonor(<%=honor.getHonorid()%>)">
+                        <label class="col-sm-2">    </label>
+                        <button class="btn btn-primary col-sm-2" onclick="checkHonor(<%=honor.getHonorid()%>)">
                             审核通过
                         </button>
+                        <label class="col-md-2">   </label>
+                        <button class="btn btn-primary col-sm-2" onclick="deletehonorinfo(<%=honor.getHonorid()%>)">删除荣誉信息</button>
                     </c:if>
                 </div>
             </div>

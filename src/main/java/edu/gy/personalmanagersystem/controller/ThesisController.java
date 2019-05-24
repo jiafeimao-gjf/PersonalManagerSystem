@@ -101,22 +101,29 @@ public class ThesisController {
 
     @RequestMapping(value = "/getthesisbylikes",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<String> getThesisByLikes(@RequestParam("title")String title,
+    public ResultVO<String> getThesisByLikes(@RequestParam(value = "who",required = false)String who,
+                                             @RequestParam(value = "name",required = false)String name,
+                                             @RequestParam(value = "department",required = false)String deparment,
+                                             @RequestParam("title")String title,
                                              @RequestParam("classify")String classify,
                                              @RequestParam("magazine")String magazine,
                                              @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                              HttpSession session){
         People people = (People) session.getAttribute("peopleinfo");
+        logger.info("getThesisByLikes");
         if (people == null) {
             logger.log(Level.WARNING,"用户没有登录");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"not login");
             resultVO.setData("用户没有登录");
             return resultVO;
         } else {
-            logger.info("getThesisByLikes");
             Thesis thesis = new Thesis();
-            thesis.setNumber(people.getNumber());
-            thesis.setName(people.getName());
+            if ("admin".equals(who)){
+                thesis.setName(name);
+                thesis.setCompany(deparment);
+            }else {
+                thesis.setName(people.getName());
+            }
             thesis.setTitle(title);
             thesis.setClassify(classify);
             thesis.setMagazine(magazine);
@@ -153,6 +160,22 @@ public class ThesisController {
             resultVO.setData("跟新论文信息失败");
             return resultVO;
         }
+    }
+
+    @RequestMapping(value = "/getallthesis")
+    public ResultVO<String> getAllThesis(@RequestParam(value = "pagenum",required = false)Integer pageNum,
+                                         HttpSession session){
+        PageInfo<Thesis> thesisPageInfo ;
+        if (pageNum!=null) {
+            thesisPageInfo = thesisService.getAll(pageNum);
+        } else {
+            thesisPageInfo= thesisService.getAll(1);
+        }
+        session.setAttribute("thesisPageInfo",thesisPageInfo);
+        session.setAttribute("thesisType",3);// 1表示具体某个人的信息
+        ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+        resultVO.setData("获取全部论文信息，第 "+pageNum+" 页");
+        return resultVO;
     }
 
     private ResultVO<String> setResultVO(HttpSession session,PageInfo<Thesis> thesisPageInfo){

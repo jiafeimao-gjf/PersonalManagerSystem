@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.*;
 import edu.gy.personalmanagersystem.service.*;
+import edu.gy.personalmanagersystem.utils.SessionDataSetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,29 +107,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/personalIndex")
-    public String personalIndex(@RequestParam(value = "chosenmune",required = false)String chosenmune
+    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu
                                 ,HttpSession session){
-        if ("honorinfo".equals(chosenmune)) {
-            session.setAttribute("isinfoshow","hidden");
-            session.setAttribute("ispeopleshow","hidden");
-            session.setAttribute("ishonorshow","");
-            session.setAttribute("isthesisshow","hidden");
-        } else if("thesisinfo".equals(chosenmune)) {
-            session.setAttribute("isinfoshow", "hidden");
-            session.setAttribute("ishonorshow", "hidden");
-            session.setAttribute("ispeopleshow","hidden");
-            session.setAttribute("isthesisshow", "");
-        }else if("peoplesinfo".equals(chosenmune)) {
-            session.setAttribute("isinfoshow", "hidden");
-            session.setAttribute("ishonorshow", "hidden");
-            session.setAttribute("ispeopleshow","");
-            session.setAttribute("isthesisshow", "hidden");
-        } else {
-            session.setAttribute("isinfoshow","");
-            session.setAttribute("ispeopleshow","hidden");
-            session.setAttribute("ishonorshow","hidden");
-            session.setAttribute("isthesisshow","hidden");
-        }
+        SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
         return "personalIndex";
     }
 }

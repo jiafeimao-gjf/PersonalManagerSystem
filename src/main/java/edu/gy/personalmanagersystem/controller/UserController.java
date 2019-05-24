@@ -3,12 +3,15 @@ package edu.gy.personalmanagersystem.controller;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.UserService;
+import edu.gy.personalmanagersystem.utils.SessionDataSetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +47,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminIndex")
-    public String adminIndex(){
+    public String adminIndex(@RequestParam(value = "ischosenmenu",required = false)String chosenmenu,
+                             HttpSession session){
+        SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
         return "adminIndex";
     }
 }
