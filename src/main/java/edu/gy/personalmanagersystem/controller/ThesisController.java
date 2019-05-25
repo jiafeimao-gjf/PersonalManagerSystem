@@ -39,7 +39,7 @@ public class ThesisController {
             return resultVO;
         } else {
             logger.warning("插入新的论文信息失败");
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
             resultVO.setData("插入新的论文信息失败");
             return resultVO;
         }
@@ -56,7 +56,7 @@ public class ThesisController {
             return resultVO;
         } else {
             logger.warning("批量插入新的论文信息失败，插入了"+res+"条有效信息");
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
             resultVO.setData("批量插入新的论文信息失败，插入了"+res+"条有效信息");
             return resultVO;
         }
@@ -93,7 +93,7 @@ public class ThesisController {
             return resultVO;
         } else {
             logger.warning("查询数据失败");
-            ResultVO<String> resultVO =  new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO =  new ResultVO<String>(-1,"failed");
             resultVO.setData("查询数据失败");
             return resultVO;
         }
@@ -177,6 +177,50 @@ public class ThesisController {
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("获取全部论文信息，第 "+pageNum+" 页");
         return resultVO;
+    }
+
+    @RequestMapping(value = "/checkthesis",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> checkThesis(@RequestParam("thesisid")Integer thesisId,
+                                       HttpSession session){
+        logger.info("checkThesis");
+        Thesis thesis = new Thesis();
+        thesis.setThesisid(thesisId);
+        thesis.setChecked(1);
+        int res = thesisService.updateThesisInfo(thesis);
+        if (res == 1) {
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            Thesis thesisInfo = thesisService.getThesisByKey(thesisId);
+            session.setAttribute("thesisinfo",thesisInfo);
+            resultVO.setData("论文审核成功");
+            return resultVO;
+        } else {
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("论文审核失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/deletethesis",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> deleteHonor(@RequestParam("thesisid")Integer thesisId){
+        logger.info("deleteHonor");
+        int res = thesisService.deleteThesis(thesisId);
+        if (res == 1) {
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("论文删除成功");
+            return resultVO;
+        } else {
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("论文删除失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/addnewthesis")
+    public String addNewThesis(){
+        logger.info("addNewThesis");
+        return "addnewthesis";
     }
 
     private ResultVO<String> setResultVO(HttpSession session,PageInfo<Thesis> thesisPageInfo){

@@ -19,8 +19,52 @@
     <jsp:include page="common/bootstrap.jsp"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/peopleIndex.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
-    <title><%=thesis.getName()%>
-    </title>
+    <title><%=thesis.getName()%></title>
+    <script type="text/javascript">
+        function checkThesis(thesisid) {
+            if (confirm("确定审核通过？")) {
+                console.log("论文信息审核通过");
+                $.ajax({
+                    type:"post",
+                    datatype:"form-data",
+                    url:"${pageContext.request.contextPath}/checkthesis",
+                    data:{
+                        "thesisid":thesisid
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.data);
+                            window.location.href="${pageContext.request.contextPath}/thesisdetail";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
+        }
+
+        function deleteThesis(thesisid) {
+            if (confirm("确定审核通过？")) {
+                console.log("论文信息审核通过");
+                $.ajax({
+                    type:"post",
+                    datatype:"form-data",
+                    url:"${pageContext.request.contextPath}/deletethesis",
+                    data:{
+                        "thesisid":thesisid
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.data);
+                            window.location.href="${pageContext.request.contextPath}/adminIndex?chosenmenu=thesisinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -110,7 +154,7 @@
                         <label class="col-sm-1">    </label>
                         <button class="btn btn-primary col-sm-2" onclick="checkThesis(<%=thesis.getThesisid()%>)">审核通过</button>
                         <label class="col-sm-1">    </label>
-                        <button class="btn btn-primary col-sm-3" onclick="deletethesisinfo(<%=thesis.getThesisid()%>)">删除论文信息</button>
+                        <button class="btn btn-primary col-sm-3" onclick="deleteThesis(<%=thesis.getThesisid()%>)">删除论文信息</button>
                     </c:if>
                 </div>
             </div>

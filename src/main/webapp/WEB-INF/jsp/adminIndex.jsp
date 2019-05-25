@@ -238,6 +238,21 @@
                 }
             });
         }
+
+        function addNewThesis() {
+            console.log("addNewThesis");
+            window.location.href="/PersonalManagerSystem_war/addnewthesis"
+        }
+
+        function addNewPeople() {
+            console.log("addNewPeople");
+            window.location.href="/PersonalManagerSystem_war/addnewpeople"
+        }
+
+        function addNewAward() {
+            console.log("addNewAward");
+            window.location.href="/PersonalManagerSystem_war/addnewhonor"
+        }
     </script>
 </head>
 
@@ -338,7 +353,7 @@
             <div class="form-group">
                 <label class="col-sm-3"></label>
                 <div class="col-sm-6">
-                    <input id="changeInfo" class="btn btn-primary col-sm-2" type="button" value="修改信息"/>
+                    <input id="changeInfo" class="btn btn-primary col-sm-4" type="button" value="确定修改信息"/>
                 </div>
             </div>
         </form>
@@ -411,15 +426,16 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-2">    </label>
+
                 <div class="col-sm-8">
+                    <label class="col-sm-2">    </label>
                     <input type="button" onclick="peopleJumpByLikes(1)" class="people-search btn col-sm-2 btn-primary"
                            value="搜索"/>
-                    <label class="col-sm-2">    </label>
+                    <label class="col-sm-1">    </label>
                     <input type="button" onclick="peopleJumpByAll(1)"
                            class="display-all-people btn col-sm-3 btn-primary" value="显示全部教职工信息"/>
-                    <label class="col-sm-2">    </label>
-                    <input type="button" class="add-a-people btn col-sm-2 btn-primary" value="新增教职工"/>
+                    <label class="col-sm-1">    </label>
+                    <input type="button" onclick="addNewPeople()" class="btn col-sm-2 btn-primary" value="新增教职工"/>
                 </div>
             </div>
         </form>
@@ -459,7 +475,7 @@
                         <td>${one.position}</td>
                         <td>${one.phonenumber}</td>
                         <td>
-                            <button class="thesis-detail btn btn-primary" onclick="peopleDetail(${one.number})">
+                            <button class="btn btn-primary" onclick="peopleDetail(${one.number})">
                                 查看详情
                             </button>
                         </td>
@@ -593,13 +609,13 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-3"></label>
                 <div class="col-sm-8">
-                    <input type="button" onclick="thesisJumpByLikes(1)" class="thesis-search btn col-sm-2 btn-primary" value="搜索"/>
-                    <label class="col-sm-2"> </label>
-                    <input type="button" onclick="thesisJumpByAll(1)" class="display-all-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
-                    <label class="col-sm-2"> </label>
-                    <input type="button" class="add-a-thesis btn col-sm-2 btn-primary" value="新增论文"/>
+                    <label class="col-sm-2"></label>
+                    <input type="button" onclick="thesisJumpByLikes(1)" class="btn col-sm-2 btn-primary" value="搜索"/>
+                    <label class="col-sm-1"> </label>
+                    <input type="button" onclick="thesisJumpByAll(1)" class="btn col-sm-4 btn-primary" value="显示全部论文"/>
+                    <label class="col-sm-1"> </label>
+                    <input type="button" onclick="addNewThesis()" class="btn col-sm-2 btn-primary" value="新增论文"/>
                 </div>
             </div>
         </form>
@@ -753,13 +769,13 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-sm-3"> </label>
                 <div class="col-sm-8">
-                    <input type="button" onclick="honorJumpByLikes(1)" class="award-search btn col-sm-2 btn-primary" value="搜索"/>
                     <label class="col-sm-2"> </label>
-                    <input type="button" onclick="honorJumpByAll(1)" class="display-all-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
-                    <label class="col-sm-2"> </label>
-                    <input type="button" class="add-an-award btn col-sm-2 btn-primary" value="新增荣誉"/>
+                    <input type="button" onclick="honorJumpByLikes(1)" class="btn col-sm-2 btn-primary" value="搜索"/>
+                    <label class="col-sm-1"> </label>
+                    <input type="button" onclick="honorJumpByAll(1)" class="btn col-sm-4 btn-primary" value="显示全部荣誉"/>
+                    <label class="col-sm-1"> </label>
+                    <input type="button" onclick="addNewAward()" class="btn col-sm-2 btn-primary" value="新增荣誉"/>
                 </div>
             </div>
         </form>

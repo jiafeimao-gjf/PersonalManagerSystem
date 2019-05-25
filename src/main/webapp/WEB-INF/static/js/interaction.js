@@ -102,7 +102,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"/PersonalManagerSystem_war/updatePeopleInfo",
+                url:"/PersonalManagerSystem_war/updatepeopleinfo",
                 data:{
                     "number":number,
                     "name":name,
@@ -120,7 +120,7 @@ $(document).ready(function () {
                 success:function (resultVO) {
                     if (resultVO.code === 200) {
                         console.log("修改成功");
-                        window.location.href="/PersonalManagerSystem_war/personalIndex";
+                        window.location.href="/PersonalManagerSystem_war/peopledetail";
                     } else {
                         alert("个人信息修改失败，因为"+resultVO.info);
                     }
@@ -362,8 +362,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.data);
-                    $(".honor-checked").val("未审核");
-                    alert(result.data);
+                    window.location.href="/PersonalManagerSystem_war/lookhonorinfo";
                 } else {
                     console.log(result.data);
                     alert(result.data);
@@ -372,6 +371,23 @@ $(document).ready(function () {
         });
     });
 
-
+    $("#add-new-stuff").click(function () {
+       console.log("add-new-stuff");
+    });
+    $("#add-new-honor").click(function () {
+        console.log("add-new-honor");
+    });
+    $("#add-new-thesis").click(function () {
+        console.log("add-new-thesis");
+    });
+    $("#add-many-stuff").click(function () {
+        console.log("add-new-stuff");
+    });
+    $("#add-many-honor").click(function () {
+        console.log("add-many-honor");
+    });
+    $("#add-many-thesis").click(function () {
+        console.log("add-many-thesis");
+    });
 
 });

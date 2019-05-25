@@ -40,7 +40,7 @@ public class UserController {
             return resultVO;
         } else {
             logger.log(Level.WARNING,"修改密码失败");
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
             resultVO.setData("修改密码失败！");
             return resultVO;
         }

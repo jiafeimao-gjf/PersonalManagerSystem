@@ -41,7 +41,7 @@ public class HonorController {
             return resultVO;
         } else {
             logger.warning("插入新的荣誉信息失败");
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
             resultVO.setData("插入新的荣誉信息失败");
             return resultVO;
         }
@@ -58,7 +58,7 @@ public class HonorController {
             return resultVO;
         } else {
             logger.warning("批量插入新的荣誉信息失败，插入了"+res+"条有效信息");
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
             resultVO.setData("批量插入新的荣誉信息失败，插入了"+res+"条有效信息");
             return resultVO;
         }
@@ -113,7 +113,7 @@ public class HonorController {
     }
     @RequestMapping(value = "/lookhonorinfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResultVO<String> lookThesisInfo(@RequestParam("honorid") Integer honorid, HttpSession session){
+    public ResultVO<String> lookHonorInfo(@RequestParam("honorid") Integer honorid, HttpSession session){
         logger.info("lookHonorInfo");
         Honor honor = honorService.getHonorByKey(honorid);
         if (honor != null) {
@@ -124,14 +124,14 @@ public class HonorController {
             return resultVO;
         } else {
             logger.warning("查询数据失败");
-            ResultVO<String> resultVO =  new ResultVO<String>(-1,"filed");
+            ResultVO<String> resultVO =  new ResultVO<String>(-1,"failed");
             resultVO.setData("查询数据失败");
             return resultVO;
         }
     }
 
     @RequestMapping(value = "/honordetail")
-    public String thesisDetail(){
+    public String honorDetail(){
         logger.info("honordetail");
         return "honordetail";
     }
@@ -167,6 +167,49 @@ public class HonorController {
         return setResultVO(honorPageInfo,session);
     }
 
+    @RequestMapping(value = "/checkhonor",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> checkHonor(@RequestParam("honorid")Integer honorId,
+                                       HttpSession session){
+        logger.info("checkHonor");
+        Honor honor = new Honor();
+        honor.setHonorid(honorId);
+        honor.setChecked(1);
+        int res = honorService.updateHonorInfo(honor);
+        if (res == 1) {
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            Honor honorinfo = honorService.getHonorByKey(honorId);
+            session.setAttribute("honorinfo",honorinfo);
+            resultVO.setData("荣誉审核成功");
+            return resultVO;
+        } else {
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("荣誉审核失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/deletehonor",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> deleteHonor(@RequestParam("honorid")Integer honorId){
+        logger.info("deleteHonor");
+        int res = honorService.deleteHonor(honorId);
+        if (res == 1) {
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("荣誉删除成功");
+            return resultVO;
+        } else {
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("荣誉删除失败");
+            return resultVO;
+        }
+    }
+
+    @RequestMapping(value = "/addnewhonor")
+    public String addNewHonor(){
+        logger.info("addNewHonor");
+        return "addnewhonor";
+    }
 
     private ResultVO<String> setResultVO(PageInfo<Honor> honorPageInfo,HttpSession session){
         if (honorPageInfo.getList() == null) {

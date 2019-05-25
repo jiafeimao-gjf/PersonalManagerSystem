@@ -21,8 +21,49 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
     <title><%=people.getName()%></title>
     <script type="text/javascript">
-        function honorChecked(honorid) {
+        function checkHonor(honorid) {
+            if (confirm("确定审核通过？")){
+                console.log("审核荣誉信息");
+                $.ajax({
+                    type:"post",
+                    datatype:"form-data",
+                    url:"${pageContext.request.contextPath}/checkhonor",
+                    data:{
+                        "honorid":honorid
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.data);
+                            window.location.href="${pageContext.request.contextPath}/honordatail";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
+        }
 
+        function deleteHonor(honorid){
+            if (confirm("确定删除该荣誉信息？")){
+                console.log("删除荣誉信息");
+                $.ajax({
+                    type:"post",
+                    datatype:"form-data",
+                    url:"${pageContext.request.contextPath}/deletehonor",
+                    data:{
+                        "honorid":honorid
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.data);
+                            // 删除之后返回管理页
+                            window.location.href="${pageContext.request.contextPath}/adminIndex?chosenmenu=honorinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
+            }
         }
     </script>
 </head>
@@ -122,7 +163,7 @@
                         <label class="col-sm-1">    </label>
                         <button class="btn btn-primary col-sm-2" onclick="checkHonor(<%=honor.getHonorid()%>)">审核通过</button>
                         <label class="col-sm-1">    </label>
-                        <button class="btn btn-primary col-sm-3" onclick="deletehonorinfo(<%=honor.getHonorid()%>)">删除荣誉信息</button>
+                        <button class="btn btn-primary col-sm-3" onclick="deleteHonor(<%=honor.getHonorid()%>)">删除荣誉信息</button>
                     </c:if>
                 </div>
             </div>

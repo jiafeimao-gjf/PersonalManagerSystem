@@ -165,6 +165,15 @@
                     }
                 });
             }
+            function addNewThesis() {
+                console.log("addNewThesis");
+                window.location.href="/PersonalManagerSystem_war/addnewthesis"
+            }
+
+            function addNewAward() {
+                console.log("addNewAward");
+                window.location.href="/PersonalManagerSystem_war/addnewhonor"
+            }
         </script>
     </head>
 
@@ -261,7 +270,7 @@
                 <div class="form-group">
                     <label class="col-sm-3"></label>
                     <div class="col-sm-6">
-                        <input id="go-back" class="btn btn-primary col-sm-2" type="button" value="返回"/>
+                        <input id="changeInfo" class="btn btn-primary col-sm-4" type="button" value="确定修改信息"/>
                     </div>
                 </div>
             </form>
@@ -321,11 +330,13 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <label class="col-sm-3"></label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
+                        <label class="col-sm-2"></label>
                         <input type="button" class="my-thesis-search btn col-sm-2 btn-primary" value="搜索"/>
-                        <label class="col-sm-2">    </label>
-                        <input type="button" class="display-my-thesis btn col-sm-4 btn-primary" value="显示全部论文"/>
+                        <label class="col-sm-1">    </label>
+                        <input type="button" class="display-my-thesis btn col-sm-3 btn-primary" value="显示全部论文"/>
+                        <label class="col-sm-1"> </label>
+                        <input type="button" onclick="addNewThesis()" class="btn col-sm-2 btn-primary" value="新增论文"/>
                     </div>
                 </div>
             </form>
@@ -473,11 +484,13 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <label class="col-sm-3"></label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
+                        <label class="col-sm-2"></label>
                         <input type="button" class="my-award-search btn col-sm-2 btn-primary" value="搜索"/>
-                        <label class="col-sm-2">    </label>
-                        <input type="button" class="display-my-award btn col-sm-4 btn-primary" value="显示全部荣誉"/>
+                        <label class="col-sm-1">    </label>
+                        <input type="button" class="display-my-award btn col-sm-3 btn-primary" value="显示全部荣誉"/>
+                        <label class="col-sm-1"> </label>
+                        <input type="button" onclick="addNewAward()" class="btn col-sm-2 btn-primary" value="新增荣誉"/>
                     </div>
                 </div>
             </form>
