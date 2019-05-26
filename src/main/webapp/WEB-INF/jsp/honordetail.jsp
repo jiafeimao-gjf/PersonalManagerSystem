@@ -159,9 +159,11 @@
                 <div class="col-sm-8">
                     <label class="col-sm-2">    </label>
                     <input id="changehonorinfo" class="btn btn-primary col-sm-3" type="button" value="修改荣誉信息"/>
-                    <c:if test="<%=role.getRoleid() == 1 && honor.getChecked() == 2%>">
-                        <label class="col-sm-1">    </label>
-                        <button class="btn btn-primary col-sm-2" onclick="checkHonor(<%=honor.getHonorid()%>)">审核通过</button>
+                    <c:if test="<%=role.getRoleid() == 1%>">
+                        <c:if test="<%=honor.getChecked() == 2%>">
+                            <label class="col-sm-1">    </label>
+                            <button class="btn btn-primary col-sm-2" onclick="checkHonor(<%=honor.getHonorid()%>)">审核通过</button>
+                        </c:if>
                         <label class="col-sm-1">    </label>
                         <button class="btn btn-primary col-sm-3" onclick="deleteHonor(<%=honor.getHonorid()%>)">删除荣誉信息</button>
                     </c:if>

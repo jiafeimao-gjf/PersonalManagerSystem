@@ -49,7 +49,22 @@ public class UserController {
     @RequestMapping(value = "/adminIndex")
     public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu,
                              HttpSession session){
-        SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
-        return "adminIndex";
+        if (session.getAttribute("peopleinfo") != null) {
+            SessionDataSetUtil.menuDiaplaySet(chosenmenu, session);
+            return "adminIndex";
+        } else {
+            return "index";
+        }
+    }
+
+    @RequestMapping(value = "/personalIndex")
+    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu
+            ,HttpSession session){
+        if (session.getAttribute("peopleinfo") != null) {
+            SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
+            return "personalIndex";
+        } else {
+            return "index";
+        }
     }
 }

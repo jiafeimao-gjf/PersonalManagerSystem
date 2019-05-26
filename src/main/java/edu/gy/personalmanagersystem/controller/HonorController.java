@@ -84,8 +84,8 @@ public class HonorController {
     @RequestMapping(value = "/gethonorsbylikes",method = RequestMethod.GET)
     @ResponseBody
     public ResultVO<String> getOnceHonorsByLikes(@RequestParam("awardname")String awardname,
-                                             @RequestParam("department")String department,
-                                             @RequestParam("awardlevel")String awardlevel,
+                                                 @RequestParam("department")String department,
+                                                 @RequestParam("awardlevel")String awardlevel,
                                                  @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                                  HttpSession session){
         logger.info("getOnceHonorsByLikes");
@@ -131,9 +131,13 @@ public class HonorController {
     }
 
     @RequestMapping(value = "/honordetail")
-    public String honorDetail(){
+    public String honorDetail(HttpSession session){
         logger.info("honordetail");
-        return "honordetail";
+        if (session.getAttribute("peopleinfo") != null) {
+            return "honordetail";
+        } else {
+            return "index";
+        }
     }
 
     @RequestMapping(value = "updatehonorinfo",method = RequestMethod.POST)
@@ -178,8 +182,9 @@ public class HonorController {
         int res = honorService.updateHonorInfo(honor);
         if (res == 1) {
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
-            Honor honorinfo = honorService.getHonorByKey(honorId);
-            session.setAttribute("honorinfo",honorinfo);
+            Honor honorInfo = honorService.getHonorByKey(honorId);
+            session.removeAttribute("honorinfo");
+            session.setAttribute("honorinfo",honorInfo);
             resultVO.setData("荣誉审核成功");
             return resultVO;
         } else {
@@ -206,9 +211,13 @@ public class HonorController {
     }
 
     @RequestMapping(value = "/addnewhonor")
-    public String addNewHonor(){
+    public String addNewHonor(HttpSession session){
         logger.info("addNewHonor");
-        return "addnewhonor";
+        if (session.getAttribute("peopleinfo") != null) {
+            return "addnewhonor";
+        } else {
+            return "index";
+        }
     }
 
     private ResultVO<String> setResultVO(PageInfo<Honor> honorPageInfo,HttpSession session){

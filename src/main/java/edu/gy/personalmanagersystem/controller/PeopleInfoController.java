@@ -157,6 +157,31 @@ public class PeopleInfoController {
         }
     }
 
+    @RequestMapping(value = "/checkstuff",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> checkStuff(@RequestParam("number")String number,
+                                       @RequestParam("checked")Integer checked
+                                       ,HttpSession session){
+        logger.info("checkStuff");
+        People people = new People();
+        people.setNumber(number);
+        people.setChecked(checked);
+        int res = peopleService.updatePeopleInfo(people);
+        if (res == 1) {
+            logger.info("教职工信息通过审核");
+            People stuff = peopleService.getPeople(people.getNumber());
+            session.setAttribute("stuffinfo",stuff);
+            ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            resultVO.setData("教职工信息通过审核");
+            return resultVO;
+        } else {
+            logger.info("教职工信息未通过审核");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"failed");
+            resultVO.setData("教职工信息未通过审核");
+            return resultVO;
+        }
+    }
+
     @RequestMapping(value = "lookpeopleinfo",method = RequestMethod.GET)
     @ResponseBody
     public ResultVO<String> lookPeopleInfo(@RequestParam("number")String number,
@@ -179,14 +204,23 @@ public class PeopleInfoController {
     }
 
     @RequestMapping(value = "/peopledetail")
-    public String peopleDetail(){
+    public String peopleDetail(HttpSession session){
         logger.info("peopleDetail");
-        return "peopledetail";
+        if (session.getAttribute("peopleinfo") != null) {
+            return "peopledetail";
+        } else {
+            return "index";
+        }
     }
 
     @RequestMapping(value = "/addnewpeople")
-    public String addNewPeople(){
+    public String addNewPeople(HttpSession session){
         logger.info("addNewPeople");
-        return "addnewpeople";
+        if (session.getAttribute("peopleinfo") != null) {
+            return "addnewpeople";
+        } else {
+            return "index";
+        }
+
     }
 }

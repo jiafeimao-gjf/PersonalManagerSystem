@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 24/05/2019 19:57:22
+ Date: 25/05/2019 18:53:40
 */
 
 SET NAMES utf8mb4;
@@ -47,7 +47,6 @@ INSERT INTO `t_honor` VALUES ('100003', '计算机学院', '数据结构优秀�
 INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '优秀创业导师', '院级', 'xx大学', NULL, NULL, 8, 2);
 INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '优秀辅导员', '校级', 'xx大学', NULL, NULL, 9, 2);
 INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '计算机网络优秀讲师', '校级', 'xx大学', '2017-2018年度', '一等', 10, 2);
-INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '计算机网络优秀讲师', '校级', 'xx大学', '2017-2018年度', '一等', 11, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -80,11 +79,11 @@ INSERT INTO `t_people` VALUES ('100002', 'Jams', '男', '25', '经管学院', '�
 INSERT INTO `t_people` VALUES ('100003', 'Thomas', '男', '24', '信息学院', '讲师', '安徽合肥', '汉族', '344122199006216633', '团员', '18888888888', 1);
 INSERT INTO `t_people` VALUES ('100004', 'Jack', '男', '49', '计算机科学与技术系', '系主任', '陕西西安', '汉族', '622122197008081234', '党员', '16666664444', 1);
 INSERT INTO `t_people` VALUES ('100005', 'Tony', '男', '49', '公路系', '系主任', '陕西西安', '汉族', '622122197008081234', '党员', '16666663333', 1);
-INSERT INTO `t_people` VALUES ('100006', 'Andy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `t_people` VALUES ('100007', 'Baey', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `t_people` VALUES ('100008', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `t_people` VALUES ('100009', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `t_people` VALUES ('100010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `t_people` VALUES ('100006', 'Andy', '女', '25', '人事部', '财务员', 'nul', 'null', NULL, 'null', 'null', 1);
+INSERT INTO `t_people` VALUES ('100007', 'Baey', '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `t_people` VALUES ('100008', 'Bob', '男', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `t_people` VALUES ('100009', 'Jone', '男', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `t_people` VALUES ('100010', 'Jackson', '男', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
 COMMIT;
 
 -- ----------------------------
@@ -136,7 +135,7 @@ INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', '软件学院', '地图定点
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', '计算机学院', '基于区块链的供应链溯源系统', 'web系统', 'cc期刊', 21, 2);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '视频图像中的景深信息获取', NULL, NULL, 22, 2);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '基于卷积神经网络的视频中的运动的人获取', NULL, NULL, 23, 2);
-INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '校园投票系统设计和实现', NULL, NULL, 24, 2);
+INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', 'null', '校园投票系统设计和实现', 'null', 'null', 24, 2);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '校园人事管理系统设计和实现', NULL, NULL, 25, 2);
 COMMIT;
 

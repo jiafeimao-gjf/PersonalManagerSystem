@@ -139,9 +139,13 @@ public class ThesisController {
     }
 
     @RequestMapping(value = "/thesisdetail")
-    public String thesisDetail(){
+    public String thesisDetail(HttpSession session){
         logger.info("thesisdetail");
-        return "thesisdetail";
+        if (session.getAttribute("peopleinfo") != null) {
+            return "thesisdetail";
+        } else {
+            return "index";
+        }
     }
 
     @RequestMapping(value = "updatethesisinfo",method = RequestMethod.POST)
@@ -218,9 +222,13 @@ public class ThesisController {
     }
 
     @RequestMapping(value = "/addnewthesis")
-    public String addNewThesis(){
+    public String addNewThesis(HttpSession session){
         logger.info("addNewThesis");
-        return "addnewthesis";
+        if (session.getAttribute("peopleinfo") != null) {
+            return "addnewthesis";
+        } else {
+            return "index";
+        }
     }
 
     private ResultVO<String> setResultVO(HttpSession session,PageInfo<Thesis> thesisPageInfo){

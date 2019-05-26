@@ -15,35 +15,38 @@
     <title><%=people.getName()%></title>
     <script type="text/javascript">
         function checkStuff(number) {
-            $.ajax({
-                type:"post",
-                datatype:"form-data",
-                url:"/${pageContext.request.contextPath}/updatePeopleInfo",
-                data:{
-                    "number":number,
-                    "checked":1
-                },
-                success:function (result) {
-                    if (result.data === 200) {
-                        window.location.href = "/${pageContext.request.contextPath}/peopledetail";
-                    } else {
-                        alert(result.data);
+            console.log("审核教职工信");
+            if (confirm("确定通过审核？")){
+                $.ajax({
+                    type:"post",
+                    datatype:"form-data",
+                    url:"${pageContext.request.contextPath}/checkstuff",
+                    data:{
+                        "number":number,
+                        "checked":1
+                    },
+                    success:function (result) {
+                        if (result.data === 200) {
+                            window.location.href = "${pageContext.request.contextPath}/peopledetail";
+                        } else {
+                            alert(result.data);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         function deleteStuff(number) {
              if (comfirm("是否确定删除？")){
                  $.ajax({
                      type:"post",
                      datatype:"form-data",
-                     url:"/${pageContext.request.contextPath}/deletepeople",
+                     url:"${pageContext.request.contextPath}/deletepeople",
                      data:{
                          "number":number
                      },
                      success:function (result) {
                          if (result.data === 200) {
-                             window.location.href = "/${pageContext.request.contextPath}/adminIndex";
+                             window.location.href = "${pageContext.request.contextPath}/adminIndex";
                          } else {
                              alert(result.data);
                          }
@@ -125,7 +128,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">身份证号</label>
                 <div class="col-sm-6">
-                    <input type="text" class="identityno form-control" value="<%=stuff.getIdentityno()%>"/>
+                    <input type="text" class="stuff-identityno form-control" value="<%=stuff.getIdentityno()%>"/>
                 </div>
             </div>
             <div class="form-group">
@@ -156,9 +159,11 @@
                 <div class="col-sm-8">
                     <label class="col-sm-2">    </label>
                     <input id="changeStuffInfo" class="btn btn-primary col-sm-3" type="button" value="修改教职工信息"/>
-                    <c:if test="<%=role.getRoleid() == 1 && stuff.getChecked() == 2%>">
-                        <label class="col-sm-1">    </label>
-                        <button class="btn btn-primary col-sm-2" onclick="checkStuff(<%=stuff.getNumber()%>)">审核通过</button>
+                    <c:if test="<%=role.getRoleid() == 1%>">
+                        <c:if test="<%=stuff.getChecked() == 2%>">
+                            <label class="col-sm-1">    </label>
+                            <button class="btn btn-primary col-sm-2" onclick="checkStuff(<%=stuff.getNumber()%>)">审核通过</button>
+                        </c:if>
                         <label class="col-sm-1">    </label>
                         <button class="btn btn-primary col-sm-3" onclick="deleteStuff(<%=stuff.getNumber()%>)">删除教职工信息</button>
                     </c:if>

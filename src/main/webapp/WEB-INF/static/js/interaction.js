@@ -14,7 +14,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"/PersonalManagerSystem_war/login",
+                url:"/PersonalManagerSystem/login",
                 data:{
                     "number":no,
                     "pwd":p
@@ -25,10 +25,10 @@ $(document).ready(function () {
                         alert("Log In Successfully");
                         console.log("用户类型："+result.data);
                         if (result.data === "user"){
-                            window.location.href="/PersonalManagerSystem_war/personalIndex";
+                            window.location.href="/PersonalManagerSystem/personalIndex";
                         } else if (result.data === "admin"){
                             alert("欢迎你，系统管理员");
-                            window.location.href="/PersonalManagerSystem_war/adminIndex";
+                            window.location.href="/PersonalManagerSystem/adminIndex";
                         }
                     } else {
                         alert("Log in failed for "+result.info);
@@ -55,7 +55,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"/PersonalManagerSystem_war/updatePeopleInfo",
+                url:"/PersonalManagerSystem/updatePeopleInfo",
                 data:{
                     "number":number,
                     "name":name,
@@ -73,9 +73,9 @@ $(document).ready(function () {
                     if (resultVO.code === 200) {
                         console.log("修改成功");
                         if (result.data === "user"){
-                            window.location.href="/PersonalManagerSystem_war/personalIndex";
+                            window.location.href="/PersonalManagerSystem/personalIndex";
                         } else if (result.data === "admin"){
-                            window.location.href="/PersonalManagerSystem_war/adminIndex";
+                            window.location.href="/PersonalManagerSystem/adminIndex";
                         }
                     } else {
                         alert("个人信息修改失败，因为"+resultVO.info);
@@ -102,7 +102,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"post",
                 datatype:"form-data",
-                url:"/PersonalManagerSystem_war/updatepeopleinfo",
+                url:"/PersonalManagerSystem/updatepeopleinfo",
                 data:{
                     "number":number,
                     "name":name,
@@ -115,12 +115,12 @@ $(document).ready(function () {
                     "identityno":identityno,
                     "politicalstatus":politicalstatus,
                     "phonenumber":phonenumber,
-                    "checked":1
+                    "checked":2
                 },
                 success:function (resultVO) {
                     if (resultVO.code === 200) {
                         console.log("修改成功");
-                        window.location.href="/PersonalManagerSystem_war/peopledetail";
+                        window.location.href="/PersonalManagerSystem/peopledetail";
                     } else {
                         alert("个人信息修改失败，因为"+resultVO.info);
                     }
@@ -144,7 +144,7 @@ $(document).ready(function () {
                     $.ajax({
                         type:"post",
                         datatype:"form-data",
-                        url:"/PersonalManagerSystem_war/changepwd",
+                        url:"/PersonalManagerSystem/changepwd",
                         data: {
                             "number":number,
                             "password":newpwdconformed
@@ -153,7 +153,7 @@ $(document).ready(function () {
                             if (result.code === 200) {
                                 console.log("修改密码成功");
                                 alert(result.data+"请重新登录！");
-                                window.location.href="/PersonalManagerSystem_war/";
+                                window.location.href="/PersonalManagerSystem/";
                             } else {
                                 alert(result.data);
                             }
@@ -200,7 +200,7 @@ $(document).ready(function () {
     $(".body4").click(function(){
         if (confirm("确定退出登录？")){
             console.log("清除session，重新登录");
-            window.location.href = "/PersonalManagerSystem_war/";
+            window.location.href = "/PersonalManagerSystem/";
         } else {
             console.log("取消重新登录");
         }
@@ -212,14 +212,14 @@ $(document).ready(function () {
        $.ajax({
            type:"get",
            datatype:"form-data",
-           url:"/PersonalManagerSystem_war/gethonorsbynumber",
+           url:"/PersonalManagerSystem/gethonorsbynumber",
            data: {
                "number":number
            },
            success:function (result) {
                if (result.code === 200) {
                    console.log(result.info);
-                   window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
+                   window.location.href="/PersonalManagerSystem/personalIndex?chosenmenu=honorinfo";
                } else {
                    alert(result.data);
                }
@@ -233,14 +233,14 @@ $(document).ready(function () {
         $.ajax({
             type:"get",
             datatype:"form-data",
-            url:"/PersonalManagerSystem_war/getthesisbynumber",
+            url:"/PersonalManagerSystem/getthesisbynumber",
             data: {
                 "number":number
             },
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
+                    window.location.href="/PersonalManagerSystem/personalIndex?chosenmenu=thesisinfo";
                 } else {
                     alert(result.data);
                 }
@@ -253,25 +253,33 @@ $(document).ready(function () {
         var awardname = $(".key-honor-awardname").val();
         var department = $(".key-honor-department").val();
         var awardlevel = $(".key-honor-awardlevel").val();
-        $.ajax({
-            type:"get",
-            datatype:"form-data",
-            url:"/PersonalManagerSystem_war/gethonorsbylikes",
-            data: {
-                "awardname":awardname,
-                "department":department,
-                "awardlevel":awardlevel,
-                "pagenum":1
-            },
-            success:function (result) {
-                if (result.code === 200) {
-                    console.log(result.info);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
-                } else {
-                    alert(result.data);
-                }
+        if (awardname.length === 0 && department.length === 0 && awardlevel === 0){
+            alert("至少输入一个搜索项");
+        } else {
+            if (awardname.length === 0) {
+                alert("荣誉名称是必填项");
+            } else {
+                $.ajax({
+                    type:"get",
+                    datatype:"form-data",
+                    url:"/PersonalManagerSystem/gethonorsbylikes",
+                    data: {
+                        "awardname":awardname,
+                        "department":department,
+                        "awardlevel":awardlevel,
+                        "pagenum":1
+                    },
+                    success:function (result) {
+                        if (result.code === 200) {
+                            console.log(result.info);
+                            window.location.href="/PersonalManagerSystem/personalIndex?chosenmenu=honorinfo";
+                        } else {
+                            alert(result.data);
+                        }
+                    }
+                });
             }
-        });
+        }
     });
 
     $(".my-thesis-search").click(function () {
@@ -282,7 +290,7 @@ $(document).ready(function () {
         $.ajax({
             type:"get",
             datatype:"form-data",
-            url:"/PersonalManagerSystem_war/getthesisbylikes",
+            url:"/PersonalManagerSystem/getthesisbylikes",
             data: {
                 "title":title,
                 "classify":classify,
@@ -292,7 +300,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.info);
-                    window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
+                    window.location.href="/PersonalManagerSystem/personalIndex?chosenmenu=thesisinfo";
                 } else {
                     alert(result.data);
                 }
@@ -313,7 +321,7 @@ $(document).ready(function () {
         $.ajax({
             type:"post",
             datatype:"form-data",
-            url:"/PersonalManagerSystem_war/updatethesisinfo",
+            url:"/PersonalManagerSystem/updatethesisinfo",
             data:{
                 "thesisid":thesisid,
                 "name":name,
@@ -348,7 +356,7 @@ $(document).ready(function () {
         $.ajax({
             type:"post",
             datatype:"form-data",
-            url:"/PersonalManagerSystem_war/updatehonorinfo",
+            url:"/PersonalManagerSystem/updatehonorinfo",
             data:{
                 "honorid":honorid,
                 "awardname":awardname,
@@ -362,7 +370,7 @@ $(document).ready(function () {
             success:function (result) {
                 if (result.code === 200) {
                     console.log(result.data);
-                    window.location.href="/PersonalManagerSystem_war/lookhonorinfo";
+                    window.location.href="/PersonalManagerSystem/lookhonorinfo";
                 } else {
                     console.log(result.data);
                     alert(result.data);

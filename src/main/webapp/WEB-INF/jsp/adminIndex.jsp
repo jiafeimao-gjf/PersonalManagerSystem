@@ -37,13 +37,13 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/lookthesisinfo",
+                url: "${pageContext.request.contextPath}/lookthesisinfo",
                 data: {
                     "thesisid": thesisid
                 },
                 success: function (result) {
                     if (result.code === 200) {
-                        window.location.href = "/PersonalManagerSystem_war/thesisdetail";
+                        window.location.href = "${pageContext.request.contextPath}/thesisdetail";
                     } else {
                         alert(result.data);
                     }
@@ -56,13 +56,13 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/lookhonorinfo",
+                url: "${pageContext.request.contextPath}/lookhonorinfo",
                 data: {
                     "honorid": honorid
                 },
                 success: function (result) {
                     if (result.code === 200) {
-                        window.location.href = "/PersonalManagerSystem_war/honordetail";
+                        window.location.href = "${pageContext.request.contextPath}/honordetail";
                     } else {
                         alert(result.data);
                     }
@@ -75,13 +75,13 @@
             $.ajax({
                 type:"get",
                 datatype:"form-date",
-                url:"/PersonalManagerSystem_war/lookpeopleinfo",
+                url:"${pageContext.request.contextPath}/lookpeopleinfo",
                 data:{
                     "number":number
                 },
                 success:function(result){
                     if (result.code === 200){
-                        window.location.href="/PersonalManagerSystem_war/peopledetail";
+                        window.location.href="${pageContext.request.contextPath}/peopledetail";
                     } else {
                         alert(result.data);
                     }
@@ -96,14 +96,14 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/getallhonor",
+                url: "${pageContext.request.contextPath}/getallhonor",
                 data: {
                     "pagenum": pageNumber
                 },
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=honorinfo";
+                        window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=honorinfo";
                     } else {
                         alert(result.data);
                     }
@@ -119,7 +119,7 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/gethonorsbylikes",
+                url: "${pageContext.request.contextPath}/gethonorsbylikes",
                 data: {
                     "awardname": awardname,
                     "department": department,
@@ -129,7 +129,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=honorinfo";
+                        window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=honorinfo";
                     } else {
                         alert(result.data);
                     }
@@ -147,7 +147,7 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/getthesisbylikes",
+                url: "${pageContext.request.contextPath}/getthesisbylikes",
                 data: {
                     "who":'admin',
                     "name": thesisname,
@@ -161,7 +161,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=thesisinfo";
+                        window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=thesisinfo";
                     } else {
                         alert(result.data);
                     }
@@ -174,14 +174,14 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/getallthesis",
+                url: "${pageContext.request.contextPath}/getallthesis",
                 data: {
                     "pagenum": pageNumber
                 },
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=thesisinfo";
+                        window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=thesisinfo";
                     } else {
                         alert(result.data);
                     }
@@ -199,7 +199,7 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/querypeoplebylikes",
+                url: "${pageContext.request.contextPath}/querypeoplebylikes",
                 data: {
                     "name": name,
                     "birthplace": birthplace,
@@ -211,7 +211,7 @@
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=peoplesinfo";
+                        window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=peoplesinfo";
                     } else {
                         alert(result.data);
                     }
@@ -224,14 +224,14 @@
             $.ajax({
                 type: "get",
                 datatype: "form-data",
-                url: "/PersonalManagerSystem_war/getallpeople",
+                url: "${pageContext.request.contextPath}/getallpeople",
                 data: {
                     "pagenum": pageNumber
                 },
                 success: function (result) {
                     if (result.code === 200) {
                         console.log(result.info);
-                        window.location.href = "/PersonalManagerSystem_war/adminIndex?chosenmenu=peoplesinfo";
+                        window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=peoplesinfo";
                     } else {
                         alert(result.data);
                     }
@@ -241,17 +241,17 @@
 
         function addNewThesis() {
             console.log("addNewThesis");
-            window.location.href="/PersonalManagerSystem_war/addnewthesis"
+            window.location.href="${pageContext.request.contextPath}/addnewthesis"
         }
 
         function addNewPeople() {
             console.log("addNewPeople");
-            window.location.href="/PersonalManagerSystem_war/addnewpeople"
+            window.location.href="${pageContext.request.contextPath}/addnewpeople"
         }
 
         function addNewAward() {
             console.log("addNewAward");
-            window.location.href="/PersonalManagerSystem_war/addnewhonor"
+            window.location.href="${pageContext.request.contextPath}/addnewhonor"
         }
     </script>
 </head>

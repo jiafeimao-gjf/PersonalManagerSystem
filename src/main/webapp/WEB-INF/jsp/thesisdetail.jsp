@@ -150,9 +150,11 @@
                 <div class="col-sm-8">
                     <label class="col-sm-2">    </label>
                     <input id="changethesisinfo" class="btn btn-primary col-sm-3" type="button" value="修改论文信息"/>
-                    <c:if test="<%=role.getRoleid() == 1 && thesis.getChecked() == 2%>">
-                        <label class="col-sm-1">    </label>
-                        <button class="btn btn-primary col-sm-2" onclick="checkThesis(<%=thesis.getThesisid()%>)">审核通过</button>
+                    <c:if test="<%=role.getRoleid() == 1%>">
+                        <c:if test="<%=thesis.getChecked() == 2%>">
+                            <label class="col-sm-1">    </label>
+                            <button class="btn btn-primary col-sm-2" onclick="checkThesis(<%=thesis.getThesisid()%>)">审核通过</button>
+                        </c:if>
                         <label class="col-sm-1">    </label>
                         <button class="btn btn-primary col-sm-3" onclick="deleteThesis(<%=thesis.getThesisid()%>)">删除论文信息</button>
                     </c:if>

@@ -106,10 +106,5 @@ public class LoginController {
         return "index";
     }
 
-    @RequestMapping(value = "/personalIndex")
-    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu
-                                ,HttpSession session){
-        SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
-        return "personalIndex";
-    }
+
 }

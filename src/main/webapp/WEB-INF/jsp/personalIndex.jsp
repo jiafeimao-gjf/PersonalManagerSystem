@@ -8,7 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
     People people = (People) session.getAttribute("peopleinfo");
@@ -34,14 +33,14 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"/PersonalManagerSystem_war/lookthesisinfo",
+                    url:"${pageContext.request.contextPath}/lookthesisinfo",
                     data: {
                         "thesisid":thesisid
                     },
                     success:function (result) {
                         if (result.code === 200) {
                             console.log("进入详情页");
-                            window.location.href="/PersonalManagerSystem_war/thesisdetail";
+                            window.location.href="${pageContext.request.contextPath}/thesisdetail";
                         } else {
                             alert(result.data);
                         }
@@ -53,14 +52,14 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"/PersonalManagerSystem_war/lookhonorinfo",
+                    url:"${pageContext.request.contextPath}/lookhonorinfo",
                     data: {
                         "honorid":honorid
                     },
                     success:function (result) {
                         if (result.code === 200) {
                             console.log("进入详情页");
-                            window.location.href="/PersonalManagerSystem_war/honordetail";
+                            window.location.href="${pageContext.request.contextPath}/honordetail";
                         } else {
                             alert(result.data);
                         }
@@ -75,7 +74,7 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"/PersonalManagerSystem_war/gethonorsbylikes",
+                    url:"${pageContext.request.contextPath}/gethonorsbylikes",
                     data: {
                         "awardname":awardname,
                         "department":department,
@@ -85,7 +84,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info);
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
+                            window.location.href="${pageContext.request.contextPath}/personalIndex?chosenmenu=honorinfo";
                         } else {
                             alert(result.data);
                         }
@@ -99,7 +98,7 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"//localhost:8080/PersonalManagerSystem_war/gethonorsbynumber",
+                    url:"//localhost:8080${pageContext.request.contextPath}/gethonorsbynumber",
                     data: {
                         "number":number,
                         "pagenum":pageNumber
@@ -107,7 +106,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info);
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=honorinfo";
+                            window.location.href="${pageContext.request.contextPath}/personalIndex?chosenmenu=honorinfo";
                         } else {
                             alert(result.data);
                         }
@@ -124,7 +123,7 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"/PersonalManagerSystem_war/getthesisbylikes",
+                    url:"${pageContext.request.contextPath}/getthesisbylikes",
                     data: {
                         "name":thesisname,
                         "title":title,
@@ -137,7 +136,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info);
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
+                            window.location.href="${pageContext.request.contextPath}/personalIndex?chosenmenu=thesisinfo";
                         } else {
                             alert(result.data);
                         }
@@ -150,7 +149,7 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"/PersonalManagerSystem_war/getthesisbynumber",
+                    url:"${pageContext.request.contextPath}/getthesisbynumber",
                     data: {
                         "number":number,
                         "pagenum":pageNumber
@@ -158,7 +157,7 @@
                     success:function (result) {
                         if (result.code === 200) {
                             console.log(result.info)
-                            window.location.href="/PersonalManagerSystem_war/personalIndex?chosenmenu=thesisinfo";
+                            window.location.href="${pageContext.request.contextPath}/personalIndex?chosenmenu=thesisinfo";
                         } else {
                             alert(result.data);
                         }
@@ -167,12 +166,12 @@
             }
             function addNewThesis() {
                 console.log("addNewThesis");
-                window.location.href="/PersonalManagerSystem_war/addnewthesis"
+                window.location.href="${pageContext.request.contextPath}/addnewthesis"
             }
 
             function addNewAward() {
                 console.log("addNewAward");
-                window.location.href="/PersonalManagerSystem_war/addnewhonor"
+                window.location.href="${pageContext.request.contextPath}/addnewhonor"
             }
         </script>
     </head>
