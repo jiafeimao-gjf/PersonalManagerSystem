@@ -98,7 +98,7 @@
                 $.ajax({
                     type:"get",
                     datatype:"form-data",
-                    url:"//localhost:8080${pageContext.request.contextPath}/gethonorsbynumber",
+                    url:"${pageContext.request.contextPath}/gethonorsbynumber",
                     data: {
                         "number":number,
                         "pagenum":pageNumber
@@ -156,7 +156,7 @@
                     },
                     success:function (result) {
                         if (result.code === 200) {
-                            console.log(result.info)
+                            console.log(result.info);
                             window.location.href="${pageContext.request.contextPath}/personalIndex?chosenmenu=thesisinfo";
                         } else {
                             alert(result.data);

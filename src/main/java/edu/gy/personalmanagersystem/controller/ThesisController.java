@@ -207,8 +207,8 @@ public class ThesisController {
 
     @RequestMapping(value = "/deletethesis",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> deleteHonor(@RequestParam("thesisid")Integer thesisId){
-        logger.info("deleteHonor");
+    public ResultVO<String> deleteThesis(@RequestParam("thesisid")Integer thesisId){
+        logger.info("deleteThesis");
         int res = thesisService.deleteThesis(thesisId);
         if (res == 1) {
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");

@@ -44,8 +44,8 @@
         }
 
         function deleteThesis(thesisid) {
-            if (confirm("确定审核通过？")) {
-                console.log("论文信息审核通过");
+            if (confirm("确定删除论文信息？")) {
+                console.log("确定删除论文信息");
                 $.ajax({
                     type:"post",
                     datatype:"form-data",

@@ -36,6 +36,7 @@
             }
         }
         function deleteStuff(number) {
+            onsole.log("删除教职工信");
              if (comfirm("是否确定删除？")){
                  $.ajax({
                      type:"post",
@@ -46,7 +47,7 @@
                      },
                      success:function (result) {
                          if (result.data === 200) {
-                             window.location.href = "${pageContext.request.contextPath}/adminIndex";
+                             window.location.href = "${pageContext.request.contextPath}/adminIndex?chosenmenu=stuffinfo";
                          } else {
                              alert(result.data);
                          }

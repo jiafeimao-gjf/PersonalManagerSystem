@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.*;
 import edu.gy.personalmanagersystem.service.*;
-import edu.gy.personalmanagersystem.utils.SessionDataSetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,7 +94,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(value = "/")
     public String index(HttpSession session){
         if (session.getAttribute("peopleinfo") != null){
             session.removeAttribute("peopleinfo");

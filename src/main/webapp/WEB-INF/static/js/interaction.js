@@ -381,6 +381,7 @@ $(document).ready(function () {
 
     $("#add-new-stuff").click(function () {
        console.log("add-new-stuff");
+       var number = $(".new-stuff-number").val();
     });
     $("#add-new-honor").click(function () {
         console.log("add-new-honor");
