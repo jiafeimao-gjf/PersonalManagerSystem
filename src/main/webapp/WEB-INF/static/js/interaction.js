@@ -380,17 +380,129 @@ $(document).ready(function () {
     });
 
     $("#add-new-stuff").click(function () {
-       console.log("add-new-stuff");
-       var number = $(".new-stuff-number").val();
+        console.log("add-new-stuff");
+        var number = $(".new-stuff-number").val();
+        var name = $(".new-stuff-name").val();
+        var sex = $(".new-stuff-sex").val();
+        var age = $(".new-stuff-age").val();
+        var depart = $(".new-stuff-department").val();
+        var position = $(".new-stuff-position").val();
+        var birth = $(".new-stuff-birthplace").val();
+        var nation = $(".new-stuff-nation").val();
+        var identity = $(".new-stuff-identityno").val();
+        var political = $(".new-stuff-politicalstatus").val();
+        var phone = $(".new-stuff-phonenumber").val();
+        if (confirm("确定增加该教职工？增加后将会为其创建登录账户。")) {
+            $.ajax({
+                type:"post",
+                datatype:"form-date",
+                url:"/PersonalManagerSystem/addnewpeople",
+                data:{
+                    "number":number,
+                    "name":name,
+                    "sex":sex,
+                    'age':age,
+                    "department":depart,
+                    "position":position,
+                    "birthplace":birth,
+                    "nation":nation,
+                    "politicalstaus":political,
+                    "identityno":identity,
+                    "phonenumber":phone,
+                    "checked":1
+                },
+                success:function (result) {
+                    if (result.code === 200) {
+                        console.log(result.data);
+                        alert("成功"+result.data);
+                        $(".new-stuff-number").val("");
+                        $(".new-stuff-name").val("");
+                        $(".new-stuff-sex").val("");
+                        $(".new-stuff-age").val("");
+                        $(".new-stuff-department").val("");
+                        $(".new-stuff-position").val("");
+                        $(".new-stuff-birthplace").val("");
+                        $(".new-stuff-nation").val("");
+                        $(".new-stuff-identityno").val("");
+                        $(".new-stuff-politicalstatus").val("");
+                    } else {
+                        alert("失败："+result.data);
+                    }
+                }
+            });
+        }
     });
     $("#add-new-honor").click(function () {
         console.log("add-new-honor");
+        var number = $(".new-honor-number").val();
+        var depart = $(".new-honor-depart").val();
+        var awardname = $(".new-honor-award-name").val();
+        var awardlevel = $(".new-honor-award-level").val();
+        var awarddepart = $(".new-honor-award-depart").val();
+        var grade = $(".new-honor-grade").val();
+        var remarks = $(".new-honor-remarks").val();
+        if (confirm("确定增加该荣誉信息？")) {
+            $.ajax({
+                type:"post",
+                datatype:"form-date",
+                url:"/PersonalManagerSystem/addnewhonor",
+                data:{
+                    "number":number,
+                    "company":depart,
+                    "awardname":awardname,
+                    "awardlevel":awardlevel,
+                    "awardcpy":awarddepart,
+                    "grade":grade,
+                    "remarks":remarks,
+                    "checked":1
+                },
+                success:function (result) {
+                    if (result.code === 200) {
+                        console.log(result.data);
+                        alert("成功"+result.data);
+                    } else {
+                        alert("失败："+result.data);
+                    }
+                }
+            });
+        }
     });
+
     $("#add-new-thesis").click(function () {
         console.log("add-new-thesis");
+        var number = $(".new-thesis-number").val();
+        var name = $(".new-thesis-name").val();
+        var depart = $(".new-thesis-depart").val();
+        var title = $(".new-thesis-title").val();
+        var classify = $(".new-thesis-classify").val();
+        var magazine = $(".new-thesis-maga").val();
+        if (confirm("确定增加该荣誉信息？")) {
+            $.ajax({
+                type:"post",
+                datatype:"form-date",
+                url:"/PersonalManagerSystem/addnewthesis",
+                data:{
+                    "number":number,
+                    "company":depart,
+                    "name":name,
+                    "title":title,
+                    "classify":classify,
+                    "magazine":magazine,
+                    "checked":1
+                },
+                success:function (result) {
+                    if (result.code === 200) {
+                        console.log(result.data);
+                        alert("成功："+result.data);
+                    } else {
+                        alert("失败："+result.data);
+                    }
+                }
+            });
+        }
     });
     $("#add-many-stuff").click(function () {
-        console.log("add-new-stuff");
+        console.log("add-many-stuff");
     });
     $("#add-many-honor").click(function () {
         console.log("add-many-honor");

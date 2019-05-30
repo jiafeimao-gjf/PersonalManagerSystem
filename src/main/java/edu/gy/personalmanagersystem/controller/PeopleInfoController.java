@@ -6,6 +6,7 @@ import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Role;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.*;
+import edu.gy.personalmanagersystem.utils.PasswordCreatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,8 @@ public class PeopleInfoController {
             if (res == 1) {
                 logger.info("成功插入新的教职工信息");
                 ResultVO<String> resultVO = new ResultVO<String>(200, "success");
-                resultVO.setData("新增教职工信息成功");
+                String pwdInfo;
+                // 添加角色信息
                 Role role = new Role();
                 role.setNumber(people.getNumber());
                 role.setRoleid(2);
@@ -53,15 +55,25 @@ public class PeopleInfoController {
                 } else {
                     logger.log(Level.WARNING, "角色信息插入失败");
                 }
+                // 添加登录信息
                 User user = new User();
                 user.setNumber(people.getNumber());
-                user.setPassword(people.getIdentityno().substring(12, 18));// 身份证后六位作为登陆密码
+                int pwdLength;
+                if (people.getIdentityno().length() >= 18) {
+                    pwdLength = 18;
+                    user.setPassword(people.getIdentityno().substring(pwdLength-6, pwdLength));// 身份证后六位作为登陆密码
+                    pwdInfo = "身份号后六位位";
+                } else {
+                    pwdInfo = PasswordCreatorUtil.getDefaultPwd();
+                    user.setPassword(pwdInfo);// 随机生成密码
+                }
                 int userRes = userService.insertNewUser(user);
                 if (userRes == 1) {
                     logger.info("成功插入新的登陆信息");
                 } else {
-                    logger.log(Level.WARNING, "  用户信息插入失败");
+                    logger.log(Level.WARNING, "  教职工信息插入失败");
                 }
+                resultVO.setData("新增教职工信息成功，密码为："+pwdInfo);
                 return resultVO;
             } else {
                 logger.log(Level.WARNING, "教职工信息插入失败");
@@ -172,6 +184,18 @@ public class PeopleInfoController {
             People stuff = peopleService.getPeople(people.getNumber());
             session.setAttribute("stuffinfo",stuff);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
+            if(roleService.getRole(number) == null) {
+                Role role = new Role();
+                role.setRoleid(2);
+                role.setNumber(number);
+                roleService.insertRole(role);
+            }
+            if (userService.getUserByID(number) == null) {
+                User user = new User();
+                user.setNumber(number);
+                user.setPassword(PasswordCreatorUtil.getDefaultPwd());
+                userService.insertNewUser(user);
+            }
             resultVO.setData("教职工信息通过审核");
             return resultVO;
         } else {

@@ -36,8 +36,8 @@
             }
         }
         function deleteStuff(number) {
-            onsole.log("删除教职工信");
-             if (comfirm("是否确定删除？")){
+            console.log("删除教职工信");
+             if (confirm("是否确定删除？")){
                  $.ajax({
                      type:"post",
                      datatype:"form-data",

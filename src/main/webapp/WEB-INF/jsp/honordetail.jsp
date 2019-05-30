@@ -22,6 +22,7 @@
     <title><%=people.getName()%></title>
     <script type="text/javascript">
         function checkHonor(honorid) {
+            console.log("审核荣誉信息");
             if (confirm("确定审核通过？")){
                 console.log("审核荣誉信息");
                 $.ajax({
@@ -44,6 +45,7 @@
         }
 
         function deleteHonor(honorid){
+            console.log("删除荣誉信息");
             if (confirm("确定删除该荣誉信息？")){
                 console.log("删除荣誉信息");
                 $.ajax({

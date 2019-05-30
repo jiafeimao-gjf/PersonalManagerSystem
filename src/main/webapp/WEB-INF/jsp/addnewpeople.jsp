@@ -86,7 +86,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">身份证号</label>
                 <div class="col-sm-6">
-                    <input type="text" class="identityno form-control" />
+                    <input type="text" class="new-stuff-identityno form-control" />
                 </div>
             </div>
             <div class="form-group">

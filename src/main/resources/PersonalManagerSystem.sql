@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 25/05/2019 18:53:40
+ Date: 30/05/2019 19:29:01
 */
 
 SET NAMES utf8mb4;
@@ -47,6 +47,7 @@ INSERT INTO `t_honor` VALUES ('100003', '计算机学院', '数据结构优秀�
 INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '优秀创业导师', '院级', 'xx大学', NULL, NULL, 8, 2);
 INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '优秀辅导员', '校级', 'xx大学', NULL, NULL, 9, 2);
 INSERT INTO `t_honor` VALUES ('100003', 'xx学院', '计算机网络优秀讲师', '校级', 'xx大学', '2017-2018年度', '一等', 10, 2);
+INSERT INTO `t_honor` VALUES ('100009', '信息学院', '人工智能优秀讲师', '校级', 'xx大学', '2017-2018', '优秀', 11, 1);
 COMMIT;
 
 -- ----------------------------
@@ -82,7 +83,7 @@ INSERT INTO `t_people` VALUES ('100005', 'Tony', '男', '49', '公路系', '系�
 INSERT INTO `t_people` VALUES ('100006', 'Andy', '女', '25', '人事部', '财务员', 'nul', 'null', NULL, 'null', 'null', 1);
 INSERT INTO `t_people` VALUES ('100007', 'Baey', '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
 INSERT INTO `t_people` VALUES ('100008', 'Bob', '男', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `t_people` VALUES ('100009', 'Jone', '男', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `t_people` VALUES ('100009', 'Jone', '男', '33', '信息学院', '讲师', '北京', '汉族', '333222198655556666', '党员', '15599995555', 1);
 INSERT INTO `t_people` VALUES ('100010', 'Jackson', '男', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
 COMMIT;
 
@@ -106,6 +107,7 @@ INSERT INTO `t_role` VALUES ('100002', 2);
 INSERT INTO `t_role` VALUES ('100003', 2);
 INSERT INTO `t_role` VALUES ('100004', 2);
 INSERT INTO `t_role` VALUES ('100005', 2);
+INSERT INTO `t_role` VALUES ('100009', 2);
 COMMIT;
 
 -- ----------------------------
@@ -124,7 +126,7 @@ CREATE TABLE `t_thesis` (
   PRIMARY KEY (`thesisid`) USING BTREE,
   KEY `number3` (`number`),
   CONSTRAINT `number3` FOREIGN KEY (`number`) REFERENCES `t_people` (`number`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_thesis
@@ -134,9 +136,10 @@ INSERT INTO `t_thesis` VALUES ('100002', 'Jams', '计算机学院', '基于大�
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', '软件学院', '地图定点信息发布和搜索平台', 'web系统', 'cc期刊', 20, 2);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', '计算机学院', '基于区块链的供应链溯源系统', 'web系统', 'cc期刊', 21, 2);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '视频图像中的景深信息获取', NULL, NULL, 22, 2);
-INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '基于卷积神经网络的视频中的运动的人获取', NULL, NULL, 23, 2);
+INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '基于卷积神经网络的视频中的运动的人获取', NULL, NULL, 23, 1);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', 'null', '校园投票系统设计和实现', 'null', 'null', 24, 2);
 INSERT INTO `t_thesis` VALUES ('100003', 'Thomas', NULL, '校园人事管理系统设计和实现', NULL, NULL, 25, 2);
+INSERT INTO `t_thesis` VALUES ('100002', 'Jams', '经管学院', '网络直播服务对市场经济的效益研究', '经济学', '经济学期刊', 26, 1);
 COMMIT;
 
 -- ----------------------------
@@ -159,6 +162,7 @@ INSERT INTO `t_user` VALUES ('100002', '111111');
 INSERT INTO `t_user` VALUES ('100003', '123456');
 INSERT INTO `t_user` VALUES ('100004', '081234');
 INSERT INTO `t_user` VALUES ('100005', '123456');
+INSERT INTO `t_user` VALUES ('100009', '123456');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
