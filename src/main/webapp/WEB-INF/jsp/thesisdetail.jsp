@@ -12,14 +12,22 @@
 <jsp:include page="common/tag.jsp"/>
 <%
     Thesis thesis = (Thesis) session.getAttribute("thesisinfo");
-    Role role = (Role) session.getAttribute("roleinfo");
+    People people ;
+    String type;
+    Role role = (Role) session.getAttribute("roleInfo");
+    if (role.getRoleid() == 1){
+        type = "admin";
+    } else {
+        type = "user";
+    }
+    people = (People) session.getAttribute(type +"_login");
 %>
 <html>
 <head>
     <jsp:include page="common/bootstrap.jsp"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/peopleIndex.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/interaction.js"></script>
-    <title><%=thesis.getName()%></title>
+    <title><%=people.getName()%></title>
     <script type="text/javascript">
         function checkThesis(thesisid) {
             console.log("论文信息审核通过");

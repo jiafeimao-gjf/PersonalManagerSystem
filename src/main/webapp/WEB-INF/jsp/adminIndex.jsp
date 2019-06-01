@@ -10,19 +10,19 @@
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
-    People people = (People) session.getAttribute("peopleinfo");
-    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("honorPageInfo");
-    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
-    PageInfo<People> peoplePageInfo = (PageInfo<People>) session.getAttribute("peoplePageInfo");
+    People people = (People) session.getAttribute("admin_login");
+    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("admin_honorPageInfo");
+    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("admin_thesisPageInfo");
+    PageInfo<People> peoplePageInfo = (PageInfo<People>) session.getAttribute("admin_peoplePageInfo");
 
-    int honorType = (int) session.getAttribute("honorType");
-    int thesisType = (int) session.getAttribute("thesisType");
-    int peopleType = (int) session.getAttribute("thesisType");
+    int honorType = (int) session.getAttribute("admin_honorDataType");
+    int thesisType = (int) session.getAttribute("admin_thesisType");
+    int peopleType = (int) session.getAttribute("admin_thesisType");
 
-    String isInfoShow = (String) session.getAttribute("isinfoshow");
-    String isHonorShow = (String) session.getAttribute("ishonorshow");
-    String isThesisShow = (String) session.getAttribute("isthesisshow");
-    String isPeopleShow = (String) session.getAttribute("ispeopleshow");
+    String isInfoShow = (String) session.getAttribute("admin_isInfoShow");
+    String isHonorShow = (String) session.getAttribute("admin_isHonorShow");
+    String isThesisShow = (String) session.getAttribute("admin_isThesisShow");
+    String isPeopleShow = (String) session.getAttribute("admin_isStuffShow");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>

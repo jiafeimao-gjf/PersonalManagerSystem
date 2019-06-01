@@ -3,7 +3,7 @@ package edu.gy.personalmanagersystem.controller;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.UserService;
-import edu.gy.personalmanagersystem.utils.SessionDataSetUtil;
+import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +50,7 @@ public class UserController {
     public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu,
                              HttpSession session){
         if (session.getAttribute("peopleinfo") != null) {
-            SessionDataSetUtil.menuDiaplaySet(chosenmenu, session);
+            SessionManagerUtil.menuDisplaySet(chosenmenu,"admin",session);
             return "adminIndex";
         } else {
             return "index";
@@ -61,7 +61,7 @@ public class UserController {
     public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu
             ,HttpSession session){
         if (session.getAttribute("peopleinfo") != null) {
-            SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
+            SessionManagerUtil.menuDisplaySet(chosenmenu,"user",session);
             return "personalIndex";
         } else {
             return "index";

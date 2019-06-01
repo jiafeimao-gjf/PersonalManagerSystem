@@ -3,8 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="common/tag.jsp"/>
 <%
-    People people = (People) session.getAttribute("peopleinfo");
-    Role role = (Role) session.getAttribute("roleinfo");
+    People people ;
+    String type;
+    Role role = (Role) session.getAttribute("roleInfo");
+    if (role.getRoleid() == 1){
+        type = "admin";
+    } else {
+        type = "user";
+    }
+    people = (People) session.getAttribute(type +"_login");
 %>
 <html>
 <head>
