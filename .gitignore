@@ -30,4 +30,4 @@ gen/
 .mvn
 mvnw*
 src/test/
-!/src/main/resources/mybatis-generator-config.xml
+!/mybatis-generator-config-1.xml

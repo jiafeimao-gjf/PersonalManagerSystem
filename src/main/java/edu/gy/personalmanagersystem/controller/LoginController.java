@@ -95,8 +95,8 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/")
-    public String index(HttpSession session){
-        if (session.getAttribute("peopleinfo") != null){
+    public String index(@RequestParam(value = "logout",required = false)String logout, HttpSession session){
+        if (session.getAttribute("peopleinfo") != null && "logout".equals(logout)){
             session.removeAttribute("peopleinfo");
             session.removeAttribute("honorPageInfo");
             session.removeAttribute("thesisPageInfo");

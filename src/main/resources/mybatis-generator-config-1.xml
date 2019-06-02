@@ -34,12 +34,12 @@
 <!--        <table tableName="t_people" domainObjectName="People" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
 <!--            &lt;!&ndash; <generatedKey column="ID" sqlStatement="oracle" identity="true" /> &ndash;&gt;-->
 <!--        </table>-->
-         <table tableName="t_honor" domainObjectName="Honor" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">
+<!--         <table tableName="t_honor" domainObjectName="Honor" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
             <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
-        </table>
-         <table tableName="t_thesis" domainObjectName="Thesis" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">
+<!--        </table>-->
+<!--         <table tableName="t_thesis" domainObjectName="Thesis" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
             <!-- <generatedKey column="ID" sqlStatement="oracle" identity="true" /> -->
-        </table>
+<!--        </table>-->
 
 <!--        <table tableName="t_user" domainObjectName="User" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" selectByExampleQueryId="true" enableUpdateByExample="false">-->
 <!--            &lt;!&ndash; <generatedKey column="ID" sqlStatement="oracle" identity="true" /> &ndash;&gt;-->

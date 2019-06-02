@@ -249,8 +249,8 @@
             window.location.href="${pageContext.request.contextPath}/addnewpeople"
         }
 
-        function addNewAward() {
-            console.log("addNewAward");
+        function addNewHonor() {
+            console.log("addNewHonor");
             window.location.href="${pageContext.request.contextPath}/addnewhonor"
         }
     </script>
@@ -775,7 +775,7 @@
                     <label class="col-sm-1"> </label>
                     <input type="button" onclick="honorJumpByAll(1)" class="btn col-sm-4 btn-primary" value="显示全部荣誉"/>
                     <label class="col-sm-1"> </label>
-                    <input type="button" onclick="addNewAward()" class="btn col-sm-2 btn-primary" value="新增荣誉"/>
+                    <input type="button" onclick="addNewHonor()" class="btn col-sm-2 btn-primary" value="新增荣誉"/>
                 </div>
             </div>
         </form>

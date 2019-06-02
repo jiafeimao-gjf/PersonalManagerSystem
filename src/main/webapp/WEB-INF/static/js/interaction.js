@@ -200,7 +200,7 @@ $(document).ready(function () {
     $(".body4").click(function(){
         if (confirm("确定退出登录？")){
             console.log("清除session，重新登录");
-            window.location.href = "/PersonalManagerSystem/";
+            window.location.href = "/PersonalManagerSystem/?logout=logout";
         } else {
             console.log("取消重新登录");
         }
