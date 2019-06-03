@@ -10,9 +10,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    People people = (People) session.getAttribute("peopleinfo");
-    Honor honor = (Honor) session.getAttribute("honorinfo");
-    Role role = (Role) session.getAttribute("roleinfo");
+    Honor honor = (Honor) session.getAttribute("honorInfo");
+    People people = (People) session.getAttribute("login_people");
+    Role role = (Role) session.getAttribute("roleInfo");
 %>
 <html>
 <head>

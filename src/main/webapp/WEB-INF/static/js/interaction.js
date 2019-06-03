@@ -200,7 +200,12 @@ $(document).ready(function () {
     $(".body4").click(function(){
         if (confirm("确定退出登录？")){
             console.log("清除session，重新登录");
+<<<<<<< HEAD
             window.location.href = "/PersonalManagerSystem/?logout=logout";
+=======
+            var number = $(".number").val();
+            window.location.href = "/PersonalManagerSystem/?logout="+number;
+>>>>>>> newfeature
         } else {
             console.log("取消重新登录");
         }
@@ -335,6 +340,7 @@ $(document).ready(function () {
                 if (result.code === 200) {
                     console.log(result.data);
                     $(".thesis-checked").val("未审核");
+                    window.location.href="/PersonalManagerSystem/thesisdetail";
                     alert(result.data);
                 } else {
                     console.log(result.data);
@@ -510,5 +516,6 @@ $(document).ready(function () {
     $("#add-many-thesis").click(function () {
         console.log("add-many-thesis");
     });
+
 
 });

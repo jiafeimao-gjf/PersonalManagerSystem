@@ -3,7 +3,7 @@ package edu.gy.personalmanagersystem.controller;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.UserService;
-import edu.gy.personalmanagersystem.utils.SessionDataSetUtil;
+import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,10 +47,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminIndex")
-    public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu,
+    public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenMenu,
                              HttpSession session){
-        if (session.getAttribute("peopleinfo") != null) {
-            SessionDataSetUtil.menuDiaplaySet(chosenmenu, session);
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            SessionManagerUtil.menuDisplaySet(chosenMenu,session);
             return "adminIndex";
         } else {
             return "index";
@@ -58,10 +58,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/personalIndex")
-    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu
+    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenMenu
             ,HttpSession session){
-        if (session.getAttribute("peopleinfo") != null) {
-            SessionDataSetUtil.menuDiaplaySet(chosenmenu,session);
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            SessionManagerUtil.menuDisplaySet(chosenMenu,session);
             return "personalIndex";
         } else {
             return "index";

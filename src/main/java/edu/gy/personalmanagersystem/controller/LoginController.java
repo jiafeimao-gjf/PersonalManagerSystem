@@ -4,6 +4,9 @@ import com.github.pagehelper.PageInfo;
 import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.*;
 import edu.gy.personalmanagersystem.service.*;
+import edu.gy.personalmanagersystem.utils.DataTypesUtil;
+import edu.gy.personalmanagersystem.utils.LoginManagerUtil;
+import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,50 +47,72 @@ public class LoginController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public ResultVO<String> login(@RequestParam String number, @RequestParam String pwd, HttpSession session){
-
         logger.info("登陆验证");
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            People people = SessionManagerUtil.getLogin(session);
+            if (LoginManagerUtil.isPeopleLogin(number)) {
+                ResultVO<String> resultVO = new ResultVO<String>(200,"该用户已经登录");
+                if ("100001".equals(people.getNumber())) {
+                    resultVO.setData("admin");
+                } else {
+                    resultVO.setData("user");
+                }
+                return resultVO;
+            }
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"该设备已经登录用户："+people.getNumber()+"-"+people.getName()+"，若要切换用户，请先退出登录");
+            resultVO.setData("该用户已经登录，请不要重复登录");
+            return resultVO;
+        }
+        if (LoginManagerUtil.isPeopleLogin(number)) {
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"该用户已经在另一台设备登录");
+            resultVO.setData("该用户已经登录，请不要重复登录");
+            return resultVO;
+        }
         User user = userService.getUserByID(number);
         if (user == null) {
-            logger.log(Level.WARNING,"用户不存在");
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"not exist");
+            logger.log(Level.WARNING, "用户不存在");
+            ResultVO<String> resultVO = new ResultVO<String>(-1, "not exist");
             resultVO.setData("用户不存在");
             return resultVO;
         } else {
             logger.info("用户存在");
             if (user.getPassword().equals(pwd)) {
                 logger.info("输入密码正确");
+                LoginManagerUtil.addLoginPerson(number);
                 ResultVO<String> resultVO = new ResultVO<String>(200, "OK");
                 People peopleInfo = peopleService.getPeople(number);
                 Role role = roleService.getRole(number);
                 if (role.getRoleid() == 2) {
                     Honor honor = new Honor();
                     honor.setNumber(number);
-                    PageInfo<Honor> honorPageInfo = honorService.getByItem(honor,null,1);
-                    Thesis thesis = new Thesis();thesis.setNumber(number);
-                    PageInfo<Thesis> thesisPageInfo = thesisService.getByItem(thesis,null,1);
-                    session.setAttribute("honorPageInfo",honorPageInfo);
-                    session.setAttribute("thesisPageInfo",thesisPageInfo);
-                    session.setAttribute("thesisType",2);// 2表示具体某个人的信息
-                    session.setAttribute("honorType",2);// 2表示具体某个人的信息
+                    PageInfo<Honor> honorPageInfo = honorService.getByItem(honor, null, 1);
+                    Thesis thesis = new Thesis();
+                    thesis.setNumber(number);
+                    PageInfo<Thesis> thesisPageInfo = thesisService.getByItem(thesis, null, 1);
+                    SessionManagerUtil.setHonorList(honorPageInfo,session);
+                    SessionManagerUtil.setThesisList(thesisPageInfo,session);
+                    SessionManagerUtil.setThesisDataType(DataTypesUtil.THESIS_DATA_FOR_GET,session);
+                    SessionManagerUtil.setHonorDataType(DataTypesUtil.HONOR_DATA_FOR_GET,session);
+                    SessionManagerUtil.setLogin(peopleInfo,session);
                     resultVO.setData("user");
                 } else if (role.getRoleid() == 1) {
                     PageInfo<Honor> honorPageInfo = honorService.getAll(1);
                     PageInfo<Thesis> thesisPageInfo = thesisService.getAll(1);
                     PageInfo<People> peoplePageInfo = peopleService.getAll(1);
-                    session.setAttribute("honorPageInfo",honorPageInfo);
-                    session.setAttribute("thesisPageInfo",thesisPageInfo);
-                    session.setAttribute("peoplePageInfo",peoplePageInfo);
-                    session.setAttribute("thesisType",3);// 2表示具体某个人的信息
-                    session.setAttribute("honorType",3);// 2表示具体某个人的信息
-                    session.setAttribute("peopleType",2);// 2 全部人员
+                    SessionManagerUtil.setHonorList(honorPageInfo,session);
+                    SessionManagerUtil.setThesisList(thesisPageInfo,session);
+                    SessionManagerUtil.setThesisDataType(DataTypesUtil.THESIS_DATA_FOR_GET,session);
+                    SessionManagerUtil.setHonorDataType(DataTypesUtil.HONOR_DATA_FOR_GET,session);
+                    SessionManagerUtil.setStuffList(peoplePageInfo,session);
+                    SessionManagerUtil.setStuffDataType(DataTypesUtil.STUFF_DATA_FOR_ADMIN,session);
+                    SessionManagerUtil.setLogin(peopleInfo,session);
                     resultVO.setData("admin");
                 }
-                session.setAttribute("peopleinfo",peopleInfo);
-                session.setAttribute("roleinfo",role);
+                SessionManagerUtil.setRole(role,session);
                 return resultVO;
             } else {
                 logger.info("输入密码错误");
-                ResultVO<String> resultVO = new ResultVO<String>(-1,"wrong password");
+                ResultVO<String> resultVO = new ResultVO<String>(-1, "wrong password");
                 resultVO.setData("密码错误");
                 return resultVO;
             }
@@ -95,11 +120,19 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/")
+<<<<<<< HEAD
     public String index(@RequestParam(value = "logout",required = false)String logout, HttpSession session){
         if (session.getAttribute("peopleinfo") != null && "logout".equals(logout)){
             session.removeAttribute("peopleinfo");
             session.removeAttribute("honorPageInfo");
             session.removeAttribute("thesisPageInfo");
+=======
+    public String index(@RequestParam(value = "logout",required = false)String number,
+                        HttpSession session){
+        if (LoginManagerUtil.isPeopleLogin(number) && SessionManagerUtil.isDeviceExist(session.getId())){
+            LoginManagerUtil.removeLoginPerson(number);
+            SessionManagerUtil.removeALl(session);
+>>>>>>> newfeature
             logger.info("用户已退出登录");
         }
         return "index";

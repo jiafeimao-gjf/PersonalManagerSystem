@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="common/tag.jsp"/>
 <%
-    People people = (People) session.getAttribute("peopleinfo");
-    Role role = (Role) session.getAttribute("roleinfo");
+    People people = (People) session.getAttribute("login_people");
 %>
 <html>
 <head>

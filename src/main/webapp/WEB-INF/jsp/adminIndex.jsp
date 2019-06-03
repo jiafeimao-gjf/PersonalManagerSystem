@@ -10,19 +10,19 @@
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
-    People people = (People) session.getAttribute("peopleinfo");
+    People people = (People) session.getAttribute("login_people");
     PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("honorPageInfo");
     PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
     PageInfo<People> peoplePageInfo = (PageInfo<People>) session.getAttribute("peoplePageInfo");
 
-    int honorType = (int) session.getAttribute("honorType");
-    int thesisType = (int) session.getAttribute("thesisType");
-    int peopleType = (int) session.getAttribute("thesisType");
+    int honorType = (int) session.getAttribute("honorDataType");
+    int thesisType = (int) session.getAttribute("thesisDataType");
+    int peopleType = (int) session.getAttribute("stuffDataType");
 
-    String isInfoShow = (String) session.getAttribute("isinfoshow");
-    String isHonorShow = (String) session.getAttribute("ishonorshow");
-    String isThesisShow = (String) session.getAttribute("isthesisshow");
-    String isPeopleShow = (String) session.getAttribute("ispeopleshow");
+    String isInfoShow = (String) session.getAttribute("isInfoShow");
+    String isHonorShow = (String) session.getAttribute("isHonorShow");
+    String isThesisShow = (String) session.getAttribute("isThesisShow");
+    String isPeopleShow = (String) session.getAttribute("isStuffShow");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>
@@ -156,7 +156,6 @@
                     "classify": classify,
                     "magazine": magazine,
                     "pagenum": pageNumber
-
                 },
                 success: function (result) {
                     if (result.code === 200) {
@@ -496,22 +495,22 @@
             <nav aria-label="=Page navigation">
                 <ul class="pagination">
                     <li>
-                        <c:if test="${peopleType == 1}">
+                        <c:if test="<%=peopleType == 1%>">
                             <a onclick="peopleJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${peopleType == 2}">
+                        <c:if test="<%=peopleType == 2%>">
                             <a onclick="peopleJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
                     <!-- 判断是否有上一页，以便显示点击按钮 -->
                     <c:if test="${peoplePageInfo.hasPreviousPage }">
                         <li>
-                            <c:if test="${peopleType == 1}">
+                            <c:if test="<%=peopleType == 1%>">
                                 <a onclick="peopleJumpByLikes(${peoplePageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${peopleType == 2}">
+                            <c:if test="<%=peopleType == 2%>">
                                 <a onclick="peopleJumpByAll(${peoplePageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -525,10 +524,10 @@
                         </c:if>
                         <c:if test="${page_Num != peoplePageInfo.pageNum }">
                             <li>
-                                <c:if test="${peopleType == 1}">
+                                <c:if test="<%=peopleType == 1%>">
                                     <a onclick="peopleJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${peopleType == 2}">
+                                <c:if test="<%=peopleType == 2%>">
                                     <a onclick="peopleJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -537,12 +536,12 @@
                     <!-- 判断是否有下一页 -->
                     <c:if test="${peoplePageInfo.hasNextPage }">
                         <li>
-                            <c:if test="${peopleType == 1}">
+                            <c:if test="<%=peopleType == 1%>">
                                 <a onclick="peopleJumpByLikes(${peoplePageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${peopleType == 2}">
+                            <c:if test="<%=peopleType == 2%>">
                                 <a onclick="peopleJumpByAll(${peoplePageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -550,10 +549,10 @@
                         </li>
                     </c:if>
                     <li>
-                        <c:if test="${peopleType == 1}">
+                        <c:if test="<%=peopleType == 1%>">
                             <a onclick="peopleJumpByLikes(${peoplePageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${peopleType == 2}">
+                        <c:if test="<%=peopleType == 2%>">
                             <a onclick="peopleJumpByAll(${peoplePageInfo.pages})">末页</a>
                         </c:if>
                     </li>
@@ -672,22 +671,22 @@
             <nav aria-label="=Page navigation">
                 <ul class="pagination">
                     <li>
-                        <c:if test="${thesisType == 1}">
+                        <c:if test="<%=thesisType == 1%>">
                             <a onclick="thesisJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${thesisType == 3}">
+                        <c:if test="<%=thesisType == 2%>">
                             <a onclick="thesisJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
                     <!-- 判断是否有上一页，以便显示点击按钮 -->
                     <c:if test="${thesisPageInfo.hasPreviousPage }">
                         <li>
-                            <c:if test="${thesisType == 1}">
+                            <c:if test="<%=thesisType == 1%>">
                                 <a onclick="thesisJumpByLikes(${thesisPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${thesisType == 3}">
+                            <c:if test="<%=thesisType == 2%>">
                                 <a onclick="thesisJumpByAll(${thesisPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -701,10 +700,10 @@
                         </c:if>
                         <c:if test="${page_Num != thesisPageInfo.pageNum }">
                             <li>
-                                <c:if test="${thesisType == 1}">
+                                <c:if test="<%=thesisType == 1%>">
                                     <a onclick="thesisJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${thesisType == 3}">
+                                <c:if test="<%=thesisType == 2%>">
                                     <a onclick="thesisJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -713,12 +712,12 @@
                     <!-- 判断是否有下一页 -->
                     <c:if test="${thesisPageInfo.hasNextPage }">
                         <li>
-                            <c:if test="${thesisType == 1}">
+                            <c:if test="<%=thesisType == 1%>">
                                 <a onclick="thesisJumpByLikes(${thesisPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${thesisType == 3}">
+                            <c:if test="<%=thesisType == 2%>">
                                 <a onclick="thesisJumpByAll(${thesisPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -726,10 +725,10 @@
                         </li>
                     </c:if>
                     <li>
-                        <c:if test="${thesisType == 1}">
+                        <c:if test="<%=thesisType == 1%>">
                             <a onclick="thesisJumpByLikes(${thesisPageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${thesisType == 3}">
+                        <c:if test="<%=thesisType == 2%>">
                             <a onclick="thesisJumpByAll(${thesisPageInfo.pages})">末页</a>
                         </c:if>
                     </li>
@@ -832,22 +831,22 @@
             <nav aria-label="=Page navigation">
                 <ul class="pagination">
                     <li>
-                        <c:if test="${honorType == 1}">
+                        <c:if test="<%=honorType == 1%>">
                             <a onclick="honorJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${honorType == 3}">
+                        <c:if test="<%=honorType == 2%>">
                             <a onclick="honorJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
                     <!-- 判断是否有上一页，以便显示点击按钮 -->
                     <c:if test="${honorPageInfo.hasPreviousPage }">
                         <li>
-                            <c:if test="${honorType == 1}">
+                            <c:if test="<%=honorType == 1%>">
                                 <a onclick="honorJumpByLikes(${honorPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${honorType == 3}">
+                            <c:if test="<%=honorType == 2%>">
                                 <a onclick="honorJumpByAll(${honorPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -861,10 +860,10 @@
                         </c:if>
                         <c:if test="${page_Num != honorPageInfo.pageNum }">
                             <li>
-                                <c:if test="${honorType == 1}">
+                                <c:if test="<%=honorType == 1%>">
                                     <a onclick="honorJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${honorType == 3}">
+                                <c:if test="<%=honorType == 2%>">
                                     <a onclick="honorJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -873,12 +872,12 @@
                     <!-- 判断是否有下一页 -->
                     <c:if test="${honorPageInfo.hasNextPage }">
                         <li>
-                            <c:if test="${honorType == 1}">
+                            <c:if test="<%=honorType == 1%>">
                                 <a onclick="honorJumpByLikes(${honorPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${honorType == 3}">
+                            <c:if test="<%=honorType == 2%>">
                                 <a onclick="honorJumpByAll(${honorPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -886,10 +885,10 @@
                         </li>
                     </c:if>
                     <li>
-                        <c:if test="${honorType == 1}">
+                        <c:if test="<%=honorType == 1%>">
                             <a onclick="honorJumpByLikes(${honorPageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${honorType == 3}">
+                        <c:if test="<%=honorType == 2%>">
                             <a onclick="honorJumpByAll(${honorPageInfo.pages})">末页</a>
                         </c:if>
                     </li>

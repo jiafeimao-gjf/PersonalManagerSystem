@@ -5,6 +5,8 @@ import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.Honor;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.service.HonorService;
+import edu.gy.personalmanagersystem.utils.DataTypesUtil;
+import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +79,7 @@ public class HonorController {
         } else {
             honorPageInfo = honorService.getByItem(honor,null,1);
         }
-        session.setAttribute("honorType",2);// 1表示具体某个人的信息
+        SessionManagerUtil.setHonorDataType(DataTypesUtil.HONOR_DATA_FOR_GET,session);
         return setResultVO(honorPageInfo,session);
     }
 
@@ -107,7 +109,7 @@ public class HonorController {
             } else {
                 honorPageInfo = honorService.getByLikes(honor,1);
             }
-            session.setAttribute("honorType",1);// 1表示具体某个人的信息
+            SessionManagerUtil.setHonorDataType(DataTypesUtil.HONOR_DATA_FOR_SEARCH,session);
             return setResultVO(honorPageInfo,session);
         }
     }
@@ -119,7 +121,7 @@ public class HonorController {
         if (honor != null) {
             logger.info("成功查询到数据");
             ResultVO<String> resultVO =  new ResultVO<String>(200,"success");
-            session.setAttribute("honorinfo",honor);
+            SessionManagerUtil.setStuffHonor(honor,session);
             resultVO.setData("成功查询到数据");
             return resultVO;
         } else {
@@ -133,7 +135,7 @@ public class HonorController {
     @RequestMapping(value = "/honordetail")
     public String honorDetail(HttpSession session){
         logger.info("honordetail");
-        if (session.getAttribute("peopleinfo") != null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "honordetail";
         } else {
             return "index";
@@ -183,8 +185,7 @@ public class HonorController {
         if (res == 1) {
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             Honor honorInfo = honorService.getHonorByKey(honorId);
-            session.removeAttribute("honorinfo");
-            session.setAttribute("honorinfo",honorInfo);
+            SessionManagerUtil.setStuffHonor(honorInfo,session);
             resultVO.setData("荣誉审核成功");
             return resultVO;
         } else {
@@ -213,7 +214,7 @@ public class HonorController {
     @RequestMapping(value = "/addnewhonor")
     public String addNewHonor(HttpSession session){
         logger.info("addNewHonor");
-        if (session.getAttribute("peopleinfo") != null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "addnewhonor";
         } else {
             return "index";
@@ -223,15 +224,12 @@ public class HonorController {
     private ResultVO<String> setResultVO(PageInfo<Honor> honorPageInfo,HttpSession session){
         if (honorPageInfo.getList() == null) {
             logger.info("没有荣誉信息");
-            session.removeAttribute("honorPageInfo");
-            session.setAttribute("honorPageInfo",null);
             ResultVO<String> resultVO = new ResultVO<String>(-1,"none");
             resultVO.setData("没有荣誉信息");
             return resultVO;
         } else {
             logger.info("成功获取荣誉信息");
-            session.removeAttribute("honorPageInfo");
-            session.setAttribute("honorPageInfo",honorPageInfo);
+            SessionManagerUtil.setHonorList(honorPageInfo,session);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("成功获取荣誉信息");
             return resultVO;

@@ -5,6 +5,8 @@ import edu.gy.personalmanagersystem.VO.ResultVO;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Thesis;
 import edu.gy.personalmanagersystem.service.ThesisService;
+import edu.gy.personalmanagersystem.utils.DataTypesUtil;
+import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -76,7 +78,7 @@ public class ThesisController {
         } else{
             thesisPageInfo = thesisService.getByItem(thesis,null,pageNum);
         }
-        session.setAttribute("thesisType",2);// 1表示具体某个人的信息
+        SessionManagerUtil.setThesisDataType(DataTypesUtil.THESIS_DATA_FOR_GET,session);
         return setResultVO(session,thesisPageInfo);
     }
 
@@ -88,7 +90,7 @@ public class ThesisController {
         if (thesis != null) {
             logger.info("成功查询到数据");
             ResultVO<String> resultVO =  new ResultVO<String>(200,"success");
-            session.setAttribute("thesisinfo",thesis);
+            SessionManagerUtil.setStuffThesis(thesis,session);
             resultVO.setData("成功查询到数据");
             return resultVO;
         } else {
@@ -109,9 +111,9 @@ public class ThesisController {
                                              @RequestParam("magazine")String magazine,
                                              @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                              HttpSession session){
-        People people = (People) session.getAttribute("peopleinfo");
+        People people = (People) session.getAttribute("login_people");
         logger.info("getThesisByLikes");
-        if (people == null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             logger.log(Level.WARNING,"用户没有登录");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"not login");
             resultVO.setData("用户没有登录");
@@ -133,7 +135,7 @@ public class ThesisController {
             } else{
                 thesisPageInfo = thesisService.getByLikes(thesis,pageNum);
             }
-            session.setAttribute("thesisType",1);// 1表示具体某个人的信息
+            SessionManagerUtil.setThesisDataType(DataTypesUtil.THESIS_DATA_FOR_SEARCH,session);
             return setResultVO(session,thesisPageInfo);
         }
     }
@@ -141,7 +143,7 @@ public class ThesisController {
     @RequestMapping(value = "/thesisdetail")
     public String thesisDetail(HttpSession session){
         logger.info("thesisdetail");
-        if (session.getAttribute("peopleinfo") != null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "thesisdetail";
         } else {
             return "index";
@@ -176,8 +178,8 @@ public class ThesisController {
         } else {
             thesisPageInfo= thesisService.getAll(1);
         }
-        session.setAttribute("thesisPageInfo",thesisPageInfo);
-        session.setAttribute("thesisType",3);// 1表示具体某个人的信息
+        SessionManagerUtil.setThesisList(thesisPageInfo,session);
+        SessionManagerUtil.setThesisDataType(DataTypesUtil.THESIS_DATA_FOR_GET,session);
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("获取全部论文信息，第 "+pageNum+" 页");
         return resultVO;
@@ -195,7 +197,7 @@ public class ThesisController {
         if (res == 1) {
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             Thesis thesisInfo = thesisService.getThesisByKey(thesisId);
-            session.setAttribute("thesisinfo",thesisInfo);
+            SessionManagerUtil.setStuffThesis(thesisInfo,session);
             resultVO.setData("论文审核成功");
             return resultVO;
         } else {
@@ -224,7 +226,7 @@ public class ThesisController {
     @RequestMapping(value = "/addnewthesis")
     public String addNewThesis(HttpSession session){
         logger.info("addNewThesis");
-        if (session.getAttribute("peopleinfo") != null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "addnewthesis";
         } else {
             return "index";
@@ -234,15 +236,13 @@ public class ThesisController {
     private ResultVO<String> setResultVO(HttpSession session,PageInfo<Thesis> thesisPageInfo){
         if (thesisPageInfo.getList() == null){
             logger.log(Level.WARNING,"没有论文信息");
-            session.removeAttribute("thesisPageInfo");
-            session.setAttribute("thesisPageInfo",null);
+            SessionManagerUtil.setThesisList(null,session);
             ResultVO<String> resultVO = new ResultVO<String>(-1,"none");
             resultVO.setData("没有论文信息");
             return resultVO;
         } else {
             logger.info("已获取论文信息");
-            session.removeAttribute("thesisPageInfo");
-            session.setAttribute("thesisPageInfo",thesisPageInfo);
+            SessionManagerUtil.setThesisList(thesisPageInfo,session);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("已获取论文信息");
             return resultVO;
