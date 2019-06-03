@@ -120,19 +120,12 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/")
-<<<<<<< HEAD
-    public String index(@RequestParam(value = "logout",required = false)String logout, HttpSession session){
-        if (session.getAttribute("peopleinfo") != null && "logout".equals(logout)){
-            session.removeAttribute("peopleinfo");
-            session.removeAttribute("honorPageInfo");
-            session.removeAttribute("thesisPageInfo");
-=======
+
     public String index(@RequestParam(value = "logout",required = false)String number,
                         HttpSession session){
         if (LoginManagerUtil.isPeopleLogin(number) && SessionManagerUtil.isDeviceExist(session.getId())){
             LoginManagerUtil.removeLoginPerson(number);
             SessionManagerUtil.removeALl(session);
->>>>>>> newfeature
             logger.info("用户已退出登录");
         }
         return "index";
