@@ -15,7 +15,6 @@
     PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
     int honorType = (int)session.getAttribute("honorDataType");
     int thesisType = (int)session.getAttribute("thesisDataType");
-    System.out.println(honorType+"+"+thesisType);
 
     String isInfoShow = (String)session.getAttribute("isInfoShow");
     String isHonorShow = (String)session.getAttribute("isHonorShow");

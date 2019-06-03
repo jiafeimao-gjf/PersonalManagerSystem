@@ -19,8 +19,6 @@
     int thesisType = (int) session.getAttribute("thesisDataType");
     int peopleType = (int) session.getAttribute("stuffDataType");
 
-    System.out.println(honorType+"+"+thesisType+"+"+peopleType);
-
     String isInfoShow = (String) session.getAttribute("isInfoShow");
     String isHonorShow = (String) session.getAttribute("isHonorShow");
     String isThesisShow = (String) session.getAttribute("isThesisShow");

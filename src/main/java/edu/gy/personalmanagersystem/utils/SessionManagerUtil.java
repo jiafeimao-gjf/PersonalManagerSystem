@@ -56,6 +56,10 @@ public class SessionManagerUtil {
         addSessionId(session.getId());
     }
 
+    public static People getLogin(HttpSession session) {
+        return (People) session.getAttribute("login_people");
+    }
+
     public static void setStuffList(PageInfo<People> peoplePageInfo,HttpSession session){
         session.setAttribute("peoplePageInfo",peoplePageInfo);
     }

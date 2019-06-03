@@ -49,12 +49,22 @@ public class LoginController {
     public ResultVO<String> login(@RequestParam String number, @RequestParam String pwd, HttpSession session){
         logger.info("登陆验证");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"一个设备只能登录一个用户。若要切换用户清先推出登录");
+            People people = SessionManagerUtil.getLogin(session);
+            if (LoginManagerUtil.isPeopleLogin(number)) {
+                ResultVO<String> resultVO = new ResultVO<String>(200,"该用户已经登录");
+                if ("100001".equals(people.getNumber())) {
+                    resultVO.setData("admin");
+                } else {
+                    resultVO.setData("user");
+                }
+                return resultVO;
+            }
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"该设备已经登录用户："+people.getNumber()+"-"+people.getName()+"，若要切换用户，请先退出登录");
             resultVO.setData("该用户已经登录，请不要重复登录");
             return resultVO;
         }
         if (LoginManagerUtil.isPeopleLogin(number)) {
-            ResultVO<String> resultVO = new ResultVO<String>(-1,"该用户已经登录");
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"该用户已经在另一台设备登录");
             resultVO.setData("该用户已经登录，请不要重复登录");
             return resultVO;
         }
@@ -112,7 +122,7 @@ public class LoginController {
     @RequestMapping(value = "/")
     public String index(@RequestParam(value = "logout",required = false)String number,
                         HttpSession session){
-        if (LoginManagerUtil.isPeopleLogin(number)){
+        if (LoginManagerUtil.isPeopleLogin(number) && SessionManagerUtil.isDeviceExist(session.getId())){
             LoginManagerUtil.removeLoginPerson(number);
             SessionManagerUtil.removeALl(session);
             logger.info("用户已退出登录");

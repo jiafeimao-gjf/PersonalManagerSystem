@@ -336,6 +336,7 @@ $(document).ready(function () {
                 if (result.code === 200) {
                     console.log(result.data);
                     $(".thesis-checked").val("未审核");
+                    window.location.href="/PersonalManagerSystem/thesisdetail";
                     alert(result.data);
                 } else {
                     console.log(result.data);
@@ -511,5 +512,6 @@ $(document).ready(function () {
     $("#add-many-thesis").click(function () {
         console.log("add-many-thesis");
     });
+
 
 });
