@@ -11,15 +11,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     Honor honor = (Honor) session.getAttribute("honorInfo");
-    People people ;
-    String type;
+    People people = (People) session.getAttribute("login_people");
     Role role = (Role) session.getAttribute("roleInfo");
-    if (role.getRoleid() == 1){
-        type = "admin";
-    } else {
-        type = "user";
-    }
-    people = (People) session.getAttribute(type +"_login");
 %>
 <html>
 <head>

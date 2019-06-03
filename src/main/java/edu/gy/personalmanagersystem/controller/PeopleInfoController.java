@@ -6,7 +6,9 @@ import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Role;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.*;
+import edu.gy.personalmanagersystem.utils.DataTypesUtil;
 import edu.gy.personalmanagersystem.utils.PasswordCreatorUtil;
+import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -109,8 +111,8 @@ public class PeopleInfoController {
         logger.info("成功获取教职工信息");
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("成功获取教职工信息");
-        session.setAttribute("peoplePageInfo",peoplePageInfo);
-        session.setAttribute("peopleType",1);// 1表示模糊查询
+        SessionManagerUtil.setStuffList(peoplePageInfo,session);
+        SessionManagerUtil.setStuffDataType(DataTypesUtil.STUFF_DATA_FOR_SEARCH,session);// 1表示模糊查询
         return resultVO;
 
     }
@@ -123,8 +125,8 @@ public class PeopleInfoController {
         logger.info("成功获取教职工信息");
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
         resultVO.setData("成功获取教职工信息");
-        session.setAttribute("peoplePageInfo",peoplePageInfo);
-        session.setAttribute("peopleType",2);// 2表示查询全部
+        SessionManagerUtil.setStuffList(peoplePageInfo,session);
+        SessionManagerUtil.setStuffDataType(DataTypesUtil.STUFF_DATA_FOR_ADMIN,session);// 2表示查询全部
         return resultVO;
     }
 
@@ -138,7 +140,7 @@ public class PeopleInfoController {
             logger.info("成功删除该职工相关的信息");
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             PageInfo<People> peoplePageInfo = peopleService.getAll(1);
-            session.setAttribute("peoplePageInfo",peoplePageInfo);
+            SessionManagerUtil.setStuffList(peoplePageInfo,session);
             resultVO.setData("成功删除该职工相关的信息");
             return resultVO;
         } else {
@@ -157,7 +159,7 @@ public class PeopleInfoController {
         if (res == 1) {
             logger.info("成功修改教职工信息");
             People stuff = peopleService.getPeople(people.getNumber());
-            session.setAttribute("stuffinfo",stuff);
+            SessionManagerUtil.setStuff(stuff,session);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("成功修改教职工信息");
             return resultVO;
@@ -182,15 +184,15 @@ public class PeopleInfoController {
         if (res == 1) {
             logger.info("教职工信息通过审核");
             People stuff = peopleService.getPeople(people.getNumber());
-            session.setAttribute("stuffinfo",stuff);
+            SessionManagerUtil.setStuff(stuff,session);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
-            if(roleService.getRole(number) == null) {
+            if(roleService.getRole(number) == null) { // 创建角色
                 Role role = new Role();
                 role.setRoleid(2);
                 role.setNumber(number);
                 roleService.insertRole(role);
             }
-            if (userService.getUserByID(number) == null) {
+            if (userService.getUserByID(number) == null) { // 创建登录账号
                 User user = new User();
                 user.setNumber(number);
                 user.setPassword(PasswordCreatorUtil.getDefaultPwd());
@@ -211,18 +213,16 @@ public class PeopleInfoController {
     public ResultVO<String> lookPeopleInfo(@RequestParam("number")String number,
                                        HttpSession session){
         People people = peopleService.getPeople(number);
-
         if (people != null){
             logger.info("成功获取职工信息");
-            session.setAttribute("stuffinfo",people);
+            SessionManagerUtil.setStuff(people,session);
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
             resultVO.setData("成功获取职工信息");
             return resultVO;
         } else {
             logger.warning("获取职工信息失败");
-            session.setAttribute("stuffinfo",null);
             ResultVO<String> resultVO = new ResultVO<String>(-1,"filed");
-            resultVO.setData("获取职工信息失败");
+            resultVO.setData("该教职工不存在");
             return  resultVO;
         }
     }
@@ -230,7 +230,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "/peopledetail")
     public String peopleDetail(HttpSession session){
         logger.info("peopleDetail");
-        if (session.getAttribute("peopleinfo") != null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "peopledetail";
         } else {
             return "index";
@@ -240,7 +240,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "/addnewpeople")
     public String addNewPeople(HttpSession session){
         logger.info("addNewPeople");
-        if (session.getAttribute("peopleinfo") != null) {
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "addnewpeople";
         } else {
             return "index";

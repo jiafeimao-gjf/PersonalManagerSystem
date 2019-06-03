@@ -1,7 +1,5 @@
 package edu.gy.personalmanagersystem.utils;
 
-import edu.gy.personalmanagersystem.pojo.People;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +10,10 @@ import java.util.Map;
  * @Version: 1.0
  **/
 public final class LoginManagerUtil {
-    private final static Map<String, People> LOGIN_PEOPLE = new HashMap<String,People>();
+    private final static Map<String, Integer> LOGIN_PEOPLE = new HashMap<String,Integer>();
 
-    public static void addLoginPerson(People people){
-        LOGIN_PEOPLE.put(people.getNumber(),people);
+    public static void addLoginPerson(String number){
+        LOGIN_PEOPLE.put(number,1);
     }
 
     public static Boolean isPeopleLogin(String number){

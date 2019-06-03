@@ -10,15 +10,16 @@
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
-    People people = (People) session.getAttribute("user_login");
-    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("user_honorPageInfo");
-    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("user_thesisPageInfo");
-    int honorType = (int)session.getAttribute("user_honordatatype");
-    int thesisType = (int)session.getAttribute("user_thesisdatatype");
+    People people = (People) session.getAttribute("login_people");
+    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("honorPageInfo");
+    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
+    int honorType = (int)session.getAttribute("honorDataType");
+    int thesisType = (int)session.getAttribute("thesisDataType");
+    System.out.println(honorType+"+"+thesisType+"+");
 
-    String isInfoShow = (String)session.getAttribute("user_isinfoshow");
-    String isHonorShow = (String)session.getAttribute("user_ishonorshow");
-    String isThesisShow = (String)session.getAttribute("user_isthesisshow");
+    String isInfoShow = (String)session.getAttribute("isInfoShow");
+    String isHonorShow = (String)session.getAttribute("isHonorShow");
+    String isThesisShow = (String)session.getAttribute("isThesisShow");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>

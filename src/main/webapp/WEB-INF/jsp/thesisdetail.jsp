@@ -11,16 +11,9 @@
 
 <jsp:include page="common/tag.jsp"/>
 <%
-    Thesis thesis = (Thesis) session.getAttribute("thesisinfo");
-    People people ;
-    String type;
+    Thesis thesis = (Thesis) session.getAttribute("thesisInfo");
+    People people = (People) session.getAttribute("login_people");
     Role role = (Role) session.getAttribute("roleInfo");
-    if (role.getRoleid() == 1){
-        type = "admin";
-    } else {
-        type = "user";
-    }
-    people = (People) session.getAttribute(type +"_login");
 %>
 <html>
 <head>

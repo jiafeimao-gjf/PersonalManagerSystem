@@ -47,10 +47,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminIndex")
-    public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu,
+    public String adminIndex(@RequestParam(value = "chosenmenu",required = false)String chosenMenu,
                              HttpSession session){
-        if (session.getAttribute("peopleinfo") != null) {
-            SessionManagerUtil.menuDisplaySet(chosenmenu,"admin",session);
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            SessionManagerUtil.menuDisplaySet(chosenMenu,session);
             return "adminIndex";
         } else {
             return "index";
@@ -58,10 +58,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/personalIndex")
-    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenmenu
+    public String personalIndex(@RequestParam(value = "chosenmenu",required = false)String chosenMenu
             ,HttpSession session){
-        if (session.getAttribute("peopleinfo") != null) {
-            SessionManagerUtil.menuDisplaySet(chosenmenu,"user",session);
+        if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            SessionManagerUtil.menuDisplaySet(chosenMenu,session);
             return "personalIndex";
         } else {
             return "index";

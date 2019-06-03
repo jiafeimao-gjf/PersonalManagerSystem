@@ -10,19 +10,21 @@
 <%@page import="edu.gy.personalmanagersystem.pojo.*" %>
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <%
-    People people = (People) session.getAttribute("admin_login");
-    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("admin_honorPageInfo");
-    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("admin_thesisPageInfo");
-    PageInfo<People> peoplePageInfo = (PageInfo<People>) session.getAttribute("admin_peoplePageInfo");
+    People people = (People) session.getAttribute("login_people");
+    PageInfo<Honor> honorPageInfo = (PageInfo<Honor>) session.getAttribute("honorPageInfo");
+    PageInfo<Thesis> thesisPageInfo = (PageInfo<Thesis>) session.getAttribute("thesisPageInfo");
+    PageInfo<People> peoplePageInfo = (PageInfo<People>) session.getAttribute("peoplePageInfo");
 
-    int honorType = (int) session.getAttribute("admin_honorDataType");
-    int thesisType = (int) session.getAttribute("admin_thesisType");
-    int peopleType = (int) session.getAttribute("admin_thesisType");
+    int honorType = (int) session.getAttribute("honorDataType");
+    int thesisType = (int) session.getAttribute("thesisDataType");
+    int peopleType = (int) session.getAttribute("stuffDataType");
 
-    String isInfoShow = (String) session.getAttribute("admin_isInfoShow");
-    String isHonorShow = (String) session.getAttribute("admin_isHonorShow");
-    String isThesisShow = (String) session.getAttribute("admin_isThesisShow");
-    String isPeopleShow = (String) session.getAttribute("admin_isStuffShow");
+    System.out.println(honorType+"+"+thesisType+"+"+peopleType);
+
+    String isInfoShow = (String) session.getAttribute("isInfoShow");
+    String isHonorShow = (String) session.getAttribute("isHonorShow");
+    String isThesisShow = (String) session.getAttribute("isThesisShow");
+    String isPeopleShow = (String) session.getAttribute("isStuffShow");
 %>
 <jsp:include page="common/tag.jsp"/>
 <html>
@@ -156,7 +158,6 @@
                     "classify": classify,
                     "magazine": magazine,
                     "pagenum": pageNumber
-
                 },
                 success: function (result) {
                     if (result.code === 200) {
@@ -675,7 +676,7 @@
                         <c:if test="${thesisType == 1}">
                             <a onclick="thesisJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${thesisType == 3}">
+                        <c:if test="${thesisType == 2}">
                             <a onclick="thesisJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
@@ -687,7 +688,7 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${thesisType == 3}">
+                            <c:if test="${thesisType == 2}">
                                 <a onclick="thesisJumpByAll(${thesisPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -704,7 +705,7 @@
                                 <c:if test="${thesisType == 1}">
                                     <a onclick="thesisJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${thesisType == 3}">
+                                <c:if test="${thesisType == 2}">
                                     <a onclick="thesisJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -718,7 +719,7 @@
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${thesisType == 3}">
+                            <c:if test="${thesisType == 2}">
                                 <a onclick="thesisJumpByAll(${thesisPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -729,7 +730,7 @@
                         <c:if test="${thesisType == 1}">
                             <a onclick="thesisJumpByLikes(${thesisPageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${thesisType == 3}">
+                        <c:if test="${thesisType == 2}">
                             <a onclick="thesisJumpByAll(${thesisPageInfo.pages})">末页</a>
                         </c:if>
                     </li>
@@ -835,7 +836,7 @@
                         <c:if test="${honorType == 1}">
                             <a onclick="honorJumpByLikes(1)">首页</a>
                         </c:if>
-                        <c:if test="${honorType == 3}">
+                        <c:if test="${honorType == 2}">
                             <a onclick="honorJumpByAll(1)">首页</a>
                         </c:if>
                     </li>
@@ -847,7 +848,7 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${honorType == 3}">
+                            <c:if test="${honorType == 2}">
                                 <a onclick="honorJumpByAll(${honorPageInfo.pageNum-1})" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -864,7 +865,7 @@
                                 <c:if test="${honorType == 1}">
                                     <a onclick="honorJumpByLikes(${page_Num})">${page_Num }</a>
                                 </c:if>
-                                <c:if test="${honorType == 3}">
+                                <c:if test="${honorType == 2}">
                                     <a onclick="honorJumpByAll(${page_Num})">${page_Num }</a>
                                 </c:if>
                             </li>
@@ -878,7 +879,7 @@
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </c:if>
-                            <c:if test="${honorType == 3}">
+                            <c:if test="${honorType == 2}">
                                 <a onclick="honorJumpByAll(${honorPageInfo.pageNum+1})" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -889,7 +890,7 @@
                         <c:if test="${honorType == 1}">
                             <a onclick="honorJumpByLikes(${honorPageInfo.pages})">末页</a>
                         </c:if>
-                        <c:if test="${honorType == 3}">
+                        <c:if test="${honorType == 2}">
                             <a onclick="honorJumpByAll(${honorPageInfo.pages})">末页</a>
                         </c:if>
                     </li>
