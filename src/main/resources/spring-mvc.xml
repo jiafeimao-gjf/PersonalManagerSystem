@@ -77,6 +77,6 @@
 	<task:annotation-driven/>
 	<bean id="SessionIdMangerService"  class="edu.gy.personalmanagersystem.utils.SessionManagerUtil"/>
 	<task:scheduled-tasks>
-		<task:scheduled ref="SessionIdMangerService" method="removeTimeoutSessionId" fixed-delay="1800000"/>
+		<task:scheduled ref="SessionIdMangerService" method="removeTimeoutSessionId" fixed-delay="600000"/>
 	</task:scheduled-tasks>
 </beans>  

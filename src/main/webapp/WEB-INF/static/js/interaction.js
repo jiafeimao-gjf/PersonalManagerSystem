@@ -153,7 +153,7 @@ $(document).ready(function () {
                             if (result.code === 200) {
                                 console.log("修改密码成功");
                                 alert(result.data+"请重新登录！");
-                                window.location.href="/PersonalManagerSystem/";
+                                window.location.href="/PersonalManagerSystem/?logout="+number;
                             } else {
                                 alert(result.data);
                             }
@@ -200,12 +200,8 @@ $(document).ready(function () {
     $(".body4").click(function(){
         if (confirm("确定退出登录？")){
             console.log("清除session，重新登录");
-<<<<<<< HEAD
-            window.location.href = "/PersonalManagerSystem/?logout=logout";
-=======
             var number = $(".number").val();
             window.location.href = "/PersonalManagerSystem/?logout="+number;
->>>>>>> newfeature
         } else {
             console.log("取消重新登录");
         }
@@ -312,8 +308,6 @@ $(document).ready(function () {
             }
         });
     });
-
-
 
     $("#changethesisinfo").click(function () {
         console.log("修改论文信息");

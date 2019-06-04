@@ -6,6 +6,7 @@ import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Thesis;
 import edu.gy.personalmanagersystem.service.ThesisService;
 import edu.gy.personalmanagersystem.utils.DataTypesUtil;
+import edu.gy.personalmanagersystem.utils.LoginManagerUtil;
 import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,9 @@ public class ThesisController {
 
     @RequestMapping(value = "/addnewthesis",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> addNewThesis(Thesis thesis){
+    public ResultVO<String> addNewThesis(Thesis thesis,HttpSession session){
+        logger.info("addNewThesis");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = thesisService.addThesis(thesis);
         if (res == 1){
             logger.info("成功插入新的论文信息");
@@ -49,7 +52,9 @@ public class ThesisController {
 
     @RequestMapping(value = "/addnewthesislist",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> addNewThesisList(List<Thesis> thesisList){
+    public ResultVO<String> addNewThesisList(List<Thesis> thesisList,HttpSession session){
+        logger.info("addNewThesisList");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = thesisService.addThesisList(thesisList);
         if (res == thesisList.size()){
             logger.info("成功插入新的论文信息");
@@ -70,6 +75,7 @@ public class ThesisController {
                                               @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                               HttpSession session){
         logger.info("getThesisByNumber");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         Thesis thesis = new Thesis();
         thesis.setNumber(number);
         PageInfo<Thesis> thesisPageInfo;
@@ -86,6 +92,7 @@ public class ThesisController {
     @ResponseBody
     public ResultVO<String> lookThesisInfo(@RequestParam("thesisid") Integer thesisid, HttpSession session){
         logger.info("lookThesisInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         Thesis thesis = thesisService.getThesisByKey(thesisid);
         if (thesis != null) {
             logger.info("成功查询到数据");
@@ -111,8 +118,9 @@ public class ThesisController {
                                              @RequestParam("magazine")String magazine,
                                              @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                              HttpSession session){
-        People people = (People) session.getAttribute("login_people");
         logger.info("getThesisByLikes");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
+        People people = (People) session.getAttribute("login_people");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
             logger.log(Level.WARNING,"用户没有登录");
             ResultVO<String> resultVO = new ResultVO<String>(-1,"not login");
@@ -144,6 +152,7 @@ public class ThesisController {
     public String thesisDetail(HttpSession session){
         logger.info("thesisdetail");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
             return "thesisdetail";
         } else {
             return "index";
@@ -152,8 +161,9 @@ public class ThesisController {
 
     @RequestMapping(value = "updatethesisinfo",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> updateThesisInfo(Thesis thesis){
+    public ResultVO<String> updateThesisInfo(Thesis thesis,HttpSession session){
         logger.info("updateThesisInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = thesisService.updateThesisInfo(thesis);
         if (res == 1) {
             logger.info("成功跟新论文信息");
@@ -172,6 +182,8 @@ public class ThesisController {
     @ResponseBody
     public ResultVO<String> getAllThesis(@RequestParam(value = "pagenum",required = false)Integer pageNum,
                                          HttpSession session){
+        logger.info("getAllThesis");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         PageInfo<Thesis> thesisPageInfo ;
         if (pageNum!=null) {
             thesisPageInfo = thesisService.getAll(pageNum);
@@ -190,6 +202,7 @@ public class ThesisController {
     public ResultVO<String> checkThesis(@RequestParam("thesisid")Integer thesisId,
                                        HttpSession session){
         logger.info("checkThesis");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         Thesis thesis = new Thesis();
         thesis.setThesisid(thesisId);
         thesis.setChecked(1);
@@ -209,8 +222,9 @@ public class ThesisController {
 
     @RequestMapping(value = "/deletethesis",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> deleteThesis(@RequestParam("thesisid")Integer thesisId){
+    public ResultVO<String> deleteThesis(@RequestParam("thesisid")Integer thesisId,HttpSession session){
         logger.info("deleteThesis");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = thesisService.deleteThesis(thesisId);
         if (res == 1) {
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
@@ -227,6 +241,7 @@ public class ThesisController {
     public String addNewThesis(HttpSession session){
         logger.info("addNewThesis");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
             return "addnewthesis";
         } else {
             return "index";

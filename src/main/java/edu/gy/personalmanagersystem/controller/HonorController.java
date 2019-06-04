@@ -6,6 +6,7 @@ import edu.gy.personalmanagersystem.pojo.Honor;
 import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.service.HonorService;
 import edu.gy.personalmanagersystem.utils.DataTypesUtil;
+import edu.gy.personalmanagersystem.utils.LoginManagerUtil;
 import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,9 @@ public class HonorController {
 
     @RequestMapping(value = "/addnewhonor",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> addNewHonor(Honor honor){
+    public ResultVO<String> addNewHonor(Honor honor,HttpSession session){
+        logger.info("addNewHonor");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = honorService.addHonor(honor);
         if (res == 1){
             logger.info("成功插入新的荣誉信息");
@@ -51,7 +54,9 @@ public class HonorController {
 
     @RequestMapping(value = "/addnewhonors",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> addNewHonors(List<Honor> honorList){
+    public ResultVO<String> addNewHonors(List<Honor> honorList,HttpSession session){
+        logger.info("addNewHonors");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = honorService.addHonors(honorList);
         if (res == honorList.size()){
             logger.info("成功插入新的荣誉信息");
@@ -71,6 +76,7 @@ public class HonorController {
     public ResultVO<String> getHonorsByNumber(@RequestParam("number")String number,
                                               @RequestParam(value = "pagenum",required = false) Integer pageNum,HttpSession session){
         logger.info("getHonorsByNumber");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         Honor honor = new Honor();
         honor.setNumber(number);
         PageInfo<Honor> honorPageInfo;
@@ -91,6 +97,7 @@ public class HonorController {
                                                  @RequestParam(value = "pagenum",required = false)Integer pageNum,
                                                  HttpSession session){
         logger.info("getOnceHonorsByLikes");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         People people = (People) session.getAttribute("peopleinfo");
         if (people == null) {
             logger.log(Level.WARNING,"用户没有登录");
@@ -117,6 +124,7 @@ public class HonorController {
     @ResponseBody
     public ResultVO<String> lookHonorInfo(@RequestParam("honorid") Integer honorid, HttpSession session){
         logger.info("lookHonorInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         Honor honor = honorService.getHonorByKey(honorid);
         if (honor != null) {
             logger.info("成功查询到数据");
@@ -136,6 +144,7 @@ public class HonorController {
     public String honorDetail(HttpSession session){
         logger.info("honordetail");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
             return "honordetail";
         } else {
             return "index";
@@ -144,8 +153,9 @@ public class HonorController {
 
     @RequestMapping(value = "updatehonorinfo",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> updateThesisInfo(Honor honor){
+    public ResultVO<String> updateThesisInfo(Honor honor,HttpSession session){
         logger.info("updateThesisInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = honorService.updateHonorInfo(honor);
         if (res == 1) {
             logger.info("成功更新荣誉信息");
@@ -164,6 +174,8 @@ public class HonorController {
     @ResponseBody
     public ResultVO<String> getAllHonor(@RequestParam(value = "pagenum",required = false)Integer pageNum,
                                         HttpSession session){
+        logger.info("getAllHonor");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         PageInfo<Honor> honorPageInfo;
         if (pageNum != null) {
             honorPageInfo = honorService.getAll(pageNum);
@@ -178,6 +190,7 @@ public class HonorController {
     public ResultVO<String> checkHonor(@RequestParam("honorid")Integer honorId,
                                        HttpSession session){
         logger.info("checkHonor");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         Honor honor = new Honor();
         honor.setHonorid(honorId);
         honor.setChecked(1);
@@ -197,8 +210,9 @@ public class HonorController {
 
     @RequestMapping(value = "/deletehonor",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> deleteHonor(@RequestParam("honorid")Integer honorId){
+    public ResultVO<String> deleteHonor(@RequestParam("honorid")Integer honorId,HttpSession session){
         logger.info("deleteHonor");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = honorService.deleteHonor(honorId);
         if (res == 1) {
             ResultVO<String> resultVO = new ResultVO<String>(200,"success");
@@ -214,6 +228,7 @@ public class HonorController {
     @RequestMapping(value = "/addnewhonor")
     public String addNewHonor(HttpSession session){
         logger.info("addNewHonor");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
             return "addnewhonor";
         } else {

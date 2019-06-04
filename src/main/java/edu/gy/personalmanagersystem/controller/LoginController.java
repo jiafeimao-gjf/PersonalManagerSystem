@@ -52,6 +52,7 @@ public class LoginController {
             People people = SessionManagerUtil.getLogin(session);
             if (LoginManagerUtil.isPeopleLogin(number)) {
                 ResultVO<String> resultVO = new ResultVO<String>(200,"该用户已经登录");
+                LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
                 if ("100001".equals(people.getNumber())) {
                     resultVO.setData("admin");
                 } else {
@@ -120,10 +121,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/")
-
     public String index(@RequestParam(value = "logout",required = false)String number,
                         HttpSession session){
-        if (LoginManagerUtil.isPeopleLogin(number) && SessionManagerUtil.isDeviceExist(session.getId())){
+        if (number != null && LoginManagerUtil.isPeopleLogin(number) && SessionManagerUtil.isDeviceExist(session.getId())){
             LoginManagerUtil.removeLoginPerson(number);
             SessionManagerUtil.removeALl(session);
             logger.info("用户已退出登录");

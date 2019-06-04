@@ -7,6 +7,7 @@ import edu.gy.personalmanagersystem.pojo.Role;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.*;
 import edu.gy.personalmanagersystem.utils.DataTypesUtil;
+import edu.gy.personalmanagersystem.utils.LoginManagerUtil;
 import edu.gy.personalmanagersystem.utils.PasswordCreatorUtil;
 import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,9 @@ public class PeopleInfoController {
 
     @RequestMapping(value = "/addnewpeople",method = RequestMethod.POST)
     @ResponseBody
-    public ResultVO<String> addNewPeople(People people){
+    public ResultVO<String> addNewPeople(People people,HttpSession session){
+        logger.info("addNewPeople");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         if (peopleService.getPeople(people.getNumber())==null) {
             people.setChecked(1);
             int res = peopleService.addPeople(people);
@@ -99,6 +102,8 @@ public class PeopleInfoController {
                                                @RequestParam("position")String position,
                                                @RequestParam("pagenum")Integer pageNum,
                                                HttpSession session){
+        logger.info("queryPeopleByLikes");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         People people = new People();
 
         people.setName(name);
@@ -121,6 +126,8 @@ public class PeopleInfoController {
     @ResponseBody
     public ResultVO<String> getAllPeople(@RequestParam("pagenum")Integer pageNum,
                                          HttpSession session) {
+        logger.info("getAllPeople");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         PageInfo<People> peoplePageInfo = peopleService.getAll(pageNum);
         logger.info("成功获取教职工信息");
         ResultVO<String> resultVO = new ResultVO<String>(200,"success");
@@ -134,7 +141,8 @@ public class PeopleInfoController {
     @ResponseBody
     public ResultVO<String> deletePeopleInfo(@RequestParam("number")String number,
                                              HttpSession session){
-
+        logger.info("deletePeopleInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = peopleService.deletePeople(number);
         if (res == 1){
             logger.info("成功删除该职工相关的信息");
@@ -155,6 +163,7 @@ public class PeopleInfoController {
     @ResponseBody
     public ResultVO<String> updatePeopleInfo(People people,HttpSession session){
         logger.info("updatePeopleInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         int res = peopleService.updatePeopleInfo(people);
         if (res == 1) {
             logger.info("成功修改教职工信息");
@@ -177,6 +186,7 @@ public class PeopleInfoController {
                                        @RequestParam("checked")Integer checked
                                        ,HttpSession session){
         logger.info("checkStuff");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         People people = new People();
         people.setNumber(number);
         people.setChecked(checked);
@@ -212,6 +222,8 @@ public class PeopleInfoController {
     @ResponseBody
     public ResultVO<String> lookPeopleInfo(@RequestParam("number")String number,
                                        HttpSession session){
+        logger.info("lookPeopleInfo");
+        LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
         People people = peopleService.getPeople(number);
         if (people != null){
             logger.info("成功获取职工信息");
@@ -231,6 +243,7 @@ public class PeopleInfoController {
     public String peopleDetail(HttpSession session){
         logger.info("peopleDetail");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
             return "peopledetail";
         } else {
             return "index";
@@ -241,6 +254,7 @@ public class PeopleInfoController {
     public String addNewPeople(HttpSession session){
         logger.info("addNewPeople");
         if (SessionManagerUtil.isDeviceExist(session.getId())) {
+            LoginManagerUtil.updateLoginTime(SessionManagerUtil.getLogin(session).getNumber());
             return "addnewpeople";
         } else {
             return "index";

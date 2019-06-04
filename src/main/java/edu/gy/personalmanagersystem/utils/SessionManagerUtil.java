@@ -102,6 +102,8 @@ public class SessionManagerUtil {
 
     public static void removeALl(HttpSession session){
         if (session.getAttribute("login_people")!=null) {
+            String number = getLogin(session).getNumber();
+            LoginManagerUtil.removeLoginPerson(number);
             session.removeAttribute("login_people");
             session.removeAttribute("thesisPageInfo");
             session.removeAttribute("honorPageInfo");
@@ -121,7 +123,7 @@ public class SessionManagerUtil {
 
     }
 
-    private final static Map<String, Date> SESSION_ID_MAP = new ConcurrentHashMap<String, Date>();
+    private static Map<String, Date> SESSION_ID_MAP = new ConcurrentHashMap<String, Date>();
 
     private static boolean isSessionExist(String sessionId){
         return SESSION_ID_MAP.containsKey(sessionId);
@@ -149,13 +151,14 @@ public class SessionManagerUtil {
      * @Param
      * @return
      **/
-    @Scheduled(fixedDelay = 1800000)
+    @Scheduled(fixedDelay = 600000)
     public static void removeTimeoutSessionId(){
         Date now = new Date();
         for (Map.Entry<String,Date> entry :SESSION_ID_MAP.entrySet()) {
-            if (entry.getValue().getTime() - now.getTime() > 1800000) {
+            if (now.getTime() - entry.getValue().getTime() > 1800000) {
                 removeSessionId(entry.getKey());
             }
         }
+        LoginManagerUtil.removeTimeoutUser(now);
     }
 }

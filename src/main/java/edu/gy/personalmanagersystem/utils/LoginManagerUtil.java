@@ -1,7 +1,8 @@
 package edu.gy.personalmanagersystem.utils;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @ClassName: LoginManagerUtil
@@ -10,10 +11,10 @@ import java.util.Map;
  * @Version: 1.0
  **/
 public final class LoginManagerUtil {
-    private final static Map<String, Integer> LOGIN_PEOPLE = new HashMap<String,Integer>();
+    private static Map<String, Date> LOGIN_PEOPLE = new ConcurrentHashMap<String, Date>();
 
     public static void addLoginPerson(String number){
-        LOGIN_PEOPLE.put(number,1);
+        LOGIN_PEOPLE.put(number,new Date());
     }
 
     public static Boolean isPeopleLogin(String number){
@@ -26,6 +27,20 @@ public final class LoginManagerUtil {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void updateLoginTime(String number) {
+        if (LOGIN_PEOPLE.containsKey(number)) {
+            LOGIN_PEOPLE.put(number,new Date());
+        }
+    }
+
+    public static void removeTimeoutUser(Date now){
+        for (Map.Entry<String,Date> entry:LOGIN_PEOPLE.entrySet()) {
+            if (now.getTime() - entry.getValue().getTime() > 1800000) {
+                removeLoginPerson(entry.getKey());
+            }
         }
     }
 }
