@@ -6,15 +6,17 @@ import edu.gy.personalmanagersystem.pojo.People;
 import edu.gy.personalmanagersystem.pojo.Role;
 import edu.gy.personalmanagersystem.pojo.User;
 import edu.gy.personalmanagersystem.service.*;
-import edu.gy.personalmanagersystem.utils.DataTypesUtil;
-import edu.gy.personalmanagersystem.utils.LoginManagerUtil;
-import edu.gy.personalmanagersystem.utils.PasswordCreatorUtil;
-import edu.gy.personalmanagersystem.utils.SessionManagerUtil;
+import edu.gy.personalmanagersystem.utils.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -261,4 +263,67 @@ public class PeopleInfoController {
         }
 
     }
+
+    @RequestMapping(value = "/addpeoplebyfile",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVO<String> addPeopleByFile(@RequestParam("stuffs") MultipartFile file, HttpSession session){
+        logger.info("addPeopleByFile");
+        //检查文件类型
+        if (FileCheck.checkExcelFile(file.getOriginalFilename())) {
+            ResultVO<String> resultVO = new ResultVO<String>(-1,"请上传.xls或者.xlsx格式的文件");
+            resultVO.setData("文件格式不正确");
+            return resultVO;
+        }
+        // 读取文件信息
+        List<People> peopleList;
+        try {
+            peopleList = readExcelFile(file);
+        } catch (IOException ioe) {
+            logger.warning("文件读取错误");
+            ioe.printStackTrace();
+        }
+
+        // 上传文件数据
+
+        // 返回值处理
+        ResultVO<String> resultVO = new ResultVO<String>(200,"已经存储所有的数据！");
+        resultVO.setData("success");
+        return resultVO;
+    }
+
+    private List<People> readExcelFile(MultipartFile file) throws IOException {
+        try {
+            Workbook workBook = WorkbookFactory.create(file.getInputStream());
+            Sheet sheet = workBook.getSheetAt(0);
+
+            for (int i = 0;i < sheet.getLastRowNum();i++){
+                Row row = sheet.getRow(i);
+                System.out.println("第"+i+"行：");
+                for (int j = 0;j < row.getLastCellNum();j++) {
+                    Cell cell = row.getCell(j);
+                    switch (cell.getCellType()) {
+                        case BOOLEAN:
+                            System.out.println("Boolean:"+cell.getBooleanCellValue());
+                            break;
+                        case STRING:
+                            System.out.println("String:"+cell.getStringCellValue());
+                            break;
+                        case NUMERIC:
+                            System.out.println("numeric:"+cell.getNumericCellValue());
+                            break;
+                        case FORMULA:
+                            System.out.println("Formula:"+cell.getCellFormula());
+                            break;
+                    }
+                }
+                System.out.println("=====================================");
+            }
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

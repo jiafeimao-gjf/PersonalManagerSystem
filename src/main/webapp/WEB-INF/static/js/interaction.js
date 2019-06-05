@@ -395,7 +395,7 @@ $(document).ready(function () {
         if (confirm("确定增加该教职工？增加后将会为其创建登录账户。")) {
             $.ajax({
                 type:"post",
-                datatype:"form-date",
+                datatype:"form-data",
                 url:"/PersonalManagerSystem/addnewpeople",
                 data:{
                     "number":number,
@@ -444,7 +444,7 @@ $(document).ready(function () {
         if (confirm("确定增加该荣誉信息？")) {
             $.ajax({
                 type:"post",
-                datatype:"form-date",
+                datatype:"form-data",
                 url:"/PersonalManagerSystem/addnewhonor",
                 data:{
                     "number":number,
@@ -479,7 +479,7 @@ $(document).ready(function () {
         if (confirm("确定增加该荣誉信息？")) {
             $.ajax({
                 type:"post",
-                datatype:"form-date",
+                datatype:"form-data",
                 url:"/PersonalManagerSystem/addnewthesis",
                 data:{
                     "number":number,
@@ -503,6 +503,31 @@ $(document).ready(function () {
     });
     $("#add-many-stuff").click(function () {
         console.log("add-many-stuff");
+        var filePath = $("#people-excel")[0].files[0];
+        $.ajax({
+            type:"post",
+            datatype:"multipart/form-data",
+            url:"/PersonalManagerSystem/addpeoplebyfile",
+            data:{
+                "stuffs":filePath
+            },
+            /**
+             *必须false才会自动加上正确的Content-Type
+             */
+            ContentType: false,
+            /**
+             * 必须false才会避开jQuery对 formdata 的默认处理
+             * XMLHttpRequest会对 formdata 进行正确的处理
+             */
+            processData: false,
+            success:function (result) {
+                if (result.code === 200) {
+                    alert(result.info);
+                } else {
+                    alert(result.info);
+                }
+            }
+        })
     });
     $("#add-many-honor").click(function () {
         console.log("add-many-honor");

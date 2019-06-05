@@ -116,7 +116,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">上传Excel文件</label>
                 <div class="col-sm-6">
-                    <input type="file" class="form-control"/>
+                    <input id="people-excel" type="file" class="form-control"/>
                 </div>
             </div>
             <div class="form-group">
