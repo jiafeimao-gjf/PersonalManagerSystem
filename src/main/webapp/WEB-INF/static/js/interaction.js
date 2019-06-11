@@ -504,30 +504,32 @@ $(document).ready(function () {
     $("#add-many-stuff").click(function () {
         console.log("add-many-stuff");
         var filePath = $("#people-excel")[0].files[0];
-        $.ajax({
-            type:"post",
-            datatype:"multipart/form-data",
-            url:"/PersonalManagerSystem/addpeoplebyfile",
-            data:{
-                "stuffs":filePath
+        console.log(filePath);
+        var form = new FormData();
+        form.append("stuffs", filePath);
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "/PersonalManagerSystem/addpeoplebyfile",
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded",
             },
-            /**
-             *必须false才会自动加上正确的Content-Type
-             */
-            ContentType: false,
-            /**
-             * 必须false才会避开jQuery对 formdata 的默认处理
-             * XMLHttpRequest会对 formdata 进行正确的处理
-             */
-            processData: false,
-            success:function (result) {
-                if (result.code === 200) {
-                    alert(result.info);
-                } else {
-                    alert(result.info);
-                }
+            "processData": false,
+            "contentType": false,
+            "mimeType": "multipart/form-data",
+            "data": form
+        };
+
+        $.ajax(settings).done(function (result) {
+            if (result.code === 200) {
+                alert(result.info);
+            } else {
+                alert(result.info+result.data);
             }
-        })
+        });
+
     });
     $("#add-many-honor").click(function () {
         console.log("add-many-honor");
