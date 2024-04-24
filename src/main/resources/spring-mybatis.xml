@@ -53,6 +53,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
+    <!--  指定controller路径，进行路由配置  -->
     <aop:config>
         <aop:pointcut id="" expression="execution(* edu.gy.personalmanagersystem.controller..*())"/>
     </aop:config>
